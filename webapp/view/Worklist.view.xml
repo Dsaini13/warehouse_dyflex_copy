@@ -21,7 +21,7 @@
 				id="table"
 				width="auto"
 				items="{
-					path: '/A_MatlStkInAcctMod',
+					path: 'matlStockSrv>/A_MatlStkInAcctMod',
 					sorter: {
 						path: 'Material',
 						descending: false
@@ -68,13 +68,13 @@
 						press=".onPress">
 						<cells>
 							<ObjectIdentifier
-								title="{Material}"/>
+								title="{matlStockSrv>Material}"/>
 							<ObjectNumber
 								number="{
-									path: 'MatlWrhsStkQtyInMatlBaseUnit',
+									path: 'matlStockSrv>MatlWrhsStkQtyInMatlBaseUnit',
 									formatter: '.formatter.numberUnit'
 								}"
-								unit="{MaterialBaseUnit}"/>
+								unit="{matlStockSrv>MaterialBaseUnit}"/>
 						</cells>
 					</ColumnListItem>
 				</items>

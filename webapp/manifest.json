@@ -11,18 +11,25 @@
 		},
 		"resources": "resources.json",
 		"dataSources": {
-			"mainService": {
+			"API_MATERIAL_STOCK_SRV": {
 				"uri": "/DYFLEX_S4H_CLOUD_API_OAUTH/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml"
 				}
+			},
+			"API_PURCHASEORDER_PROCESS_SRV": {
+				"uri": "/DYFLEX_S4H_CLOUD_API_OAUTH/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/API_PURCHASEORDER_PROCESS_SRV/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
-			"id": "sap.ui.ui5-template-plugin.1worklist",
-			"version": "1.96.7"
+			"id": "servicecatalog.connectivityComponentForManifest",
+			"version": "0.0.0"
 		}
 	},
 	"sap.ui": {
@@ -71,8 +78,18 @@
 					"bundleName": "dyflex.mm.s4cloud.warehouse.i18n.i18n"
 				}
 			},
-			"": {
-				"dataSource": "mainService",
+			"matlStockSrv": {
+				"dataSource": "API_MATERIAL_STOCK_SRV",
+				"preload": true
+			},
+			"purchOrderSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "API_PURCHASEORDER_PROCESS_SRV",
 				"preload": true
 			}
 		},
