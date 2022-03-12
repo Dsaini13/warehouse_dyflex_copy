@@ -1,0 +1,83 @@
+<mvc:View
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.MainList"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic">
+	
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>worklistTitle}" level="H2" />
+		</semantic:titleHeading>
+
+		<semantic:content>
+					
+			<List mode="SingleSelectMaster">
+				<items>
+					
+					<StandardListItem
+						title="Stock Overview"
+						icon="sap-icon://building"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+					<StandardListItem
+						title="Stock Transfer"
+						icon="sap-icon://journey-arrive"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+					<StandardListItem
+						title="Goods Receipt"
+						description="Purchase Orders"
+						icon="sap-icon://add-product"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+					<StandardListItem
+						title="Goods Receipt"
+						description="Production Orders"
+						icon="sap-icon://add-activity"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+					<StandardListItem
+						title="Goods Issue"
+						description="Production Orders"
+						icon="sap-icon://shipping-status"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+					<StandardListItem
+						title="Goods Issue"
+						description="Others"
+						icon="sap-icon://checklist"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+					<StandardListItem
+						title="Stocktake"
+						description="Physical Inventory Count"
+						icon="sap-icon://task"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+					<StandardListItem
+						title="Picking"
+						description="Outbound Delivery"
+						icon="sap-icon://cart-3"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+				</items>
+			</List>
+			
+		</semantic:content>
+
+	</semantic:SemanticPage>
+	
+</mvc:View>

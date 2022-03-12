@@ -119,9 +119,9 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "worklist",
+					"name": "mainList",
 					"target": [
-						"worklist"
+						"mainList"
 					]
 				},
 				{
@@ -152,6 +152,10 @@
 				"notFound": {
 					"viewName": "NotFound",
 					"viewId": "notFound"
+				},
+				"mainList": {
+					"viewType": "XML",
+					"viewName": "MainList"
 				}
 			}
 		}
