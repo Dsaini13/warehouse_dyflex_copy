@@ -23,16 +23,19 @@
 					sorter: {
 						path: 'Material',
 						descending: false
-					}
+					},
+					filters : [
+						{ path : 'Material', operator : 'NE', value1 : ''}
+					]
 				}"
-				noDataText="{worklistView>/tableNoDataText}"
+				noDataText="{listView>/tableNoDataText}"
 				busyIndicatorDelay="{listView>/tableBusyDelay}"
 				updateFinished="onUpdateFinished">
 
 				<headerToolbar>
 					<OverflowToolbar>
 						<Title
-							text="{worklistView>/worklistTableTitle}"
+							text="{listView>/listTableTitle}"
 							level="H3"/>
 						<ToolbarSpacer />
 						<SearchField
