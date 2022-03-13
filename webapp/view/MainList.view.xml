@@ -11,17 +11,18 @@
 		toggleHeaderOnTitleClick="false">
 
 		<semantic:titleHeading>
-			<Title text="{i18n>worklistTitle}" level="H2" />
+			<Title text="{i18n>mainListTitle}" level="H2" />
 		</semantic:titleHeading>
 
 		<semantic:content>
-					
-			<List mode="SingleSelectMaster">
+			<List>
 				<items>
 					
 					<StandardListItem
 						title="Stock Overview"
 						icon="sap-icon://building"
+						press="onStockOverviewPress"
+						type="Active"
 						iconDensityAware="false"
 						iconInset="false" />
 						
@@ -75,7 +76,6 @@
 						
 				</items>
 			</List>
-			
 		</semantic:content>
 
 	</semantic:SemanticPage>

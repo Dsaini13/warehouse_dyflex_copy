@@ -1,44 +1,25 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function (Controller) {
+	"./BaseController"
+], function (BaseController) {
 	"use strict";
 
-	return Controller.extend("dyflex.mm.s4cloud.warehouse.controller.MainList", {
+	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.MainList", {
 
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf dyflex.mm.s4cloud.warehouse.view.MainList
 		 */
-		onInit: function () {
-
+		onInit: function() {
+			
 		},
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf dyflex.mm.s4cloud.warehouse.view.MainList
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf dyflex.mm.s4cloud.warehouse.view.MainList
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf dyflex.mm.s4cloud.warehouse.view.MainList
-		 */
-		//	onExit: function() {
-		//
-		//	}
+		
+		/* =========================================================== */
+		/* event handlers                                              */
+		/* =========================================================== */
+		onStockOverviewPress: function(oEvent) {
+			this.getRouter().navTo("stockOverviewList");
+		}
 
 	});
 

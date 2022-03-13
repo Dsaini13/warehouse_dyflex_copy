@@ -1,0 +1,90 @@
+<mvc:View
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.StockOverviewList"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>stockOverviewListTitle}" level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:content>
+			<Table
+				id="idStockOverviewListTable"
+				width="auto"
+				items="{
+					path: 'matlStockSrv>/A_MatlStkInAcctMod',
+					sorter: {
+						path: 'Material',
+						descending: false
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{listView>/tableBusyDelay}"
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished="onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title
+							text="{worklistView>/worklistTableTitle}"
+							level="H3"/>
+						<ToolbarSpacer />
+						<SearchField
+							id="idSearchField"
+							search="onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="200px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column>
+						<Text text="Material" />
+					</Column>
+					<Column hAlign="End">
+						<Text text="Stock Qty" />
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem
+						type="Navigation"
+						press="onPress">
+						<cells>
+							<ObjectIdentifier
+								title="{matlStockSrv>Material}"/>
+							<ObjectNumber
+								number="{
+									path: 'matlStockSrv>MatlWrhsStkQtyInMatlBaseUnit',
+									formatter: '.formatter.numberUnit'
+								}"
+								unit="{matlStockSrv>MaterialBaseUnit}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton title="{listView>/saveAsTileTitle}" />
+		</semantic:saveAsTileAction>
+
+	</semantic:SemanticPage>
+	
+</mvc:View>
