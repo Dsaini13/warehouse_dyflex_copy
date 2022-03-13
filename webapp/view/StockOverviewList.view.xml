@@ -27,8 +27,6 @@
 				}"
 				noDataText="{worklistView>/tableNoDataText}"
 				busyIndicatorDelay="{listView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
 				updateFinished="onUpdateFinished">
 
 				<headerToolbar>
@@ -53,6 +51,15 @@
 					<Column>
 						<Text text="Material" />
 					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" >
+						<Text text="Plant" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Storage Location" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Batch" />
+					</Column>
 					<Column hAlign="End">
 						<Text text="Stock Qty" />
 					</Column>
@@ -63,8 +70,10 @@
 						type="Navigation"
 						press="onPress">
 						<cells>
-							<ObjectIdentifier
-								title="{matlStockSrv>Material}"/>
+							<ObjectIdentifier title="{matlStockSrv>Material}"/>
+							<ObjectIdentifier title="{matlStockSrv>Plant}"/>
+							<ObjectIdentifier title="{matlStockSrv>StorageLocation}"/>
+							<ObjectIdentifier title="{matlStockSrv>Batch}"/>
 							<ObjectNumber
 								number="{
 									path: 'matlStockSrv>MatlWrhsStkQtyInMatlBaseUnit',
