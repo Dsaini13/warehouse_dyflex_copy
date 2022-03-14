@@ -1,0 +1,40 @@
+<mvc:View
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.StockOverviewDetail"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false"
+		busy="{detailView>/busy}"
+		busyIndicatorDelay="{detailView>/delay}">
+
+		<semantic:titleHeading>
+			<Title
+				text="{dataModel>/d/Material}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+			<ObjectNumber
+				number="{
+					path: 'dataModel>/d/StockOnHand',
+					formatter: '.formatter.numberUnit'
+				}"
+				unit="{dataModel>/d/MaterialBaseUnit}"
+			/>
+		</semantic:headerContent>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton title="{detailView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+
+	</semantic:SemanticPage>
+
+</mvc:View>

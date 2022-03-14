@@ -149,10 +149,10 @@
 					]
 				},
 				{
-					"pattern": "A_MatlStkInAcctMod/{objectId}",
-					"name": "object",
+					"pattern": "StockOverviewDetail/{objectId}",
+					"name": "stockOverviewDetail",
 					"target": [
-						"object"
+						"stockOverviewDetail"
 					]
 				}
 			],
@@ -184,6 +184,10 @@
 				"stockOverviewList": {
 					"viewType": "XML",
 					"viewName": "StockOverviewList"
+				},
+				"stockOverviewDetail": {
+					"viewType": "XML",
+					"viewName": "StockOverviewDetail"
 				}
 			}
 		}

@@ -20,7 +20,7 @@ sap.ui.define([
 			
 			var that = this;
 			this._oTable = this.byId("idStockOverviewListTable");
-
+			
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
@@ -102,7 +102,19 @@ sap.ui.define([
 		onRefresh : function () {
 			this._oTable.getBinding("items").refresh();
 		},
-
+		
+		/**
+		 * Event handler when a table item gets pressed
+		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
+		 * @public
+		 */
+		onPress : function (oEvent) {
+			var oObject = this.getModel("customStockSrv").getProperty(oEvent.getSource().getBindingContextPath());
+			this.getRouter().navTo("stockOverviewDetail", {
+				objectId: oObject.ID
+			});
+		},
+		
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */

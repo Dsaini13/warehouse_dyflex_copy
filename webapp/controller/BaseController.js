@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/UIComponent",
-	"sap/m/library"
-], function (Controller, UIComponent, mobileLibrary) {
+	"sap/m/library",
+	"sap/m/MessageBox"
+], function (Controller, UIComponent, mobileLibrary, MessageBox) {
 	"use strict";
 
 	// shortcut for sap.m.URLHelper
@@ -60,7 +61,37 @@ sap.ui.define([
 				oViewModel.getProperty("/shareSendEmailMessage")
 			);
 		},
-
+		
+		_handleJSONModelError: function(oEvent) {
+			var sDetails = oEvent.getParameters().errorobject;
+			if (sDetails) {
+				
+				// Add friendly error messages
+				var e = null, xml = null, sErrorString = "", sErrorMessage = "";
+				try {
+					e = JSON.parse(sDetails.responseText);
+				} catch (ex) {
+					jQuery.sap.log.info(ex.message);
+					// OPA tests will send 'serverError' when mocking a server-side response error!
+					if (sDetails.responseText !== "serverError") {
+						xml = jQuery.parseXML(sDetails.responseText);
+						sErrorString = xml.getElementsByTagName("message")[0].childNodes[0].data;
+					}
+				}
+			
+				if (sErrorString) {
+					sErrorMessage = "An error occured:\n\n" + sErrorString;
+					MessageBox.error(sErrorMessage);
+				} else if (e && e.error.message.value) {
+					sErrorMessage = this.getResourceBundle().getText("errorBAPITitle") + "\n\n" + e.error.message.value;
+					MessageBox.error(sErrorMessage);
+				} else {
+					MessageBox.error(this._sErrorText);
+				}
+			
+			}
+		},
+		
 		/**
 		* Adds a history entry in the FLP page history
 		* @public
