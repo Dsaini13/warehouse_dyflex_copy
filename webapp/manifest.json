@@ -12,7 +12,7 @@
 		"resources": "resources.json",
 		"dataSources": {
 			"API_MATERIAL_STOCK_SRV": {
-				"uri": "/DYFLEX_S4H_CLOUD_API_OAUTH/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV/",
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
@@ -20,10 +20,17 @@
 				}
 			},
 			"API_PURCHASEORDER_PROCESS_SRV": {
-				"uri": "/DYFLEX_S4H_CLOUD_API_OAUTH/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/",
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_PURCHASEORDER_PROCESS_SRV/metadata.xml"
+				}
+			},
+			"YY1_WAREHOUSE_STOCK_CDS": {
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_STOCK_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_STOCK_CDS/metadata.xml"
 				}
 			}
 		},
@@ -90,6 +97,16 @@
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "API_PURCHASEORDER_PROCESS_SRV",
+				"preload": true
+			},
+			"customStockSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "YY1_WAREHOUSE_STOCK_CDS",
 				"preload": true
 			}
 		},

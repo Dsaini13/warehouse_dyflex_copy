@@ -41,12 +41,12 @@
       "description": "SAPUI5 Test Resources"
     },
     {
-      "path": "/DYFLEX_S4H_CLOUD_API_OAUTH",
+      "path": "/S4HANA_CLOUD",
       "target": {
         "type": "destination",
-        "name": "DYFLEX_S4H_CLOUD_API_OAUTH"
+        "name": "S4HANA_CLOUD"
       },
-      "description": "Dyflex S4HANA Cloud Demo System"
+      "description": "S4HANA Cloud System"
     }
   ],
   "welcomeFile": "/webapp/test/flpSandbox.html",
