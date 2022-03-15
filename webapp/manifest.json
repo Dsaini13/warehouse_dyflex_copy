@@ -11,7 +11,7 @@
 		},
 		"resources": "resources.json",
 		"dataSources": {
-			"API_MATERIAL_STOCK_SRV": {
+			"MatlStock": {
 				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV/",
 				"type": "OData",
 				"settings": {
@@ -19,21 +19,21 @@
 					"localUri": "localService/metadata.xml"
 				}
 			},
-			"API_PURCHASEORDER_PROCESS_SRV": {
+			"PurchOrder": {
 				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_PURCHASEORDER_PROCESS_SRV/metadata.xml"
 				}
 			},
-			"YY1_WAREHOUSE_STOCK_CDS": {
+			"CustomStock": {
 				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_STOCK_CDS/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_STOCK_CDS/metadata.xml"
 				}
 			},
-			"API_PRODUCT_SRV": {
+			"Product": {
 				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PRODUCT_SRV/",
 				"type": "OData",
 				"settings": {
@@ -93,7 +93,13 @@
 				}
 			},
 			"matlStockSrv": {
-				"dataSource": "API_MATERIAL_STOCK_SRV",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "MatlStock",
 				"preload": true
 			},
 			"purchOrderSrv": {
@@ -103,7 +109,7 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request"
 				},
-				"dataSource": "API_PURCHASEORDER_PROCESS_SRV",
+				"dataSource": "PurchOrder",
 				"preload": true
 			},
 			"customStockSrv": {
@@ -113,7 +119,7 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request"
 				},
-				"dataSource": "YY1_WAREHOUSE_STOCK_CDS",
+				"dataSource": "CustomStock",
 				"preload": true
 			},
 			"productSrv": {
@@ -123,7 +129,7 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request"
 				},
-				"dataSource": "API_PRODUCT_SRV",
+				"dataSource": "Product",
 				"preload": true
 			}
 		},

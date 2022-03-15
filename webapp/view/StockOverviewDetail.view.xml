@@ -15,30 +15,30 @@
 		busyIndicatorDelay="{detailView>/delay}">
 
 		<semantic:titleHeading>
-			<Title text="{dataModel>/d/ProductName}" level="H2"/>
+			<Title text="{stockModel>/d/ProductName}" level="H2"/>
 		</semantic:titleHeading>
 		
 		<semantic:titleSnappedContent>
-			<Text text="{dataModel>/d/Material}"/>
+			<Text text="{stockModel>/d/Material}"/>
 		</semantic:titleSnappedContent>
 
 		<semantic:titleExpandedContent>
-			<Text text="{dataModel>/d/Material}"/>
+			<Text text="{stockModel>/d/Material}"/>
 		</semantic:titleExpandedContent>
 		
 		<semantic:headerContent>
-			<ObjectAttribute title="Plant" text="{dataModel>/d/PlantName} ({dataModel>/d/Plant})" />
-			<ObjectAttribute title="Store Loc" text="{dataModel>/d/StorageLocationName} ({dataModel>/d/StorageLocation})" />
-			<ObjectAttribute title="Batch" text="{dataModel>/d/Batch}" />
+			<ObjectAttribute title="Plant" text="{stockModel>/d/PlantName} ({stockModel>/d/Plant})" />
+			<ObjectAttribute title="Store Loc" text="{stockModel>/d/StorageLocationName} ({stockModel>/d/StorageLocation})" />
+			<ObjectAttribute title="Batch" text="{stockModel>/d/Batch}" />
 		</semantic:headerContent>
 
 		<semantic:content>
 			<f:SimpleForm
 				editable="false"
 				layout="ResponsiveGridLayout"
-				labelSpanXL="4"
-				labelSpanL="4"
-				labelSpanM="4"
+				labelSpanXL="5"
+				labelSpanL="5"
+				labelSpanM="6"
 				labelSpanS="12"
 				adjustLabelSpan="false"
 				emptySpanXL="0"
@@ -51,34 +51,64 @@
 				singleContainerFullSize="false" >
 				<f:content>
 					
+					<!-- Stock Details -->
 					<core:Title text="Stock Details" />
 					
 					<Label text="Stock on Hand" />
 					<ObjectNumber
-						number="{ path: 'dataModel>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
-						unit="{dataModel>/d/MaterialBaseUnit}" />
+						number="{ path: 'stockModel>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
+						unit="{stockModel>/d/MaterialBaseUnit}" />
 					
 					<Label text="QI Stock" />
 					<ObjectNumber
-						number="{ path: 'dataModel>/d/StockQuality', formatter: '.formatter.numberUnit' }"
-						unit="{dataModel>/d/MaterialBaseUnit}" />
+						number="{ path: 'stockModel>/d/StockQuality', formatter: '.formatter.numberUnit' }"
+						unit="{stockModel>/d/MaterialBaseUnit}" />
 					
 					<Label text="Blocked Stock" />
 					<ObjectNumber
-						number="{ path: 'dataModel>/d/StockBlocked', formatter: '.formatter.numberUnit' }"
-						unit="{dataModel>/d/MaterialBaseUnit}" />
+						number="{ path: 'stockModel>/d/StockBlocked', formatter: '.formatter.numberUnit' }"
+						unit="{stockModel>/d/MaterialBaseUnit}" />
 					
+					<!-- Material Details -->
 					<core:Title text="Material Details" />
+					
 					<Label text="Web" />
 					<Text text="1234" />
 					<Label text="Twitter" />
 					<Text text="xxxxxxxxxxxxx" />
 					
+					<!-- Plant Details -->
 					<core:Title text="Plant Details" />
-					<Label text="Rating" />
-					<Text text="yyyyyyyyyyy" />
-					<Label text="Disposable" />
-					<Text text="zzzzzzzzzzzz" />
+					
+					<Label text="MRP Type" />
+					<Text text="{plantModel>/d/MRPType}" />
+					
+					<Label text="MRP Controller" />
+					<Text text="{plantModel>/d/MRPResponsible}" />
+					
+					<Label text="Planned Deliv Time" />
+					<Text text="{plantModel>/d/PlannedDeliveryDurationInDays}" />
+					
+					<Label text="GR Processing Time" />
+					<Text text="{plantModel>/d/GoodsReceiptDuration}" />
+					
+					<Label text="Procurement Type" />
+					<Text text="{plantModel>/d/ProcurementType}" />
+					
+					<Label text="Safety Stock" />
+					<Text text="{plantModel>/d/SafetyStockQuantity}" />
+					
+					<Label text="Minimum Lot Size" />
+					<Text text="{plantModel>/d/MinimumLotSizeQuantity}" />
+					
+					<Label text="Maximum Lot Size" />
+					<Text text="{plantModel>/d/MaximumLotSizeQuantity}" />
+					
+					<Label text="Fixed Lot Size" />
+					<Text text="{plantModel>/d/FixedLotSizeQuantity}" />
+					
+					<Label text="Avail. Check Type" />
+					<Text text="{plantModel>/d/AvailabilityCheckType}" />
 					
 				</f:content>
 			</f:SimpleForm>
