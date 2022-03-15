@@ -1,7 +1,6 @@
 <mvc:View
-	controllerName="dyflex.mm.s4cloud.warehouse.controller.StockOverviewList"
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.StocktakeList"
 	xmlns="sap.m"
-	xmlns:ndc="sap.ndc"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic"
 	xmlns:footerbar="sap.ushell.ui.footerbar">
@@ -17,14 +16,15 @@
 
 		<semantic:content>
 			<Table
-				id="idStockOverviewListTable"
+				id="idStocktakeListTable"
 				width="auto"
 				items="{
-					path: 'customStockSrv>/YY1_Warehouse_Stock',
-					sorter: {
-						path: 'Material',
-						descending: false
-					}
+					path: 'physInvDocSrv>/A_PhysInventoryDocItem',
+					sorter: [
+						{ path: 'PhysicalInventoryDocument', descending: true, group: true },
+						{ path: 'PhysicalInventoryDocumentItem', descending: false }
+					],
+					groupHeaderFactory: '.onGroupHeader'
 				}"
 				noDataText="{listView>/tableNoDataText}"
 				busyIndicatorDelay="{listView>/tableBusyDelay}"
@@ -41,17 +41,10 @@
 							search="onSearch">
 							<layoutData>
 								<OverflowToolbarLayoutData
-									maxWidth="150px"
+									maxWidth="200px"
 									priority="NeverOverflow"/>
 							</layoutData>
 						</SearchField>
-						<ndc:BarcodeScannerButton
-							id="idBarcodeScannerButton"
-							scanSuccess="onScanSuccess"
-							scanFail="onScanError"
-							inputLiveUpdate="onScanLiveupdate"
-							dialogTitle="Barcode Scanner Button Sample" >
-						</ndc:BarcodeScannerButton>
 					</OverflowToolbar>
 				</headerToolbar>
 

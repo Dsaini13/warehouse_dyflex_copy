@@ -47,10 +47,8 @@ sap.ui.define([
 		 * @private
 		 */
 		_onObjectMatched : function (oEvent) {
-			this._sObjectId = oEvent.getParameter("arguments").objectId;
 			this._oViewModel.setProperty("/busy", true);
-			
-			this._splitObjectId();
+			this._getObjectKeys(oEvent);
 			this._getStockDetails();
 			this._getMaterialDetails();
 			this._getPlantDetails();
@@ -58,9 +56,12 @@ sap.ui.define([
 		
 		/**
 		 * Split object ID to individual keys
-		 * ObjectID is like '.1~000000000000000014.2~3010.3~301A.4~.15~ST.16~Fan Cover.17~Plant 1 AU.18~Std&as storage 1'
+		 * ObjectID is like '.1~000000000000000014.2~3010.3~301A.4~.15~ST.16~Fan Cover.17~Plant 1 AU.18~Std&as storage 1' OR
+		 *  '.1~RM1420.2~3010.3~301B.4~0000000001.15~L.16~RM1420, PD, Solvent.17~Plant 1 AU.18~Std&as storage 2-SMATERIAL LIKE '%rm1420%''
+		 *  when there is a search
 		 */
-		_splitObjectId: function() {
+		_getObjectKeys: function(oEvent) {
+			this._sObjectId = oEvent.getParameter("arguments").objectId.split("-")[0];
 			this._sMaterial = this._sObjectId.split(".")[1].split("~")[1];
 			this._sPlant    = this._sObjectId.split(".")[2].split("~")[1];
 			this._sStoreLoc = this._sObjectId.split(".")[3].split("~")[1];

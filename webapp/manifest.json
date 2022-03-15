@@ -228,6 +228,10 @@
 				"stockOverviewDetail": {
 					"viewType": "XML",
 					"viewName": "StockOverviewDetail"
+				},
+				"StocktakeList": {
+					"viewType": "XML",
+					"viewName": "StocktakeList"
 				}
 			}
 		}
