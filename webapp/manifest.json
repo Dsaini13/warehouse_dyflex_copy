@@ -39,6 +39,13 @@
 				"settings": {
 					"localUri": "localService/API_PRODUCT_SRV/metadata.xml"
 				}
+			},
+			"PhysInvDoc": {
+				"uri": "/DYFLEX_S4H_CLOUD_API/sap/opu/odata/sap/API_PHYSICAL_INVENTORY_DOC_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/API_PHYSICAL_INVENTORY_DOC_SRV/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
@@ -130,6 +137,16 @@
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "Product",
+				"preload": true
+			},
+			"physInvDocSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "PhysInvDoc",
 				"preload": true
 			}
 		},
