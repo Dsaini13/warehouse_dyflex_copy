@@ -69,13 +69,21 @@
 						number="{ path: 'stockModel>/d/StockBlocked', formatter: '.formatter.numberUnit' }"
 						unit="{stockModel>/d/MaterialBaseUnit}" />
 					
+					
 					<!-- Material Details -->
 					<core:Title text="Material Details" />
 					
-					<Label text="Web" />
-					<Text text="1234" />
-					<Label text="Twitter" />
-					<Text text="xxxxxxxxxxxxx" />
+					<Label text="Material Type" />
+					<Text text="{materialModel>/d/ProductType}" />
+					
+					<Label text="Material Group" />
+					<Text text="{materialModel>/d/ProductGroup}" />
+					
+					<Label text="Old Material No" />
+					<Text text="{materialModel>/d/ProductOldID}" />
+					
+					<Label text="Mfr. Part No" />
+					<Text text="{materialModel>/d/ProductManufacturerNumber}" />
 					
 					<!-- Plant Details -->
 					<core:Title text="Plant Details" />
@@ -86,17 +94,11 @@
 					<Label text="MRP Controller" />
 					<Text text="{plantModel>/d/MRPResponsible}" />
 					
-					<Label text="Planned Deliv Time" />
-					<Text text="{plantModel>/d/PlannedDeliveryDurationInDays}" />
-					
 					<Label text="GR Processing Time" />
 					<Text text="{plantModel>/d/GoodsReceiptDuration}" />
 					
 					<Label text="Procurement Type" />
 					<Text text="{plantModel>/d/ProcurementType}" />
-					
-					<Label text="Safety Stock" />
-					<Text text="{plantModel>/d/SafetyStockQuantity}" />
 					
 					<Label text="Minimum Lot Size" />
 					<Text text="{plantModel>/d/MinimumLotSizeQuantity}" />

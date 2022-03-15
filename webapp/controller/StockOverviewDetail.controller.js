@@ -52,6 +52,7 @@ sap.ui.define([
 			
 			this._splitObjectId();
 			this._getStockDetails();
+			this._getMaterialDetails();
 			this._getPlantDetails();
 		},
 		
@@ -75,6 +76,11 @@ sap.ui.define([
 				that._handleJSONModelError(oEvent);
 				that._oViewModel.setProperty("/busy", false);
 			});
+		},
+		
+		_getMaterialDetails: function() {
+			var oMaterialModel = new JSONModel(this._dataSources.Product.uri + "A_Product('" + this._sMaterial + "')?$format=json");
+			this.setModel(oMaterialModel, "materialModel");
 		},
 		
 		_getPlantDetails: function() {
