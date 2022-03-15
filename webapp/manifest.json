@@ -32,6 +32,13 @@
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_STOCK_CDS/metadata.xml"
 				}
+			},
+			"API_PRODUCT_SRV": {
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PRODUCT_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/API_PRODUCT_SRV/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
@@ -107,6 +114,16 @@
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "YY1_WAREHOUSE_STOCK_CDS",
+				"preload": true
+			},
+			"productSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "API_PRODUCT_SRV",
 				"preload": true
 			}
 		},
