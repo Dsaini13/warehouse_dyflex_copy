@@ -94,7 +94,11 @@
 				</items>
 			</Table>
 		</semantic:content>
-
+		
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
+		</semantic:titleCustomIconActions>
+		
 		<semantic:sendEmailAction>
 			<semantic:SendEmailAction press="onShareEmailPress"/>
 		</semantic:sendEmailAction>

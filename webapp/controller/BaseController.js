@@ -92,6 +92,10 @@ sap.ui.define([
 			}
 		},
 		
+		onPressMenu: function() {
+			this.getRouter().navTo("mainList", {}, true);
+		},
+		
 		/**
 		* Adds a history entry in the FLP page history
 		* @public

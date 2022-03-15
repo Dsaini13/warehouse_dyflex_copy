@@ -3,30 +3,91 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout"
+	xmlns:core="sap.ui.core"
 	xmlns:footerbar="sap.ushell.ui.footerbar">
 
 	<semantic:SemanticPage
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false"
+		headerPinnable="true"
+		toggleHeaderOnTitleClick="true"
 		busy="{detailView>/busy}"
 		busyIndicatorDelay="{detailView>/delay}">
 
 		<semantic:titleHeading>
-			<Title
-				text="{dataModel>/d/Material}"
-				level="H2"/>
+			<Title text="{dataModel>/d/ProductName}" level="H2"/>
 		</semantic:titleHeading>
+		
+		<semantic:titleSnappedContent>
+			<Text text="{dataModel>/d/Material}"/>
+		</semantic:titleSnappedContent>
 
+		<semantic:titleExpandedContent>
+			<Text text="{dataModel>/d/Material}"/>
+		</semantic:titleExpandedContent>
+		
 		<semantic:headerContent>
-			<ObjectNumber
-				number="{
-					path: 'dataModel>/d/StockOnHand',
-					formatter: '.formatter.numberUnit'
-				}"
-				unit="{dataModel>/d/MaterialBaseUnit}"
-			/>
+			<ObjectAttribute title="Plant" text="{dataModel>/d/PlantName} ({dataModel>/d/Plant})" />
+			<ObjectAttribute title="Store Loc" text="{dataModel>/d/StorageLocationName} ({dataModel>/d/StorageLocation})" />
+			<ObjectAttribute title="Batch" text="{dataModel>/d/Batch}" />
 		</semantic:headerContent>
 
+		<semantic:content>
+			<f:SimpleForm
+				editable="false"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="4"
+				labelSpanL="4"
+				labelSpanM="4"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="0"
+				emptySpanL="0"
+				emptySpanM="0"
+				emptySpanS="0"
+				columnsXL="3"
+				columnsL="3"
+				columnsM="2"
+				singleContainerFullSize="false" >
+				<f:content>
+					
+					<core:Title text="Stock Details" />
+					
+					<Label text="Stock on Hand" />
+					<ObjectNumber
+						number="{ path: 'dataModel>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
+						unit="{dataModel>/d/MaterialBaseUnit}" />
+					
+					<Label text="QI Stock" />
+					<ObjectNumber
+						number="{ path: 'dataModel>/d/StockQuality', formatter: '.formatter.numberUnit' }"
+						unit="{dataModel>/d/MaterialBaseUnit}" />
+					
+					<Label text="Blocked Stock" />
+					<ObjectNumber
+						number="{ path: 'dataModel>/d/StockBlocked', formatter: '.formatter.numberUnit' }"
+						unit="{dataModel>/d/MaterialBaseUnit}" />
+					
+					<core:Title text="Material Details" />
+					<Label text="Web" />
+					<Text text="1234" />
+					<Label text="Twitter" />
+					<Text text="xxxxxxxxxxxxx" />
+					
+					<core:Title text="Plant Details" />
+					<Label text="Rating" />
+					<Text text="yyyyyyyyyyy" />
+					<Label text="Disposable" />
+					<Text text="zzzzzzzzzzzz" />
+					
+				</f:content>
+			</f:SimpleForm>
+		</semantic:content>
+		
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
+		</semantic:titleCustomIconActions>
+		
 		<semantic:sendEmailAction>
 			<semantic:SendEmailAction press="onShareEmailPress"/>
 		</semantic:sendEmailAction>
