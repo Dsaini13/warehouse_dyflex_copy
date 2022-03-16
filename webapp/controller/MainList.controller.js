@@ -19,6 +19,10 @@ sap.ui.define([
 		/* =========================================================== */
 		onStockOverviewPress: function(oEvent) {
 			this.getRouter().navTo("stockOverviewList");
+		},
+		
+		onStocktakePress: function(oEvent) {
+			this.getRouter().navTo("stocktakeList");
 		}
 
 	});

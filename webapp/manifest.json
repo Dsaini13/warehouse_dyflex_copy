@@ -41,7 +41,7 @@
 				}
 			},
 			"PhysInvDoc": {
-				"uri": "/DYFLEX_S4H_CLOUD_API/sap/opu/odata/sap/API_PHYSICAL_INVENTORY_DOC_SRV/",
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PHYSICAL_INVENTORY_DOC_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_PHYSICAL_INVENTORY_DOC_SRV/metadata.xml"
@@ -194,6 +194,13 @@
 					"target": [
 						"stockOverviewDetail"
 					]
+				},
+				{
+					"pattern": "Stocktake",
+					"name": "stocktakeList",
+					"target": [
+						"stocktakeList"
+					]
 				}
 			],
 			"targets": {
@@ -229,7 +236,7 @@
 					"viewType": "XML",
 					"viewName": "StockOverviewDetail"
 				},
-				"StocktakeList": {
+				"stocktakeList": {
 					"viewType": "XML",
 					"viewName": "StocktakeList"
 				}

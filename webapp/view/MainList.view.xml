@@ -20,9 +20,9 @@
 					
 					<StandardListItem
 						title="Stock Overview"
-						icon="sap-icon://building"
 						press="onStockOverviewPress"
 						type="Active"
+						icon="sap-icon://building"
 						iconDensityAware="false"
 						iconInset="false" />
 						
@@ -63,6 +63,8 @@
 					<StandardListItem
 						title="Stocktake"
 						description="Physical Inventory Count"
+						press="onStocktakePress"
+						type="Active"
 						icon="sap-icon://task"
 						iconDensityAware="false"
 						iconInset="false" />

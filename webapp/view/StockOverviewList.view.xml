@@ -49,8 +49,7 @@
 							id="idBarcodeScannerButton"
 							scanSuccess="onScanSuccess"
 							scanFail="onScanError"
-							inputLiveUpdate="onScanLiveupdate"
-							dialogTitle="Barcode Scanner Button Sample" >
+							dialogTitle="Barcode Scanner" >
 						</ndc:BarcodeScannerButton>
 					</OverflowToolbar>
 				</headerToolbar>

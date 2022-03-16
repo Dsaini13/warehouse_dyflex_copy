@@ -1,6 +1,7 @@
 <mvc:View
 	controllerName="dyflex.mm.s4cloud.warehouse.controller.StocktakeList"
 	xmlns="sap.m"
+	xmlns:ndc="sap.ndc"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic"
 	xmlns:footerbar="sap.ushell.ui.footerbar">
@@ -11,7 +12,7 @@
 		toggleHeaderOnTitleClick="false">
 
 		<semantic:titleHeading>
-			<Title text="{i18n>stockOverviewListTitle}" level="H2"/>
+			<Title text="{i18n>stocktakeListTitle}" level="H2"/>
 		</semantic:titleHeading>
 
 		<semantic:content>
@@ -22,6 +23,7 @@
 					path: 'physInvDocSrv>/A_PhysInventoryDocItem',
 					sorter: [
 						{ path: 'PhysicalInventoryDocument', descending: true, group: true },
+						{ path: 'FiscalYear', descending: true, group: true },
 						{ path: 'PhysicalInventoryDocumentItem', descending: false }
 					],
 					groupHeaderFactory: '.onGroupHeader'
@@ -41,55 +43,45 @@
 							search="onSearch">
 							<layoutData>
 								<OverflowToolbarLayoutData
-									maxWidth="200px"
+									maxWidth="150px"
 									priority="NeverOverflow"/>
 							</layoutData>
 						</SearchField>
+						<ndc:BarcodeScannerButton
+							id="idBarcodeScannerButton"
+							scanSuccess="onScanSuccess"
+							scanFail="onScanError"
+							dialogTitle="Barcode Scanner" >
+						</ndc:BarcodeScannerButton>
 					</OverflowToolbar>
 				</headerToolbar>
 
 				<columns>
+					<Column width="auto" >
+						<Text text="Item" />
+					</Column>
 					<Column width="auto" >
 						<Text text="Material" />
 					</Column>
 					<Column width="auto" >
 						<Text text="Plant" />
 					</Column>
-					<Column width="17.5%" minScreenWidth="Tablet" demandPopin="true">
+					<Column width="20%" minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Storage Location" />
 					</Column>
 					<Column width="15%" minScreenWidth="Desktop" demandPopin="true">
 						<Text text="Batch" />
 					</Column>
-					<Column width="auto" hAlign="End">
-						<Text text="Stock on Hand" />
-					</Column>
-					<Column width="10%" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-						<Text text="Quality" />
-					</Column>
-					<Column width="10%" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-						<Text text="Blocked" />
-					</Column>
 				</columns>
 
 				<items>
-					<ColumnListItem
-						type="Navigation"
-						press="onPress">
+					<ColumnListItem type="Navigation" press="onPress">
 						<cells>
-							<ObjectIdentifier title="{customStockSrv>Material}" text="{customStockSrv>ProductName}" />
-							<ObjectIdentifier title="{customStockSrv>Plant}" text="{customStockSrv>PlantName}" />
-							<ObjectIdentifier title="{customStockSrv>StorageLocation}" text="{customStockSrv>StorageLocationName}" />
-							<ObjectIdentifier title="{customStockSrv>Batch}"/>
-							<ObjectNumber
-								number="{ path: 'customStockSrv>StockOnHand', formatter: '.formatter.numberUnit' }"
-								unit="{customStockSrv>MaterialBaseUnit}" />
-							<ObjectNumber
-								number="{ path: 'customStockSrv>StockQuality', formatter: '.formatter.numberUnit' }"
-								unit="{customStockSrv>MaterialBaseUnit}" />
-							<ObjectNumber
-								number="{ path: 'customStockSrv>StockBlocked', formatter: '.formatter.numberUnit' }"
-								unit="{customStockSrv>MaterialBaseUnit}" />
+							<ObjectIdentifier title="{physInvDocSrv>PhysicalInventoryDocumentItem}" />
+							<ObjectIdentifier title="{physInvDocSrv>Material}" />
+							<ObjectIdentifier title="{physInvDocSrv>Plant}" />
+							<ObjectIdentifier title="{physInvDocSrv>StorageLocation}" />
+							<ObjectIdentifier title="{physInvDocSrv>Batch}"/>
 						</cells>
 					</ColumnListItem>
 				</items>
