@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/UIComponent",
 	"sap/m/library",
-	"sap/m/MessageBox"
-], function (Controller, UIComponent, mobileLibrary, MessageBox) {
+	"sap/m/MessageBox",
+	"sap/m/MessageToast"
+], function (Controller, UIComponent, mobileLibrary, MessageBox, MessageToast) {
 	"use strict";
 
 	// shortcut for sap.m.URLHelper
@@ -121,7 +122,29 @@ sap.ui.define([
 					});
 				}
 			};
-		})()
+		})(),
+		
+		/* =========================================================== */
+		/* Barcode Scanner Handler                                     */
+		/* =========================================================== */
+		
+		onScanSuccess: function(oEvent) {
+			var oSearchField = this.byId("idSearchField");
+			if (oEvent.getParameter("cancelled")) {
+				MessageToast.show("Scan cancelled", { duration:1000 });
+			} else {
+				if (oEvent.getParameter("text")) {
+					oSearchField.setValue(oEvent.getParameter("text"));
+					oSearchField.fireSearch({ query: oEvent.getParameter("text") });
+				} else {
+					oSearchField.setValue("");
+				}
+			}
+		},
+		
+		onScanError: function(oEvent) {
+			MessageToast.show("Scan failed: " + oEvent, { duration:1000 });
+		}
 
 	});
 

@@ -3,9 +3,8 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator",
-	"sap/m/MessageToast"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator, MessageToast) {
+	"sap/ui/model/FilterOperator"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
 	"use strict";
 
 	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.StockOverviewList", {
@@ -114,28 +113,6 @@ sap.ui.define([
 			this.getRouter().navTo("stockOverviewDetail", {
 				objectId: oObject.ID
 			});
-		},
-		
-		/* =========================================================== */
-		/* Barcode Scanner Handler                                     */
-		/* =========================================================== */
-		
-		onScanSuccess: function(oEvent) {
-			var oSearchField = this.byId("idSearchField");
-			if (oEvent.getParameter("cancelled")) {
-				MessageToast.show("Scan cancelled", { duration:1000 });
-			} else {
-				if (oEvent.getParameter("text")) {
-					oSearchField.setValue(oEvent.getParameter("text"));
-					oSearchField.fireSearch({ query: oEvent.getParameter("text") });
-				} else {
-					oSearchField.setValue("");
-				}
-			}
-		},
-		
-		onScanError: function(oEvent) {
-			MessageToast.show("Scan failed: " + oEvent, { duration:1000 });
 		},
 		
 		/* =========================================================== */
