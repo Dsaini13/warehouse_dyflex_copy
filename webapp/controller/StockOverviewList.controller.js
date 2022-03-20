@@ -89,7 +89,7 @@ sap.ui.define([
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery && sQuery.length > 0) {
-					aTableSearchState = [new Filter("Material", FilterOperator.Contains, sQuery)];
+					aTableSearchState = [new Filter("Material", FilterOperator.EQ, sQuery)];
 				}
 				this._applySearch(aTableSearchState);
 			}
