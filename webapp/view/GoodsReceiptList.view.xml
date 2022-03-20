@@ -1,0 +1,106 @@
+<mvc:View
+controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
+	xmlns="sap.m"
+	xmlns:ndc="sap.ndc"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>goodsReceiptListTitle}" level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:content>
+			<Table
+				id="idGoodsReceiptListTable"
+				width="auto"
+				items="{
+					path: 'purchOrderSrv>/A_PurchaseOrderItem',
+					sorter: [
+						{ path: 'PurchaseOrder', descending: true, group: true },
+						{ path: 'PurchaseOrderItem', descending: false }
+					],
+					groupHeaderFactory: 'onGroupHeader'
+				}"
+				noDataText="{listView>/tableNoDataText}"
+				busyIndicatorDelay="{listView>/tableBusyDelay}"
+				updateFinished="onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title
+							text="{listView>/listTableTitle}"
+							level="H3"/>
+						<ToolbarSpacer />
+						<SearchField
+							id="idSearchField"
+							search="onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="150px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+						<ndc:BarcodeScannerButton
+							id="idBarcodeScannerButton"
+							scanSuccess="onScanSuccess"
+							scanFail="onScanError"
+							dialogTitle="Barcode Scanner" >
+						</ndc:BarcodeScannerButton>
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column width="auto" >
+						<Text text="Item" />
+					</Column>
+					<Column width="auto" >
+						<Text text="Description" />
+					</Column>
+					<Column width="20%" minScreenWidth="Tablet" demandPopin="true" >
+						<Text text="Plant" />
+					</Column>
+					<Column width="20%" minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Storage Location" />
+					</Column>
+					<Column width="auto">
+						<Text text="Order Qty" />
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem type="Navigation" press="onPress">
+						<cells>
+							<ObjectIdentifier title="{purchOrderSrv>PurchaseOrderItem}" />
+							<ObjectIdentifier title="{purchOrderSrv>PurchaseOrderItemText}" text="{purchOrderSrv>Material}" />
+							<ObjectIdentifier title="{purchOrderSrv>Plant}" />
+							<ObjectIdentifier title="{purchOrderSrv>StorageLocation}" />
+							<ObjectNumber
+								number="{ path: 'purchOrderSrv>OrderQuantity', formatter: '.formatter.numberUnit' }"
+								unit="{purchOrderSrv>PurchaseOrderQuantityUnit}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
+		</semantic:titleCustomIconActions>
+		
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton title="{listView>/saveAsTileTitle}" />
+		</semantic:saveAsTileAction>
+
+	</semantic:SemanticPage>
+	
+</mvc:View>

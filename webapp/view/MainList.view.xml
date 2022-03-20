@@ -35,6 +35,8 @@
 					<StandardListItem
 						title="Goods Receipt"
 						description="Purchase Orders"
+						press="onGoodsReceiptPress"
+						type="Active"
 						icon="sap-icon://add-product"
 						iconDensityAware="false"
 						iconInset="false" />

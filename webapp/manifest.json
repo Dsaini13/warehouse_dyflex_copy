@@ -15,7 +15,6 @@
 				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV/",
 				"type": "OData",
 				"settings": {
-					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml"
 				}
 			},
@@ -201,6 +200,13 @@
 					"target": [
 						"stocktakeList"
 					]
+				},
+				{
+					"pattern": "GoodsReceipt",
+					"name": "goodsReceiptList",
+					"target": [
+						"goodsReceiptList"
+					]
 				}
 			],
 			"targets": {
@@ -239,6 +245,10 @@
 				"stocktakeList": {
 					"viewType": "XML",
 					"viewName": "StocktakeList"
+				},
+				"goodsReceiptList": {
+					"viewType": "XML",
+					"viewName": "GoodsReceiptList"
 				}
 			}
 		}

@@ -21,6 +21,10 @@ sap.ui.define([
 			this.getRouter().navTo("stockOverviewList");
 		},
 		
+		onGoodsReceiptPress: function(oEvent) {
+			this.getRouter().navTo("goodsReceiptList");
+		},
+		
 		onStocktakePress: function(oEvent) {
 			this.getRouter().navTo("stocktakeList");
 		}
