@@ -1,0 +1,89 @@
+<mvc:View
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptDetail"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		headerPinnable="true"
+		toggleHeaderOnTitleClick="true"
+		busy="{detailView>/busy}"
+		busyIndicatorDelay="{detailView>/delay}">
+
+		<semantic:titleHeading>
+			<Title text="{orderModel>/d/PurchaseOrderItemText}" level="H2"/>
+		</semantic:titleHeading>
+		
+		<semantic:titleSnappedContent>
+			<Text text="{orderModel>/d/Material}"/>
+		</semantic:titleSnappedContent>
+
+		<semantic:titleExpandedContent>
+			<Text text="{orderModel>/d/Material}"/>
+		</semantic:titleExpandedContent>
+		
+		<semantic:headerContent>
+			<ObjectAttribute title="Plant" text="{plantDesc>/PlantName} ({orderModel>/d/Plant})" />
+			<ObjectAttribute title="Store Loc" text="{slocDesc>/StorageLocationName} ({orderModel>/d/StorageLocation})" />
+		</semantic:headerContent>
+
+		<semantic:content>
+			<f:SimpleForm
+				editable="false"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="5"
+				labelSpanL="5"
+				labelSpanM="6"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="0"
+				emptySpanL="0"
+				emptySpanM="0"
+				emptySpanS="0"
+				columnsXL="3"
+				columnsL="3"
+				columnsM="2"
+				singleContainerFullSize="false" >
+				<f:content>
+					
+					<!-- Stock Details -->
+					<core:Title text="Stock Details" />
+					
+					<Label text="Stock on Hand" />
+					<ObjectNumber
+						number="{ path: 'stockModel>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
+						unit="{stockModel>/d/MaterialBaseUnit}" />
+					
+					<Label text="QI Stock" />
+					<ObjectNumber
+						number="{ path: 'stockModel>/d/StockQuality', formatter: '.formatter.numberUnit' }"
+						unit="{stockModel>/d/MaterialBaseUnit}" />
+					
+					<Label text="Blocked Stock" />
+					<ObjectNumber
+						number="{ path: 'stockModel>/d/StockBlocked', formatter: '.formatter.numberUnit' }"
+						unit="{stockModel>/d/MaterialBaseUnit}" />
+					
+				</f:content>
+			</f:SimpleForm>
+		</semantic:content>
+		
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
+		</semantic:titleCustomIconActions>
+		
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton title="{detailView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+
+	</semantic:SemanticPage>
+
+</mvc:View>

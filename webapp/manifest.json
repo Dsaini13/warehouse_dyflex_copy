@@ -25,13 +25,6 @@
 					"localUri": "localService/API_PURCHASEORDER_PROCESS_SRV/metadata.xml"
 				}
 			},
-			"CustomStock": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_STOCK_CDS/",
-				"type": "OData",
-				"settings": {
-					"localUri": "localService/YY1_WAREHOUSE_STOCK_CDS/metadata.xml"
-				}
-			},
 			"Product": {
 				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PRODUCT_SRV/",
 				"type": "OData",
@@ -44,6 +37,27 @@
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_PHYSICAL_INVENTORY_DOC_SRV/metadata.xml"
+				}
+			},
+			"CustomStock": {
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_STOCK_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_STOCK_CDS/metadata.xml"
+				}
+			},
+			"CustomPlant": {
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_PLANT_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_PLANT_CDS/metadata.xml"
+				}
+			},
+			"CustomSLoc": {
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_STORELOC_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_STORELOC_CDS/metadata.xml"
 				}
 			}
 		},
@@ -118,16 +132,6 @@
 				"dataSource": "PurchOrder",
 				"preload": true
 			},
-			"customStockSrv": {
-				"type": "sap.ui.model.odata.v2.ODataModel",
-				"settings": {
-					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneWay",
-					"defaultCountMode": "Request"
-				},
-				"dataSource": "CustomStock",
-				"preload": true
-			},
 			"productSrv": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
@@ -146,6 +150,36 @@
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "PhysInvDoc",
+				"preload": true
+			},
+			"customStockSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomStock",
+				"preload": true
+			},
+			"customPlantSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomPlant",
+				"preload": true
+			},
+			"customSLocSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomSLoc",
 				"preload": true
 			}
 		},
@@ -207,6 +241,13 @@
 					"target": [
 						"goodsReceiptList"
 					]
+				},
+				{
+					"pattern": "GoodsReceiptDetail/{purchaseOrder}/{purchaseOrderItem}",
+					"name": "goodsReceiptDetail",
+					"target": [
+						"goodsReceiptDetail"
+					]
 				}
 			],
 			"targets": {
@@ -229,6 +270,10 @@
 				"goodsReceiptList": {
 					"viewType": "XML",
 					"viewName": "GoodsReceiptList"
+				},
+				"goodsReceiptDetail": {
+					"viewType": "XML",
+					"viewName": "GoodsReceiptDetail"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",

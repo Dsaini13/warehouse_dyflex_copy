@@ -112,9 +112,10 @@ sap.ui.define([
 		 * @public
 		 */
 		onPress : function (oEvent) {
-			var oObject = this.getModel("physInvDocSrv").getProperty(oEvent.getSource().getBindingContextPath());
+			var oObject = this.getModel("purchOrderSrv").getProperty(oEvent.getSource().getBindingContextPath());
 			this.getRouter().navTo("goodsReceiptDetail", {
-				objectId: oObject.ID
+				purchaseOrder: oObject.PurchaseOrder,
+				purchaseOrderItem: oObject.PurchaseOrderItem
 			});
 		},
 		
