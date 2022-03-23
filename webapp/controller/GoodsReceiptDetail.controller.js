@@ -65,7 +65,7 @@ sap.ui.define([
 				that._setObjectKeys(oOrderModel);
 				
 				that._setPlantDescModel();
-				that._setSLocDescModel();
+				that._setStockModel();
 				
 				that.setModel(oOrderModel, "orderModel");
 				that._oViewModel.setProperty("/busy", false);
@@ -76,6 +76,12 @@ sap.ui.define([
 			this._sMaterial = oOrderModel.getProperty("/d/Material");
 			this._sPlant    = oOrderModel.getProperty("/d/Plant");
 			this._sStoreLoc = oOrderModel.getProperty("/d/StorageLocation");
+		},
+		
+		_setStockModel: function() {
+			var filter = "Material eq '" + this._sMaterial + "' and Plant eq '" + this._sPlant + "'";
+			var oStockModel = new JSONModel(this._dataSources.CustomStock.uri + "YY1_Warehouse_Stock?$filter=" + filter + "&$format=json");
+			this.setModel(oStockModel, "stockModel");
 		}
 		
 	});

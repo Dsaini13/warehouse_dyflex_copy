@@ -11,62 +11,58 @@
 	<semantic:SemanticPage
 		headerPinnable="true"
 		toggleHeaderOnTitleClick="true"
+		showFooter="true"
 		busy="{detailView>/busy}"
 		busyIndicatorDelay="{detailView>/delay}">
 
 		<semantic:titleHeading>
-			<Title text="{orderModel>/d/PurchaseOrderItemText}" level="H2"/>
+			<Title text="{= ${orderModel>/d/Material} !== '' ? ${orderModel>/d/Material} : ${orderModel>/d/PurchaseOrderItemText} }" level="H2"/>
 		</semantic:titleHeading>
 		
 		<semantic:titleSnappedContent>
-			<Text text="{orderModel>/d/Material}"/>
+			<Text text="{orderModel>/d/PurchaseOrderItemText}" visible="{= ${orderModel>/d/Material} !== '' }"/>
 		</semantic:titleSnappedContent>
 
 		<semantic:titleExpandedContent>
-			<Text text="{orderModel>/d/Material}"/>
+			<Text text="{orderModel>/d/PurchaseOrderItemText}" visible="{= ${orderModel>/d/Material} !== '' }"/>
 		</semantic:titleExpandedContent>
 		
 		<semantic:headerContent>
 			<ObjectAttribute title="Plant" text="{plantDesc>/PlantName} ({orderModel>/d/Plant})" />
-			<ObjectAttribute title="Store Loc" text="{slocDesc>/StorageLocationName} ({orderModel>/d/StorageLocation})" />
 		</semantic:headerContent>
 
 		<semantic:content>
 			<f:SimpleForm
-				editable="false"
-				layout="ResponsiveGridLayout"
-				labelSpanXL="5"
-				labelSpanL="5"
-				labelSpanM="6"
-				labelSpanS="12"
+				class="editableForm"
+				columnsL="1"
+				columnsM="1"
+				editable="true"
+				emptySpanL="3"
+				emptySpanM="2"
+				labelSpanL="3"
+				labelSpanM="3"
 				adjustLabelSpan="false"
-				emptySpanXL="0"
-				emptySpanL="0"
-				emptySpanM="0"
-				emptySpanS="0"
-				columnsXL="3"
-				columnsL="3"
-				columnsM="2"
-				singleContainerFullSize="false" >
+				layout="ResponsiveGridLayout"
+				maxContainerCols="2"
+				minWidth="1024">
 				<f:content>
 					
-					<!-- Stock Details -->
-					<core:Title text="Stock Details" />
+					<Label text="Storage Location" />
+					<ComboBox
+						id="idStoreLoc"
+						selectedKey="{orderModel>/d/StorageLocation}"
+						items="{
+							path: 'stockModel>/d/results',	
+							sorter: { path: 'StorageLocationName' }	
+						}">
+						<core:ListItem key="{stockModel>StorageLocation}" text="{stockModel>StorageLocationName} ({stockModel>StorageLocation})" />	
+					</ComboBox>
 					
-					<Label text="Stock on Hand" />
-					<ObjectNumber
-						number="{ path: 'stockModel>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
-						unit="{stockModel>/d/MaterialBaseUnit}" />
-					
-					<Label text="QI Stock" />
-					<ObjectNumber
-						number="{ path: 'stockModel>/d/StockQuality', formatter: '.formatter.numberUnit' }"
-						unit="{stockModel>/d/MaterialBaseUnit}" />
-					
-					<Label text="Blocked Stock" />
-					<ObjectNumber
-						number="{ path: 'stockModel>/d/StockBlocked', formatter: '.formatter.numberUnit' }"
-						unit="{stockModel>/d/MaterialBaseUnit}" />
+					<Label text="Receiving Qty" required="true" />
+					<Input
+						id="idReceiveQty"
+						value="{orderModel>/d/OrderQuantity}"
+						type="Number" />
 					
 				</f:content>
 			</f:SimpleForm>
@@ -83,7 +79,15 @@
 		<semantic:saveAsTileAction>
 			<footerbar:AddBookmarkButton title="{detailView>/saveAsTileTitle}"/>
 		</semantic:saveAsTileAction>
-
+		
+		<semantic:footerMainAction>
+			<semantic:FooterMainAction press="onShareEmailPress" />
+		</semantic:footerMainAction>
+		
+		<semantic:footerCustomActions>
+			<Button text="Cancel" />
+		</semantic:footerCustomActions>
+		
 	</semantic:SemanticPage>
 
 </mvc:View>
