@@ -76,7 +76,7 @@ sap.ui.define([
 		
 		onBeforeUploadStarts: function(oEvent) {
 			this._oAttachmentsControl.removeAllHeaderFields();
-			this._oAttachmentsControl.setHttpRequestMethod("PUT");
+			//this._oAttachmentsControl.setHttpRequestMethod("PUT");
 			
 			var oXCSRFToken = new sap.ui.core.Item({ key: "X-CSRF-Token", text: this.getOwnerComponent().getModel("attachmentSrv").getSecurityToken() });
 			this._oAttachmentsControl.addHeaderField(oXCSRFToken);
@@ -185,6 +185,7 @@ sap.ui.define([
 		_onObjectMatched : function (oEvent) {
 			this._sPurchaseOrder = oEvent.getParameter("arguments").purchaseOrder;
 			this._getOrderDetails();
+			this._setDateFields();
 		},
 		
 		_getOrderDetails: function() {
@@ -199,6 +200,11 @@ sap.ui.define([
 				that.setModel(that._oPurchaseOrder, "orderModel");
 				that._oViewModel.setProperty("/busy", false);
 			});
+		},
+		
+		_setDateFields: function() {
+			this.byId("idDocumentDate").setDateValue(new Date());
+			this.byId("idPostingDate").setDateValue(new Date());
 		}
 		
 	});

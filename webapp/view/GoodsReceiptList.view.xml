@@ -22,10 +22,11 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 				items="{
 					path: 'purchOrderSrv>/A_PurchaseOrderItem',
 					sorter: [
-						{ path: 'PurchaseOrder', descending: true, group: true },
+						{ path: 'PurchaseOrder', descending: false, group: true },
 						{ path: 'PurchaseOrderItem', descending: false }
 					],
-					groupHeaderFactory: 'onGroupHeader'
+					filters : [{ path : 'IsCompletelyDelivered', operator : 'EQ', value1 : false }],
+					groupHeaderFactory: '.onGroupHeader'
 				}"
 				noDataText="{listView>/tableNoDataText}"
 				busyIndicatorDelay="{listView>/tableBusyDelay}"

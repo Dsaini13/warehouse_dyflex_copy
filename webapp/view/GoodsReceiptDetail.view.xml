@@ -27,6 +27,7 @@
 		<semantic:content>
 			<VBox >
 				<Panel>
+		
 					<f:SimpleForm
 						class="editableForm"
 						columnsL="1"
@@ -41,6 +42,28 @@
 						maxContainerCols="2"
 						minWidth="1024">
 						<f:content>
+							
+							<Label text="Document Date" />
+							<DatePicker
+								id="idDocumentDate"
+								required="true"
+								displayFormat="dd.MM.yyyy" />
+								
+							<Label text="Posting Date" />
+							<DatePicker
+								id="idPostingDate"
+								required="true"
+								displayFormat="dd.MM.yyyy" />
+							
+							<Label text="Printing" />
+							<ComboBox selectedKey="0" >
+								<items>
+									<core:Item key="0" text="No Print" />
+									<core:Item key="1" text="Individual Slip" />
+									<core:Item key="2" text="Individual Slip with Inspection Text" />
+									<core:Item key="3" text="Collective Slip" />
+								</items>
+							</ComboBox>
 							
 							<Label text="Delivery Note" required="true" />
 							<Input />
