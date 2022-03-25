@@ -59,6 +59,27 @@
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_STORELOC_CDS/metadata.xml"
 				}
+			},
+			"Attachment": {
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/API_CV_ATTACHMENT_SRV/metadata.xml"
+				}
+			},
+			"CustomMatSLoc": {
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_MATSLOC_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_MATSLOC_CDS/metadata.xml"
+				}
+			},
+			"BusinessPartner": {
+				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_BUSINESS_PARTNER/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/API_BUSINESS_PARTNER/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
@@ -181,6 +202,36 @@
 				},
 				"dataSource": "CustomSLoc",
 				"preload": true
+			},
+			"attachmentSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "Attachment",
+				"preload": true
+			},
+			"customMatSLocSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomMatSLoc",
+				"preload": true
+			},
+			"busPartnerSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "BusinessPartner",
+				"preload": true
 			}
 		},
 		"services": {
@@ -243,7 +294,7 @@
 					]
 				},
 				{
-					"pattern": "GoodsReceiptDetail/{purchaseOrder}/{purchaseOrderItem}",
+					"pattern": "GoodsReceiptDetail/{purchaseOrder}",
 					"name": "goodsReceiptDetail",
 					"target": [
 						"goodsReceiptDetail"

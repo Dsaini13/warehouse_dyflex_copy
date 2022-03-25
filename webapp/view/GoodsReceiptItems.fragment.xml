@@ -1,0 +1,105 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	
+	<Table 
+		items="{ 
+			path: 'orderModel>/d/to_PurchaseOrderItem/results', 
+			sorter: { path: 'PurchaseOrderItem', descending: true }, 
+			templateShareable: false }"
+		width="auto"
+		class="sapUiSmallMarginTopBottom"
+		busyIndicatorDelay="{detailView>/lineItemTableDelay}"
+		itemPress="onItemSelected">
+		<headerToolbar>
+			<Toolbar id="lineItemsToolbar">
+				<Title text="Items"/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://add" tooltip="Add item" />
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column width="5%">
+				<Text text="Item"/>
+			</Column>
+			<Column width="30%">
+				<Text text="Product"/>
+			</Column>
+			<Column width="20%">
+				<Text text="Plant"/>
+			</Column>
+			<Column width="20%">
+				<Text text="Store Loc"/>
+			</Column>
+			<Column width="15%" hAlign="Right">
+				<Text text="Quantity"/>
+			</Column>
+			<Column width="10%">
+				<Text text="Unit"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{orderModel>PurchaseOrderItem}"/>
+					
+					<ObjectIdentifier title="{orderModel>PurchaseOrderItemText}" text="{orderModel>Material}"/>
+					
+					<ObjectIdentifier title="{orderModel>Plant}" />
+					
+					<Input
+						value="{orderModel>StorageLocation}"
+						liveChange="onLiveChangeStoreLoc"
+						showValueHelp="true"
+						valueHelpRequest="onHandleValueHelpStoreLoc"
+						showSuggestion="true"
+						maxSuggestionWidth="50%"
+						suggest="onHandleSuggestStoreLoc"
+						filterSuggests="false"
+						suggestionRows="{
+							path: 'customMatSLocSrv>/YY1_Warehouse_MatSLoc',
+							sorter: { path: 'StorageLocation', descending: false },
+							templateShareable: false
+						}"
+						suggestionItemSelected="onHandleValueHelpStoreLocClose">
+						<suggestionColumns>
+							<Column
+								hAlign="Begin"
+								width="30%"
+								popinDisplay="Inline"
+								demandPopin="true">
+								<Label text="Store Loc" />
+							</Column>
+							<Column
+								hAlign="Begin"
+								width="70%"
+								popinDisplay="Inline"
+								demandPopin="true"
+								minScreenWidth="Tablet">
+								<Label text="Description" />
+							</Column>
+						</suggestionColumns>
+						<suggestionRows>
+							<ColumnListItem>
+								<cells>
+									<Label text="{customMatSLocSrv>StorageLocation}" />
+									<Label text="{customMatSLocSrv>StorageLocationName}" />
+								</cells>
+							</ColumnListItem>
+						</suggestionRows>
+						<customData>
+							<core:CustomData key="Material" value="{orderModel>Material}" />
+							<core:CustomData key="Plant" value="{orderModel>Plant}" />
+						</customData>
+					</Input>
+					
+					<Input value="{orderModel>OrderQuantity}" type="Number" />
+					
+					<Text text="{orderModel>PurchaseOrderQuantityUnit}"/>
+					
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	
+</core:FragmentDefinition>

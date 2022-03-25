@@ -6,6 +6,7 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:layout="sap.ui.layout"
 	xmlns:core="sap.ui.core"
+	xmlns:upload="sap.m.upload"
 	xmlns:footerbar="sap.ushell.ui.footerbar">
 
 	<semantic:SemanticPage
@@ -16,56 +17,46 @@
 		busyIndicatorDelay="{detailView>/delay}">
 
 		<semantic:titleHeading>
-			<Title text="{= ${orderModel>/d/Material} !== '' ? ${orderModel>/d/Material} : ${orderModel>/d/PurchaseOrderItemText} }" level="H2"/>
+			<Title text="{orderModel>/d/PurchaseOrder}" level="H2"/>
 		</semantic:titleHeading>
 		
-		<semantic:titleSnappedContent>
-			<Text text="{orderModel>/d/PurchaseOrderItemText}" visible="{= ${orderModel>/d/Material} !== '' }"/>
-		</semantic:titleSnappedContent>
-
-		<semantic:titleExpandedContent>
-			<Text text="{orderModel>/d/PurchaseOrderItemText}" visible="{= ${orderModel>/d/Material} !== '' }"/>
-		</semantic:titleExpandedContent>
-		
 		<semantic:headerContent>
-			<ObjectAttribute title="Plant" text="{plantDesc>/PlantName} ({orderModel>/d/Plant})" />
+			<ObjectAttribute title="Supplier" text="{supplierModel>/d/SupplierName} ({orderModel>/d/Supplier})" />
 		</semantic:headerContent>
 
 		<semantic:content>
-			<f:SimpleForm
-				class="editableForm"
-				columnsL="1"
-				columnsM="1"
-				editable="true"
-				emptySpanL="3"
-				emptySpanM="2"
-				labelSpanL="3"
-				labelSpanM="3"
-				adjustLabelSpan="false"
-				layout="ResponsiveGridLayout"
-				maxContainerCols="2"
-				minWidth="1024">
-				<f:content>
-					
-					<Label text="Storage Location" />
-					<ComboBox
-						id="idStoreLoc"
-						selectedKey="{orderModel>/d/StorageLocation}"
-						items="{
-							path: 'stockModel>/d/results',	
-							sorter: { path: 'StorageLocationName' }	
-						}">
-						<core:ListItem key="{stockModel>StorageLocation}" text="{stockModel>StorageLocationName} ({stockModel>StorageLocation})" />	
-					</ComboBox>
-					
-					<Label text="Receiving Qty" required="true" />
-					<Input
-						id="idReceiveQty"
-						value="{orderModel>/d/OrderQuantity}"
-						type="Number" />
-					
-				</f:content>
-			</f:SimpleForm>
+			<VBox >
+				<Panel>
+					<f:SimpleForm
+						class="editableForm"
+						columnsL="1"
+						columnsM="1"
+						editable="true"
+						emptySpanL="3"
+						emptySpanM="2"
+						labelSpanL="3"
+						labelSpanM="3"
+						adjustLabelSpan="false"
+						layout="ResponsiveGridLayout"
+						maxContainerCols="2"
+						minWidth="1024">
+						<f:content>
+							
+							<Label text="Delivery Note" required="true" />
+							<Input />
+							
+							<Label text="Comments" />
+							<TextArea maxLength="200" />
+							
+						</f:content>
+					</f:SimpleForm>
+				</Panel>
+				
+				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.GoodsReceiptItems" type="XML" />
+				
+				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.Attachments" type="XML" />
+				
+			</VBox>
 		</semantic:content>
 		
 		<semantic:titleCustomIconActions>
@@ -81,11 +72,11 @@
 		</semantic:saveAsTileAction>
 		
 		<semantic:footerMainAction>
-			<semantic:FooterMainAction press="onShareEmailPress" />
+			<semantic:FooterMainAction text="Post" press="onPost" />
 		</semantic:footerMainAction>
 		
 		<semantic:footerCustomActions>
-			<Button text="Cancel" />
+			<Button text="Cancel" press="onCancel" />
 		</semantic:footerCustomActions>
 		
 	</semantic:SemanticPage>

@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		title="Select a Storage Location"
+		class="sapUiPopupWithPadding"
+		items="{
+			path: 'customMatSLocSrv>/YY1_Warehouse_MatSLoc',
+			sorter: { path: 'StorageLocation', descending: false },
+			templateShareable: false
+		}"
+		search="onHandleValueHelpStoreLocSearch"
+		confirm="onHandleValueHelpStoreLocClose"
+		cancel="onHandleValueHelpStoreLocClose">
+		<StandardListItem
+			title="{customMatSLocSrv>StorageLocation}"
+			description="{customMatSLocSrv>StorageLocationName}" />
+	</SelectDialog>
+</core:FragmentDefinition>

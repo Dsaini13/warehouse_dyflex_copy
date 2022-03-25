@@ -114,8 +114,7 @@ sap.ui.define([
 		onPress : function (oEvent) {
 			var oObject = this.getModel("purchOrderSrv").getProperty(oEvent.getSource().getBindingContextPath());
 			this.getRouter().navTo("goodsReceiptDetail", {
-				purchaseOrder: oObject.PurchaseOrder,
-				purchaseOrderItem: oObject.PurchaseOrderItem
+				purchaseOrder: oObject.PurchaseOrder
 			});
 		},
 		

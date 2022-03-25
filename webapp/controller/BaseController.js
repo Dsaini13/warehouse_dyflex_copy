@@ -159,6 +159,14 @@ sap.ui.define([
 			this.setModel(oMatlDescModel, "matlDescModel");
 		},
 		
+		_setSupplierDescModel: function(supplier) {
+			if (supplier) {
+				 var requestUrl = this._dataSources.BusinessPartner.uri + "A_Supplier('" + supplier + "')?$format=json";
+			}
+			var oModel = new JSONModel(requestUrl);
+			this.setModel(oModel, "supplierModel");
+		},
+		
 		_setPlantDescModel: function() {
 			var that = this;
 			if (!sap.ui.getCore().getModel("plantGlobal")) {

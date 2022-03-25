@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:upload="sap.m.upload"
+	xmlns:core="sap.ui.core">
+	
+	<upload:UploadSet
+		id="idUploadCollection"
+		uploadEnabled="true"
+		instantUpload="false"
+		maxFileSize="10"
+		uploadUrl="/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/AttachmentContentSet"
+		beforeUploadStarts="onBeforeUploadStarts"
+		fileSizeExceeded="onFileSizeExceeded">
+		<upload:toolbar>
+			<OverflowToolbar>
+				<Title text="Attachments" />
+				<ToolbarSpacer/>
+			</OverflowToolbar>
+		</upload:toolbar>
+	</upload:UploadSet>
+	
+</core:FragmentDefinition>
