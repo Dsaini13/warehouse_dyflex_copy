@@ -49,6 +49,23 @@ sap.ui.define([
 			this.getRouter().navTo("goodsReceiptList", {}, true);
 		},
 		
+		onDeleteItem : function (oEvent) {
+			var path = oEvent.getSource().getParent().getBindingContextPath(),
+				orderData = this._oPurchaseOrder.getData();
+				
+			var iRowIndex = path.match(/\d+/);
+			if (iRowIndex) {
+				if (orderData.d.to_PurchaseOrderItem.results[iRowIndex[0]].Existing) {
+					orderData.d.to_PurchaseOrderItem.results[iRowIndex[0]].Deleted = true;
+				} else {
+					orderData.d.to_PurchaseOrderItem.results.splice(iRowIndex[0], 1);
+				}
+				this._oPurchaseOrder.setData(orderData);
+			}
+			
+			//this.onValueChanged();
+		},
+		
 		/* =========================================================== */
 		/* Attachments Processing                                       */
 		/* =========================================================== */
@@ -174,15 +191,12 @@ sap.ui.define([
 			this._oViewModel.setProperty("/busy", true);
 			
 			var that = this;
-			var oOrderModel = new JSONModel(this._dataSources.PurchOrder.uri + "A_PurchaseOrder('" + this._sPurchaseOrder + "')?$expand=to_PurchaseOrderItem&$format=json");
+			this._oPurchaseOrder = new JSONModel(this._dataSources.PurchOrder.uri + "A_PurchaseOrder('" + this._sPurchaseOrder + "')?$expand=to_PurchaseOrderItem&$format=json");
 			
-			oOrderModel.attachRequestCompleted({}, function(oEvent) {
+			this._oPurchaseOrder.attachRequestCompleted({}, function(oEvent) {
 				that._handleJSONModelError(oEvent);
-
-				var orderData = oOrderModel.getData().d;
-				that._setSupplierDescModel(orderData.Supplier);
-				
-				that.setModel(oOrderModel, "orderModel");
+				that._setSupplierDescModel(that._oPurchaseOrder.getProperty("/d/Supplier"));
+				that.setModel(that._oPurchaseOrder, "orderModel");
 				that._oViewModel.setProperty("/busy", false);
 			});
 		}

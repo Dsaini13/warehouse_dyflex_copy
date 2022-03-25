@@ -5,7 +5,7 @@
 	<Table 
 		items="{ 
 			path: 'orderModel>/d/to_PurchaseOrderItem/results', 
-			sorter: { path: 'PurchaseOrderItem', descending: true }, 
+			sorter: { path: 'PurchaseOrderItem' }, 
 			templateShareable: false }"
 		width="auto"
 		class="sapUiSmallMarginTopBottom"
@@ -15,7 +15,6 @@
 			<Toolbar id="lineItemsToolbar">
 				<Title text="Items"/>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://add" tooltip="Add item" />
 			</Toolbar>
 		</headerToolbar>
 		<columns>
@@ -34,8 +33,11 @@
 			<Column width="15%" hAlign="Right">
 				<Text text="Quantity"/>
 			</Column>
-			<Column width="10%">
+			<Column width="5%">
 				<Text text="Unit"/>
+			</Column>
+			<Column width="5%" hAlign="Center">
+				<Text text="" />
 			</Column>
 		</columns>
 		<items>
@@ -97,6 +99,11 @@
 					
 					<Text text="{orderModel>PurchaseOrderQuantityUnit}"/>
 					
+					<Button
+						icon="sap-icon://delete"
+						tooltip="Delete item"
+						press="onDeleteItem" />
+						
 				</cells>
 			</ColumnListItem>
 		</items>
