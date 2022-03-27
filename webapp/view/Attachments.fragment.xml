@@ -8,7 +8,6 @@
 		uploadEnabled="true"
 		instantUpload="false"
 		maxFileSize="10"
-		uploadUrl="/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/AttachmentContentSet"
 		beforeUploadStarts="onBeforeUploadStarts"
 		fileSizeExceeded="onFileSizeExceeded">
 		<upload:toolbar>

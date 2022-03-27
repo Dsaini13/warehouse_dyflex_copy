@@ -23,7 +23,8 @@ sap.ui.define([
 			UIComponent.prototype.init.apply(this, arguments);
 
 			// initialize the error handler with the component
-			this._oErrorHandler = new ErrorHandler(this);
+			this._oErrorMatStk = new ErrorHandler(this, "matlStockSrv");
+			this._oErrorMatDoc = new ErrorHandler(this, "matDocSrv");
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
@@ -41,7 +42,8 @@ sap.ui.define([
 		 * @override
 		 */
 		destroy : function () {
-			this._oErrorHandler.destroy();
+			this._oErrorMatStk.destroy();
+			this._oErrorMatDoc.destroy();
 			// call the base component's destroy function
 			UIComponent.prototype.destroy.apply(this, arguments);
 		},

@@ -23,10 +23,12 @@ sap.ui.define([
 		onInit : function () {
 			
 			this._oViewModel = new JSONModel({
-					busy : true,
-					delay : 0
+					busy: true,
+					delay: 0,
+					purchaseOrder: "",
+					enableSave: false
 				});
-			this.setModel(this._oViewModel, "detailView");
+			this.setModel(this._oViewModel, "viewModel");
 			
 			this.getRouter().getRoute("goodsReceiptDetail").attachPatternMatched(this._onObjectMatched, this);
 			
@@ -35,15 +37,12 @@ sap.ui.define([
 			
 			// Set Attachment Control
 			this._oAttachmentsControl = this.byId("idUploadCollection");
+			this._oAttachmentsControl.setUploadUrl(this.getOwnerComponent().getManifestObject().resolveUri("/S4HANA_CLOUD/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/AttachmentContentSet"));
 		},
 
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
-		
-		onPost: function() {
-			this._oAttachmentsControl.upload();
-		},
 		
 		onCancel: function() {
 			this.getRouter().navTo("goodsReceiptList", {}, true);
@@ -51,19 +50,68 @@ sap.ui.define([
 		
 		onDeleteItem : function (oEvent) {
 			var path = oEvent.getSource().getParent().getBindingContextPath(),
-				orderData = this._oPurchaseOrder.getData();
+				oData = this._oCreateModel.getData();
 				
 			var iRowIndex = path.match(/\d+/);
 			if (iRowIndex) {
-				if (orderData.d.to_PurchaseOrderItem.results[iRowIndex[0]].Existing) {
-					orderData.d.to_PurchaseOrderItem.results[iRowIndex[0]].Deleted = true;
+				if (oData.to_MaterialDocumentItem.results[iRowIndex[0]].Existing) {
+					oData.to_MaterialDocumentItem.results[iRowIndex[0]].Deleted = true;
 				} else {
-					orderData.d.to_PurchaseOrderItem.results.splice(iRowIndex[0], 1);
+					oData.to_MaterialDocumentItem.results.splice(iRowIndex[0], 1);
 				}
-				this._oPurchaseOrder.setData(orderData);
+				this._oCreateModel.setData(oData);
 			}
 			
-			//this.onValueChanged();
+			this._validateSaveEnablement();
+		},
+		
+		onChanged: function() {
+			this._validateSaveEnablement();
+		},
+		
+		/* =========================================================== */
+		/* POST Methods                                                */
+		/* =========================================================== */
+		
+		onPost: function (oEvent) {
+			
+			// Test attachment upload with Mat Doc 5000000180 / 2022
+			
+			this._oViewModel.setProperty("/busy", true);
+			var createData = jQuery.extend(true, {}, this._oCreateModel.getData());
+			
+			// Adjust date values
+			createData.DocumentDate = this._getDateObject(this.byId("idDocumentDate"));
+			createData.PostingDate  = this._getDateObject(this.byId("idPostingDate"));
+			
+			// Adjust printing parameters
+			if (createData.VersionForPrintingSlip === "0") {
+				createData.VersionForPrintingSlip = "";
+			} else {
+				createData.ManualPrintIsTriggered = "X";
+			}
+			
+			this.getModel("matDocSrv").create("/A_MaterialDocumentHeader", createData, {
+				success: this._saveEntitySuccess.bind(this),
+				error: this._saveEntityFailed.bind(this)
+			});
+		},
+		
+		_saveEntitySuccess: function(oData, response) {
+			// Save created work order for attachment
+			//this._oAttachmentsControl.upload();
+			
+			this._oViewModel.setProperty("/busy", false);
+			
+			var msg = this.getResourceBundle().getText("goodsReceiptSucessMsg", [oData.MaterialDocument, oData.MaterialDocumentYear]);
+			MessageToast.show( msg, {
+				duration: 5000,
+				closeOnBrowserNavigation: false
+			});
+		},
+		
+		_saveEntityFailed: function(oData) {
+			this._oViewModel.setProperty("/busy", false);
 		},
 		
 		/* =========================================================== */
@@ -148,6 +196,8 @@ sap.ui.define([
 					oEvent.getSource().getBinding("items").filter([]);
 				}
 			}
+			
+			this._validateSaveEnablement();
 		},
 		
 		onLiveChangeStoreLoc: function(oEvent) {
@@ -175,7 +225,7 @@ sap.ui.define([
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
-
+		
 		/**
 		 * Binds the view to the object path.
 		 * @function
@@ -185,26 +235,113 @@ sap.ui.define([
 		_onObjectMatched : function (oEvent) {
 			this._sPurchaseOrder = oEvent.getParameter("arguments").purchaseOrder;
 			this._getOrderDetails();
-			this._setDateFields();
+			this._validateSaveEnablement();
 		},
 		
 		_getOrderDetails: function() {
 			this._oViewModel.setProperty("/busy", true);
+			this._oViewModel.setProperty("/purchaseOrder", this._sPurchaseOrder);
 			
 			var that = this;
-			this._oPurchaseOrder = new JSONModel(this._dataSources.PurchOrder.uri + "A_PurchaseOrder('" + this._sPurchaseOrder + "')?$expand=to_PurchaseOrderItem&$format=json");
+			var oPurchOrder = new JSONModel(this._dataSources.PurchOrder.uri + "A_PurchaseOrder('" + this._sPurchaseOrder + "')?$expand=to_PurchaseOrderItem&$format=json");
 			
-			this._oPurchaseOrder.attachRequestCompleted({}, function(oEvent) {
+			oPurchOrder.attachRequestCompleted({}, function(oEvent) {
 				that._handleJSONModelError(oEvent);
-				that._setSupplierDescModel(that._oPurchaseOrder.getProperty("/d/Supplier"));
-				that.setModel(that._oPurchaseOrder, "orderModel");
+				that._setSupplierDescModel(oPurchOrder.getProperty("/d/Supplier"));
+				that._createODataModel(oPurchOrder.getData());
 				that._oViewModel.setProperty("/busy", false);
 			});
 		},
 		
-		_setDateFields: function() {
-			this.byId("idDocumentDate").setDateValue(new Date());
-			this.byId("idPostingDate").setDateValue(new Date());
+		_createODataModel: function(purchOrder) {
+			
+			var matDocData = {
+				"GoodsMovementCode"			 : "01",
+				"DocumentDate"				 : new Date(),
+				"PostingDate"				 : new Date(),
+				"ReferenceDocument"			 : "",
+				"MaterialDocumentHeaderText" : "",
+				"VersionForPrintingSlip"	 : "0",
+				"ManualPrintIsTriggered"	 : "",
+				"to_MaterialDocumentItem"	 : { "results":[] }
+			};
+			
+			var aItems = purchOrder.d.to_PurchaseOrderItem.results;
+			for (var i = 0; i < aItems.length; i++) {
+				matDocData.to_MaterialDocumentItem.results.push({
+					"Material"				   : aItems[i].Material,
+					"Plant"					   : aItems[i].Plant,
+					"StorageLocation"		   : aItems[i].StorageLocation,
+					"PurchaseOrder"			   : aItems[i].PurchaseOrder,
+					"PurchaseOrderItem"		   : aItems[i].PurchaseOrderItem,
+					"GoodsMovementType"		   : "101",
+					"GoodsMovementRefDocType"  : "B",
+					"QuantityInEntryUnit"	   : aItems[i].OrderQuantity,
+					"EntryUnit"				   : aItems[i].PurchaseOrderQuantityUnit,
+					"MaterialDocumentItemText" : aItems[i].PurchaseOrderItemText
+				});
+			}
+			
+			this._oCreateModel = new JSONModel(matDocData);
+			this.setModel(this._oCreateModel, "createModel");
+		},
+		
+		/**
+		 * Checks if the save button can be enabled
+		 * @private
+		 */
+		_validateSaveEnablement: function () {
+			var aInputControls = this._getFormFields(this.byId("idHeaderForm"));
+			var oControl;
+			for (var m = 0; m < aInputControls.length; m++) {
+				oControl = aInputControls[m].control;
+				if (aInputControls[m].required) {
+					var sValue = oControl.getValue();
+					if (!sValue) {
+						this._oViewModel.setProperty("/enableSave", false);
+						return;
+					}
+				}
+			}
+			
+			var aItems = this._oCreateModel.getProperty("/to_MaterialDocumentItem/results");
+			if (aItems && aItems.length === 0) {
+				this._oViewModel.setProperty("/enableSave", false);
+				return;
+			}
+			
+			for (var i = 0; i < aItems.length; i++) {
+				if (!parseFloat(aItems[i].QuantityInEntryUnit)) {
+					this._oViewModel.setProperty("/enableSave", false);
+					return;
+				}
+			}
+				
+			this._oViewModel.setProperty("/enableSave", true);
+		},
+		
+		/**
+		 * Gets the form fields
+		 * @param {sap.ui.layout.form} oSimpleForm the form in the view.
+		 * @returns {Array} array of controls in the form
+		 * @private
+		 */
+		_getFormFields: function(oSimpleForm) {
+			var aControls = [];
+			var sControlType;
+			var aFormContent = oSimpleForm.getContent();
+			for (var i = 0; i < aFormContent.length; i++) {
+				sControlType = aFormContent[i].getMetadata().getName();
+				if (sControlType === "sap.m.Input" ||
+					sControlType === "sap.m.DatePicker" ||
+					sControlType === "sap.m.ComboBox") {
+					aControls.push({
+						control: aFormContent[i],
+						required: aFormContent[i].getRequired && aFormContent[i].getRequired()
+					});
+				}
+			}
+			return aControls;
 		}
 		
 	});

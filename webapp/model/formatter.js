@@ -14,6 +14,20 @@ sap.ui.define([], function () {
 				return "";
 			}
 			return parseFloat(sValue).toFixed(2);
+		},
+		
+		/**
+		 * Format date output for text fields
+		 * @param {String} sValue value to be formatted
+		 * @return {String} formatted date value
+		 */
+		dateOutput: function (sValue) {
+			var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+				pattern: "dd.MM.yyyy"
+			});
+			var sDateAsString = oDateFormat.format(new Date(sValue));
+
+			return sDateAsString;
 		}
 
 	};

@@ -99,6 +99,27 @@ sap.ui.define([
 		},
 		
 		/**
+		 * Get the date object from DateTimePicker needed for 
+		 * Edm.DateTime OData property
+		 * 
+		 * @returns {object} date format 
+		 */
+		_getDateObject: function (oDateTime) {
+			var oFormatDate = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				pattern: "yyyy-MM-ddTKK:mm:ss"
+			});
+			
+			if (oDateTime.getDateValue() === null || oDateTime.getDateValue() === "") {
+				return null;
+			}
+			
+			var oDate = oFormatDate.format(oDateTime.getDateValue());
+			oDate = oDate.split("T");
+			var oDateActual = oDate[0];
+			return new Date(oDateActual);
+		},
+		
+		/**
 		* Adds a history entry in the FLP page history
 		* @public
 		* @param {object} oEntry An entry object to add to the hierachy array as expected from the ShellUIService.setHierarchy method
