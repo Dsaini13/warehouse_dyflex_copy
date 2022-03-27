@@ -134,6 +134,17 @@ sap.ui.define([
 			this._oAttachmentsControl.addHeaderField(oObjectKey);
 		},
 		
+		/**
+		 * Unbind the Attachment Control, otherwise the model remembers all previous uploads
+		 */
+		_resetAttachmentControl: function() {
+			this._oAttachmentsControl.unbindAggregation("items");
+			this._oAttachmentsControl.destroyItems();
+			this._oAttachmentsControl.removeAllItems();
+			this._oAttachmentsControl.removeAllHeaderFields();
+			this._oAttachmentsControl.removeAllIncompleteItems();
+		},
+		
 		/* =========================================================== */
 		/* Value Help - Storage Location                               */
 		/* =========================================================== */
@@ -230,6 +241,7 @@ sap.ui.define([
 		_onObjectMatched : function (oEvent) {
 			this._sPurchaseOrder = oEvent.getParameter("arguments").purchaseOrder;
 			this._getOrderDetails();
+			this._resetAttachmentControl();
 			this._validateSaveEnablement();
 		},
 		
