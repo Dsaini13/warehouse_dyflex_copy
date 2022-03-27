@@ -37,7 +37,7 @@ sap.ui.define([
 			
 			// Set Attachment Control
 			this._oAttachmentsControl = this.byId("idUploadCollection");
-			this._oAttachmentsControl.setUploadUrl(this.getOwnerComponent().getManifestObject().resolveUri("/S4HANA_CLOUD/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/AttachmentContentSet"));
+			this._oAttachmentsControl.setUploadUrl(this._dataSources.Attachment.uri + "AttachmentContentSet");
 		},
 
 		/* =========================================================== */
@@ -45,7 +45,7 @@ sap.ui.define([
 		/* =========================================================== */
 		
 		onCancel: function() {
-			this.getRouter().navTo("goodsReceiptList", {}, true);
+			this._navToListView();
 		},
 		
 		onDeleteItem : function (oEvent) {
@@ -74,9 +74,6 @@ sap.ui.define([
 		/* =========================================================== */
 		
 		onPost: function (oEvent) {
-			
-			// Test attachment upload with Mat Doc 5000000180 / 2022
-			
 			this._oViewModel.setProperty("/busy", true);
 			var createData = jQuery.extend(true, {}, this._oCreateModel.getData());
 			
@@ -98,8 +95,9 @@ sap.ui.define([
 		},
 		
 		_saveEntitySuccess: function(oData, response) {
-			// Save created work order for attachment
-			//this._oAttachmentsControl.upload();
+			// Save created material document for attachment
+			this._sMatDocNo = oData.MaterialDocument + oData.MaterialDocumentYear;
+			this._oAttachmentsControl.upload();
 			
 			this._oViewModel.setProperty("/busy", false);
 			
@@ -108,6 +106,8 @@ sap.ui.define([
 				duration: 5000,
 				closeOnBrowserNavigation: false
 			});
+			
+			this._navToListView();
 		},
 		
 		_saveEntityFailed: function(oData) {
@@ -118,24 +118,19 @@ sap.ui.define([
 		/* Attachments Processing                                       */
 		/* =========================================================== */
 		
-		onFileSizeExceeded: function(oEvent) {
-			MessageToast.show("File cannot be larger than 10MB.");
-		},
-		
 		onBeforeUploadStarts: function(oEvent) {
 			this._oAttachmentsControl.removeAllHeaderFields();
-			//this._oAttachmentsControl.setHttpRequestMethod("PUT");
 			
-			var oXCSRFToken = new sap.ui.core.Item({ key: "X-CSRF-Token", text: this.getOwnerComponent().getModel("attachmentSrv").getSecurityToken() });
+			var oXCSRFToken = new sap.ui.core.Item({ key: "X-CSRF-Token", text: this.getModel("attachmentSrv").getSecurityToken() });
 			this._oAttachmentsControl.addHeaderField(oXCSRFToken);
 			
 			var oSlug = new sap.ui.core.Item({ key: "slug", text: encodeURIComponent(oEvent.getParameters().item.getProperty("fileName")) });
 			this._oAttachmentsControl.addHeaderField(oSlug);
 
-			var oObjectType = new sap.ui.core.Item({ key: "BusinessObjectTypeName", text: "BUS2012" });
+			var oObjectType = new sap.ui.core.Item({ key: "BusinessObjectTypeName", text: "BUS2017" });
 			this._oAttachmentsControl.addHeaderField(oObjectType);
 			
-			var oObjectKey = new sap.ui.core.Item({ key: "LinkedSAPObjectKey", text: this._sPurchaseOrder });
+			var oObjectKey = new sap.ui.core.Item({ key: "LinkedSAPObjectKey", text: this._sMatDocNo });
 			this._oAttachmentsControl.addHeaderField(oObjectKey);
 		},
 		
@@ -342,6 +337,10 @@ sap.ui.define([
 				}
 			}
 			return aControls;
+		},
+		
+		_navToListView: function() {
+			this.getRouter().navTo("goodsReceiptList", {}, true);
 		}
 		
 	});

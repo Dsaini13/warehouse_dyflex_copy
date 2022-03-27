@@ -1,4 +1,8 @@
 {
+  "headerWhiteList": [
+	"BusinessObjectTypeName",
+	"LinkedSAPObjectKey"
+  ],
   "routes": [
     {
       "path": "/webapp/resources",

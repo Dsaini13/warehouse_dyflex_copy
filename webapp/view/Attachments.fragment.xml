@@ -7,9 +7,7 @@
 		id="idUploadCollection"
 		uploadEnabled="true"
 		instantUpload="false"
-		maxFileSize="10"
-		beforeUploadStarts="onBeforeUploadStarts"
-		fileSizeExceeded="onFileSizeExceeded">
+		beforeUploadStarts="onBeforeUploadStarts">
 		<upload:toolbar>
 			<OverflowToolbar>
 				<Title text="Attachments" />
