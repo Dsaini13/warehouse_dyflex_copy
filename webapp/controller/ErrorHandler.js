@@ -46,7 +46,6 @@ sap.ui.define([
 			MessageBox.error(
 				this._sErrorText,
 				{
-					id : "metadataErrorMessageBox",
 					details: sDetails,
 					styleClass: this._oComponent.getContentDensityClass(),
 					actions: [MessageBox.Action.RETRY, MessageBox.Action.CLOSE],
@@ -90,7 +89,6 @@ sap.ui.define([
 
 				MessageBox.error(
 					sErrorMessage, {
-						id: "serviceErrorMessageBox",
 						styleClass: this._oComponent.getContentDensityClass(),
 						actions: [MessageBox.Action.CLOSE],
 						onClose: function() {
@@ -103,7 +101,6 @@ sap.ui.define([
 
 				MessageBox.error(
 					sErrorMessage, {
-						id: "serviceErrorMessageBox",
 						styleClass: this._oComponent.getContentDensityClass(),
 						actions: [MessageBox.Action.CLOSE],
 						onClose: function() {
@@ -114,7 +111,6 @@ sap.ui.define([
 			} else {
 				MessageBox.error(
 					this._sErrorText, {
-						id: "serviceErrorMessageBox",
 						details: sDetails.responseText,
 						styleClass: this._oComponent.getContentDensityClass(),
 						actions: [MessageBox.Action.CLOSE],

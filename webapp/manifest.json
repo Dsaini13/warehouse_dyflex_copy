@@ -12,77 +12,77 @@
 		"resources": "resources.json",
 		"dataSources": {
 			"MatlStock": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV/",
+				"uri": "/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/metadata.xml"
 				}
 			},
 			"PurchOrder": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/",
+				"uri": "/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_PURCHASEORDER_PROCESS_SRV/metadata.xml"
 				}
 			},
 			"Product": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PRODUCT_SRV/",
+				"uri": "/sap/opu/odata/sap/API_PRODUCT_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_PRODUCT_SRV/metadata.xml"
 				}
 			},
 			"PhysInvDoc": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_PHYSICAL_INVENTORY_DOC_SRV/",
+				"uri": "/sap/opu/odata/sap/API_PHYSICAL_INVENTORY_DOC_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_PHYSICAL_INVENTORY_DOC_SRV/metadata.xml"
 				}
 			},
 			"CustomStock": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_STOCK_CDS/",
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_STOCK_CDS/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_STOCK_CDS/metadata.xml"
 				}
 			},
 			"CustomPlant": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_PLANT_CDS/",
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_PLANT_CDS/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_PLANT_CDS/metadata.xml"
 				}
 			},
 			"CustomSLoc": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_STORELOC_CDS/",
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_STORELOC_CDS/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_STORELOC_CDS/metadata.xml"
 				}
 			},
 			"Attachment": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/",
+				"uri": "/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_CV_ATTACHMENT_SRV/metadata.xml"
 				}
 			},
 			"CustomMatSLoc": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/YY1_WAREHOUSE_MATSLOC_CDS/",
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_MATSLOC_CDS/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_MATSLOC_CDS/metadata.xml"
 				}
 			},
 			"BusinessPartner": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_BUSINESS_PARTNER/",
+				"uri": "/sap/opu/odata/sap/API_BUSINESS_PARTNER/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_BUSINESS_PARTNER/metadata.xml"
 				}
 			},
 			"MatDoc": {
-				"uri": "/S4HANA_CLOUD/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV/",
+				"uri": "/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/API_MATERIAL_DOCUMENT_SRV/metadata.xml"
@@ -92,6 +92,20 @@
 		"sourceTemplate": {
 			"id": "servicecatalog.connectivityComponentForManifest",
 			"version": "0.0.0"
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"intent1": {
+					"signature": {
+						"parameters": {},
+						"additionalParameters": "allowed"
+					},
+					"semanticObject": "zWarehouse",
+					"action": "manage",
+					"title": "{{appTitle}}",
+					"icon": "sap-icon://factory"
+				}
+			}
 		}
 	},
 	"sap.ui": {
@@ -319,27 +333,33 @@
 			"targets": {
 				"mainList": {
 					"viewType": "XML",
-					"viewName": "MainList"
+					"viewName": "MainList",
+					"viewId": "mainList"
 				},
 				"stockOverviewList": {
 					"viewType": "XML",
-					"viewName": "StockOverviewList"
+					"viewName": "StockOverviewList",
+					"viewId": "stockOverviewList"
 				},
 				"stockOverviewDetail": {
 					"viewType": "XML",
-					"viewName": "StockOverviewDetail"
+					"viewName": "StockOverviewDetail",
+					"viewId": "stockOverviewDetail"
 				},
 				"stocktakeList": {
 					"viewType": "XML",
-					"viewName": "StocktakeList"
+					"viewName": "StocktakeList",
+					"viewId": "stocktakeList"
 				},
 				"goodsReceiptList": {
 					"viewType": "XML",
-					"viewName": "GoodsReceiptList"
+					"viewName": "GoodsReceiptList",
+					"viewId": "goodsReceiptList"
 				},
 				"goodsReceiptDetail": {
 					"viewType": "XML",
-					"viewName": "GoodsReceiptDetail"
+					"viewName": "GoodsReceiptDetail",
+					"viewId": "goodsReceiptDetail"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",
@@ -350,6 +370,11 @@
 					"viewId": "notFound"
 				}
 			}
-		}
+		},
+		"flexEnabled": true
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/yy1_warehouse/webapp",
+		"_version": "1.1.0"
 	}
 }

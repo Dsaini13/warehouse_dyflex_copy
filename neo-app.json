@@ -45,10 +45,11 @@
       "description": "SAPUI5 Test Resources"
     },
     {
-      "path": "/S4HANA_CLOUD",
+      "path": "/sap/opu/odata",
       "target": {
         "type": "destination",
-        "name": "S4HANA_CLOUD"
+        "name": "S4HANA_CLOUD",
+        "entryPath": "/sap/opu/odata"
       },
       "description": "S4HANA Cloud System"
     }
