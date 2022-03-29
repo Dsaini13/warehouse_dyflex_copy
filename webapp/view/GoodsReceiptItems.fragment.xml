@@ -38,7 +38,6 @@
 				<Text text="Unit"/>
 			</Column>
 			<Column minScreenWidth="Tablet" demandPopin="true">
-				<Text text="SN / Del"/>
 			</Column>
 		</columns>
 		<items>
@@ -105,10 +104,16 @@
 					
 					<HBox>
 						<Button
-							icon="sap-icon://group-2"
+							text="S/N"
 							tooltip="Add serial number"
-							class="sapUiTinyMarginEnd"
-							press="onAddSerialNo" />
+							class="sapUiSmallMarginEnd"
+							press="onSerialNoShow">
+							<customData>
+								<BadgeCustomData
+									key="badge"
+									value="{ path: 'createModel>to_SerialNumbers', formatter: '.formatter.serialNoBadge' }"/>
+							</customData>
+						</Button>
 						<Button
 							icon="sap-icon://delete"
 							tooltip="Delete item"

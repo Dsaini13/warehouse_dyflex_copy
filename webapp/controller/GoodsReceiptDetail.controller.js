@@ -50,7 +50,7 @@ sap.ui.define([
 		},
 		
 		onDeleteItem : function (oEvent) {
-			var path = oEvent.getSource().getParent().getBindingContextPath(),
+			var path = oEvent.getSource().getParent().getParent().getBindingContextPath(),
 				oData = this._oCreateModel.getData();
 				
 			var iRowIndex = path.match(/\d+/);
@@ -144,6 +144,54 @@ sap.ui.define([
 			this._oAttachmentsControl.removeAllItems();
 			this._oAttachmentsControl.removeAllHeaderFields();
 			this._oAttachmentsControl.removeAllIncompleteItems();
+		},
+		
+		/* =========================================================== */
+		/* Serial No Dialog                                            */
+		/* =========================================================== */
+		
+		onSerialNoShow: function(oEvent) {
+			this._oItemPath = oEvent.getSource().getParent().getParent().getBindingContextPath();
+			var itemData = jQuery.extend(true, {}, this._oCreateModel.getProperty(this._oItemPath));
+			
+			this._oItemModel = new JSONModel(itemData);
+			this.setModel(this._oItemModel, "itemModel");
+			
+			if (!this._GoodsReceiptSerialNoDialog) {
+				this._GoodsReceiptSerialNoDialog = sap.ui.xmlfragment("dyflex.mm.s4cloud.warehouse.view.GoodsReceiptSerialNoDialog",this);
+				this.getView().addDependent(this._GoodsReceiptSerialNoDialog);
+				jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._GoodsReceiptSerialNoDialog);
+			}
+			this._GoodsReceiptSerialNoDialog.open();
+		},
+		
+		onSerialNoApply: function() {
+			var itemData = this._oItemModel.getData();
+			this._oCreateModel.setProperty(this._oItemPath, itemData);
+			this._GoodsReceiptSerialNoDialog.close();
+		},
+		
+		onSerialNoCancel: function() {
+			this._GoodsReceiptSerialNoDialog.close();
+		},
+		
+		onSerialNoScan: function(oEvent) {
+			if (!oEvent.getParameters().refreshButtonPressed) {
+				var sQuery = oEvent.getParameter("query");
+				if (sQuery && sQuery.length > 0) {
+					
+					var itemData = this._oItemModel.getData();
+					if (!itemData.to_SerialNumbers) {
+						itemData.to_SerialNumbers = { "results" : [] };
+					}
+					
+					itemData.to_SerialNumbers.results.push({
+						"SerialNumber": sQuery
+					});
+					this._oItemModel.setData(itemData);
+					oEvent.getSource().setValue("");
+				}
+			}
 		},
 		
 		/* =========================================================== */

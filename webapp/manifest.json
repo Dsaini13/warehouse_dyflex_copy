@@ -370,8 +370,7 @@
 					"viewId": "notFound"
 				}
 			}
-		},
-		"flexEnabled": true
+		}
 	},
 	"sap.platform.abap": {
 		"uri": "/sap/bc/ui5_ui5/sap/yy1_warehouse/webapp",

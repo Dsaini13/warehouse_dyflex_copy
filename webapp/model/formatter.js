@@ -50,6 +50,10 @@ sap.ui.define([], function () {
 				});
 			}
 			return oData ? oData.StorageLocationName : "";
+		},
+		
+		serialNoBadge: function(aSerialNumbers) {
+			return aSerialNumbers ? aSerialNumbers.results.length : "";
 		}
 		
 	};
