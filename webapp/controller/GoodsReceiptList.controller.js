@@ -38,7 +38,12 @@ sap.ui.define([
 				tableBusyDelay : 0
 			});
 			this.setModel(this._oViewModel, "listView");
-
+			
+			// Set Global Models
+			this._dataSources = this.getOwnerComponent().getMetadata().getManifestEntry("sap.app").dataSources;
+			this._setPlantGlobalModel();
+			this._setSLocGlobalModel();
+			
 			// Make sure, busy indication is showing immediately so there is no
 			// break after the busy indication for loading the view's meta data is
 			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)

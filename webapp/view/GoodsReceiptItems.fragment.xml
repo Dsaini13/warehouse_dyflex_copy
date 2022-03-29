@@ -8,6 +8,7 @@
 			sorter: { path: 'PurchaseOrderItem' }, 
 			templateShareable: false }"
 		width="auto"
+		fixedLayout="false"
 		class="sapUiSmallMarginTopBottom"
 		busyIndicatorDelay="{detailView>/lineItemTableDelay}"
 		itemPress="onItemSelected">
@@ -18,26 +19,26 @@
 			</Toolbar>
 		</headerToolbar>
 		<columns>
-			<Column width="5%">
+			<Column>
 				<Text text="Item"/>
 			</Column>
-			<Column width="30%">
+			<Column>
 				<Text text="Product"/>
 			</Column>
-			<Column width="20%">
+			<Column minScreenWidth="Desktop" demandPopin="true">
 				<Text text="Plant"/>
 			</Column>
-			<Column width="20%">
+			<Column minScreenWidth="Tablet" demandPopin="true" >
 				<Text text="Store Loc"/>
 			</Column>
-			<Column width="15%" hAlign="Right">
+			<Column hAlign="Right">
 				<Text text="Quantity"/>
 			</Column>
-			<Column width="5%">
+			<Column minScreenWidth="Desktop" demandPopin="true">
 				<Text text="Unit"/>
 			</Column>
-			<Column width="5%" hAlign="Center">
-				<Text text="" />
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="SN / Del"/>
 			</Column>
 		</columns>
 		<items>
@@ -47,7 +48,7 @@
 					
 					<ObjectIdentifier title="{createModel>MaterialDocumentItemText}" text="{createModel>Material}"/>
 					
-					<ObjectIdentifier title="{createModel>Plant}" />
+					<ObjectIdentifier title="{createModel>Plant}" text="{ path: 'createModel>Plant', formatter: '.formatter.plantDesc' }" />
 					
 					<Input
 						value="{createModel>StorageLocation}"
@@ -102,11 +103,18 @@
 					
 					<Text text="{createModel>EntryUnit}"/>
 					
-					<Button
-						icon="sap-icon://delete"
-						tooltip="Delete item"
-						press="onDeleteItem" />
-						
+					<HBox>
+						<Button
+							icon="sap-icon://group-2"
+							tooltip="Add serial number"
+							class="sapUiTinyMarginEnd"
+							press="onAddSerialNo" />
+						<Button
+							icon="sap-icon://delete"
+							tooltip="Delete item"
+							press="onDeleteItem" />
+					</HBox>
+							
 				</cells>
 			</ColumnListItem>
 		</items>

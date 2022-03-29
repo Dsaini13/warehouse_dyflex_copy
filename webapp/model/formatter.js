@@ -28,8 +28,30 @@ sap.ui.define([], function () {
 			var sDateAsString = oDateFormat.format(new Date(sValue));
 
 			return sDateAsString;
+		},
+		
+		plantDesc: function(sValue) {
+			if (sValue && sap.ui.getCore().getModel("plantGlobal")) {
+				var aData = sap.ui.getCore().getModel("plantGlobal").getData().d.results;
+				var oData = aData.find(function(obj) {
+					return obj.Plant === sValue;
+				});
+				return oData.PlantName;
+			} else {
+				return "";
+			}
+		},
+		
+		slocDesc: function(sValue) {
+			if (sValue && sap.ui.getCore().getModel("slocGlobal")) {
+				var aData = sap.ui.getCore().getModel("slocGlobal").getData().d.results;
+				var oData = aData.find(function(obj) {
+					return obj.StorageLocation === sValue;
+				});
+			}
+			return oData ? oData.StorageLocationName : "";
 		}
-
+		
 	};
 
 });

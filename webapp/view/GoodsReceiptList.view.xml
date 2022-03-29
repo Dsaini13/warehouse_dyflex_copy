@@ -79,8 +79,8 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 						<cells>
 							<ObjectIdentifier title="{purchOrderSrv>PurchaseOrderItem}" />
 							<ObjectIdentifier title="{purchOrderSrv>PurchaseOrderItemText}" text="{purchOrderSrv>Material}" />
-							<ObjectIdentifier title="{purchOrderSrv>Plant}" />
-							<ObjectIdentifier title="{purchOrderSrv>StorageLocation}" />
+							<ObjectIdentifier title="{purchOrderSrv>Plant}" text="{ path: 'purchOrderSrv>Plant', formatter: '.formatter.plantDesc' }" />
+							<ObjectIdentifier title="{purchOrderSrv>StorageLocation}" text="{ path: 'purchOrderSrv>StorageLocation', formatter: '.formatter.slocDesc' }" />
 							<ObjectNumber
 								number="{ path: 'purchOrderSrv>OrderQuantity', formatter: '.formatter.numberUnit' }"
 								unit="{purchOrderSrv>PurchaseOrderQuantityUnit}" />

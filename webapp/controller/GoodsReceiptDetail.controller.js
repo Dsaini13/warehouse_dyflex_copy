@@ -32,8 +32,9 @@ sap.ui.define([
 			
 			this.getRouter().getRoute("goodsReceiptDetail").attachPatternMatched(this._onObjectMatched, this);
 			
-			// Get Service URL
+			// Set Global Models
 			this._dataSources = this.getOwnerComponent().getMetadata().getManifestEntry("sap.app").dataSources;
+			this._setPlantGlobalModel();
 			
 			// Set Attachment Control
 			this._oAttachmentsControl = this.byId("idUploadCollection");

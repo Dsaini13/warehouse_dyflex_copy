@@ -188,48 +188,18 @@ sap.ui.define([
 			this.setModel(oModel, "supplierModel");
 		},
 		
-		_setPlantDescModel: function() {
-			var that = this;
+		_setPlantGlobalModel: function() {
 			if (!sap.ui.getCore().getModel("plantGlobal")) {
 				var oModel = new JSONModel(this._dataSources.CustomPlant.uri + "YY1_Warehouse_Plant?$format=json");
 				sap.ui.getCore().setModel(oModel, "plantGlobal");
-				oModel.attachRequestCompleted({}, function(oEvent) {
-					that._setPlantDescModelValue();
-				});
-			} else {
-				this._setPlantDescModelValue();
 			}
 		},
 		
-		_setPlantDescModelValue: function() {
-			var that = this;
-			var aData = sap.ui.getCore().getModel("plantGlobal").getData().d.results;
-			var oData = aData.find(function(obj) {
-				return obj.Plant === that._sPlant;
-			});
-			this.setModel(new JSONModel(oData), "plantDesc");	
-		},
-		
-		_setSLocDescModel: function() {
-			var that = this;
+		_setSLocGlobalModel: function() {
 			if (!sap.ui.getCore().getModel("slocGlobal")) {
 				var oModel = new JSONModel(this._dataSources.CustomSLoc.uri + "YY1_Warehouse_StoreLoc?$format=json");
 				sap.ui.getCore().setModel(oModel, "slocGlobal");
-				oModel.attachRequestCompleted({}, function(oEvent) {
-					that._setSLocDescModelValue();
-				});
-			} else {
-				this._setSLocDescModelValue();
 			}
-		},
-		
-		_setSLocDescModelValue: function() {
-			var that = this;
-			var aData = sap.ui.getCore().getModel("slocGlobal").getData().d.results;
-			var oData = aData.find(function(obj) {
-				return obj.Plant === that._sPlant && obj.StorageLocation === that._sStoreLoc;
-			});
-			this.setModel(new JSONModel(oData), "slocDesc");
 		}
 
 	});
