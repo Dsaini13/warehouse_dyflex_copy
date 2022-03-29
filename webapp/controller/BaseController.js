@@ -151,7 +151,7 @@ sap.ui.define([
 		/* =========================================================== */
 		
 		onScanSuccess: function(oEvent) {
-			var oSearchField = this.byId("idSearchField");
+			var oSearchField = oEvent.getSource().getParent().getControlsByFieldGroupId("idSearchFieldGrp")[0];
 			if (oEvent.getParameter("cancelled")) {
 				MessageToast.show("Scan cancelled", { duration:1000 });
 			} else {

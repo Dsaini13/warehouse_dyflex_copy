@@ -37,7 +37,7 @@
 							level="H3"/>
 						<ToolbarSpacer />
 						<SearchField
-							id="idSearchField"
+							fieldGroupIds="idSearchFieldGrp"
 							search="onSearch">
 							<layoutData>
 								<OverflowToolbarLayoutData

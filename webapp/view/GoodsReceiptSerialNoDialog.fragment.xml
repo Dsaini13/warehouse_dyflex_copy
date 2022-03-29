@@ -20,7 +20,7 @@
 				<OverflowToolbar>
 					<ToolbarSpacer />
 					<SearchField
-						id="idSearchField"
+						fieldGroupIds="idSearchFieldGrp"
 						placeholder="Scan"
 						search="onSerialNoScan">
 						<layoutData>
