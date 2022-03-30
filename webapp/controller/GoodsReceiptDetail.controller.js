@@ -324,18 +324,20 @@ sap.ui.define([
 			
 			var aItems = purchOrder.d.to_PurchaseOrderItem.results;
 			for (var i = 0; i < aItems.length; i++) {
-				matDocData.to_MaterialDocumentItem.results.push({
-					"Material"				   : aItems[i].Material,
-					"Plant"					   : aItems[i].Plant,
-					"StorageLocation"		   : aItems[i].StorageLocation,
-					"PurchaseOrder"			   : aItems[i].PurchaseOrder,
-					"PurchaseOrderItem"		   : aItems[i].PurchaseOrderItem,
-					"GoodsMovementType"		   : "101",
-					"GoodsMovementRefDocType"  : "B",
-					"QuantityInEntryUnit"	   : aItems[i].OrderQuantity,
-					"EntryUnit"				   : aItems[i].PurchaseOrderQuantityUnit,
-					"MaterialDocumentItemText" : aItems[i].PurchaseOrderItemText
-				});
+				if (!aItems[i].IsCompletelyDelivered) {
+					matDocData.to_MaterialDocumentItem.results.push({
+						"Material"				   : aItems[i].Material,
+						"Plant"					   : aItems[i].Plant,
+						"StorageLocation"		   : aItems[i].StorageLocation,
+						"PurchaseOrder"			   : aItems[i].PurchaseOrder,
+						"PurchaseOrderItem"		   : aItems[i].PurchaseOrderItem,
+						"GoodsMovementType"		   : "101",
+						"GoodsMovementRefDocType"  : "B",
+						"QuantityInEntryUnit"	   : aItems[i].OrderQuantity,
+						"EntryUnit"				   : aItems[i].PurchaseOrderQuantityUnit,
+						"MaterialDocumentItemText" : aItems[i].PurchaseOrderItemText
+					});	
+				}
 			}
 			
 			this._oCreateModel = new JSONModel(matDocData);

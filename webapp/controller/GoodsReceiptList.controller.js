@@ -89,14 +89,14 @@ sap.ui.define([
 				// refresh the list binding.
 				this.onRefresh();
 			} else {
-				var aTableSearchState = [];
+				var aTableSearchState = [new Filter("IsCompletelyDelivered", FilterOperator.EQ, false)];
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery && sQuery.length > 0) {
 					var aFilters = [];
 					aFilters.push(new Filter("PurchaseOrder", FilterOperator.EQ, sQuery));
 					aFilters.push(new Filter("Material", FilterOperator.EQ, sQuery));
-					aTableSearchState = [new Filter(aFilters, false)];
+					aTableSearchState.push(new Filter(aFilters, false));
 				}
 				this._applySearch(aTableSearchState);
 			}
