@@ -89,6 +89,11 @@ sap.ui.define([
 				createData.ManualPrintIsTriggered = "X";
 			}
 			
+			// Remove temp fields
+			for (var i = 0; i < createData.to_MaterialDocumentItem.results.length; i++) {
+				delete createData.to_MaterialDocumentItem.results[i].TempOpenQty;
+			}
+			
 			this.getModel("matDocSrv").create("/A_MaterialDocumentHeader", createData, {
 				success: this._saveEntitySuccess.bind(this),
 				error: this._saveEntityFailed.bind(this)
@@ -298,6 +303,8 @@ sap.ui.define([
 			this._oViewModel.setProperty("/busy", true);
 			this._oViewModel.setProperty("/purchaseOrder", this._sPurchaseOrder);
 			
+			this._oCustPOItems = new JSONModel(this._dataSources.CustomPOItem.uri + "YY1_Warehouse_POItem?$format=json&$filter=PurchaseOrder eq '" + this._sPurchaseOrder + "'");
+			
 			var that = this;
 			var oPurchOrder = new JSONModel(this._dataSources.PurchOrder.uri + "A_PurchaseOrder('" + this._sPurchaseOrder + "')?$expand=to_PurchaseOrderItem&$format=json");
 			
@@ -310,6 +317,7 @@ sap.ui.define([
 		},
 		
 		_createODataModel: function(purchOrder) {
+			var that = this;
 			
 			var matDocData = {
 				"GoodsMovementCode"			 : "01",
@@ -324,24 +332,65 @@ sap.ui.define([
 			
 			var aItems = purchOrder.d.to_PurchaseOrderItem.results;
 			for (var i = 0; i < aItems.length; i++) {
-				if (!aItems[i].IsCompletelyDelivered) {
-					matDocData.to_MaterialDocumentItem.results.push({
-						"Material"				   : aItems[i].Material,
-						"Plant"					   : aItems[i].Plant,
-						"StorageLocation"		   : aItems[i].StorageLocation,
-						"PurchaseOrder"			   : aItems[i].PurchaseOrder,
-						"PurchaseOrderItem"		   : aItems[i].PurchaseOrderItem,
-						"GoodsMovementType"		   : "101",
-						"GoodsMovementRefDocType"  : "B",
-						"QuantityInEntryUnit"	   : aItems[i].OrderQuantity,
-						"EntryUnit"				   : aItems[i].PurchaseOrderQuantityUnit,
-						"MaterialDocumentItemText" : aItems[i].PurchaseOrderItemText
-					});	
+				if (!aItems[i].IsCompletelyDelivered && aItems[i].OrderQuantity > 0) {
+					
+					var aCustItems = this._oCustPOItems.getData().d.results;
+					var oCustItem = aCustItems.find(function(obj) {
+						return obj.PurchaseOrderItem === that._pad(aItems[i].PurchaseOrderItem, 5);
+					});
+					
+					var openQty = aItems[i].OrderQuantity;
+					if (oCustItem) {
+						openQty = aItems[i].OrderQuantity - oCustItem.GoodsRcptQty;
+					}
+					
+					if (openQty > 0) {
+						matDocData.to_MaterialDocumentItem.results.push({
+							"Material"				   : aItems[i].Material,
+							"Plant"					   : aItems[i].Plant,
+							"StorageLocation"		   : aItems[i].StorageLocation,
+							"PurchaseOrder"			   : aItems[i].PurchaseOrder,
+							"PurchaseOrderItem"		   : aItems[i].PurchaseOrderItem,
+							"GoodsMovementType"		   : "101",
+							"GoodsMovementRefDocType"  : "B",
+							"InventoryUsabilityCode"   : this._convertInventoryStockType(oCustItem),
+							"QuantityInEntryUnit"	   : openQty.toString(),
+							"EntryUnit"				   : aItems[i].PurchaseOrderQuantityUnit,
+							"MaterialDocumentItemText" : aItems[i].PurchaseOrderItemText,
+							"TempOpenQty"			   : openQty.toString()
+						});		
+					}
 				}
 			}
 			
 			this._oCreateModel = new JSONModel(matDocData);
 			this.setModel(this._oCreateModel, "createModel");
+		},
+		
+		_convertInventoryStockType: function(oCustItem) {
+			
+			// FIX THIS
+			// WHAT ABOUT STOCK TYPE THAT DOESN"T HAVE GR YET!!!!
+			
+			if (oCustItem && oCustItem.StockType) {
+				return oCustItem.StockType;
+			} else {
+				return " ";		// Unrestricted-Use
+			}
+			/*
+			if (oCustItem) {
+				switch (oCustItem.StockType) {
+				case "X":
+					return "02";	// Quality Inspection
+				case "S":
+					return "07";	// Blocked
+				default:
+					return "01";	// Unrestricted-Use
+				}
+			} else {
+				return "01";		// Unrestricted-Use
+			}
+			*/
 		},
 		
 		/**

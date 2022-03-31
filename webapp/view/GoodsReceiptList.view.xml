@@ -25,7 +25,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 						{ path: 'PurchaseOrder', descending: false, group: true },
 						{ path: 'PurchaseOrderItem', descending: false }
 					],
-					filters : [{ path : 'IsCompletelyDelivered', operator : 'EQ', value1 : false }],
+					filters : [
+						{ path : 'IsCompletelyDelivered', operator : 'EQ', value1 : false },
+						{ path : 'OrderQuantity', operator : 'GT', value1 : 0 }
+					],
 					groupHeaderFactory: '.onGroupHeader'
 				}"
 				noDataText="{listView>/tableNoDataText}"

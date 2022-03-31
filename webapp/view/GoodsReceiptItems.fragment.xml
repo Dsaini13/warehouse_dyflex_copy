@@ -10,6 +10,7 @@
 		width="auto"
 		fixedLayout="false"
 		class="sapUiSmallMarginTopBottom"
+		noDataText="{i18n>goodsReceiptItemNoData}"
 		busyIndicatorDelay="{detailView>/lineItemTableDelay}"
 		itemPress="onItemSelected">
 		<headerToolbar>
@@ -25,19 +26,22 @@
 			<Column>
 				<Text text="Product"/>
 			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Open Qty"/>
+			</Column>
+			<Column>
+				<Text text="Delivered"/>
+			</Column>
 			<Column minScreenWidth="Desktop" demandPopin="true">
 				<Text text="Plant"/>
 			</Column>
 			<Column minScreenWidth="Tablet" demandPopin="true" >
 				<Text text="Store Loc"/>
 			</Column>
-			<Column hAlign="Right">
-				<Text text="Quantity"/>
+			<Column minScreenWidth="Tablet" demandPopin="true" >
+				<Text text="Stock Type"/>
 			</Column>
 			<Column minScreenWidth="Desktop" demandPopin="true">
-				<Text text="Unit"/>
-			</Column>
-			<Column minScreenWidth="Tablet" demandPopin="true">
 			</Column>
 		</columns>
 		<items>
@@ -46,6 +50,17 @@
 					<Text text="{createModel>PurchaseOrderItem}"/>
 					
 					<ObjectIdentifier title="{createModel>MaterialDocumentItemText}" text="{createModel>Material}"/>
+					
+					<ObjectNumber
+						number="{createModel>TempOpenQty}"
+						unit="{createModel>EntryUnit}" />
+						
+					<Input
+						value="{createModel>QuantityInEntryUnit}"
+						change="onChanged"
+						fieldWidth="75%"
+						description="{createModel>EntryUnit}"
+						type="Number" />
 					
 					<ObjectIdentifier title="{createModel>Plant}" text="{ path: 'createModel>Plant', formatter: '.formatter.plantDesc' }" />
 					
@@ -95,12 +110,15 @@
 						</customData>
 					</Input>
 					
-					<Input
-						value="{createModel>QuantityInEntryUnit}"
-						change="onChanged"
-						type="Number" />
-					
-					<Text text="{createModel>EntryUnit}"/>
+					<ComboBox
+						selectedKey="{createModel>InventoryUsabilityCode}"
+						selectionChange="onChanged">
+						<items>
+							<core:Item key=" " text="Unrestricted-Use"/>
+							<core:Item key="X" text="Quality Inspection"/>
+							<core:Item key="S" text="Blocked"/>
+						</items>
+					</ComboBox>
 					
 					<HBox>
 						<Button

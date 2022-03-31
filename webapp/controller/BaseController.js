@@ -120,6 +120,20 @@ sap.ui.define([
 		},
 		
 		/**
+		 * Pad a number with leading zeros.
+		 * @param {number} num The number to format 
+		 * @param {number} size The size required to pad to
+		 * @returns {string} zero-padded number
+		 */
+		_pad: function(num, size) {
+			var s = num + "";
+			while (s.length < size) {
+				s = "0" + s;
+			}
+			return s;
+		},
+		
+		/**
 		* Adds a history entry in the FLP page history
 		* @public
 		* @param {object} oEntry An entry object to add to the hierachy array as expected from the ShellUIService.setHierarchy method
