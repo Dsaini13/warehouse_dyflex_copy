@@ -20,9 +20,9 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 				id="idGoodsReceiptListTable"
 				width="auto"
 				items="{
-					path: 'purchOrderSrv>/A_PurchaseOrderItem',
+					path: 'customPOItemSrv>/YY1_Warehouse_POItem',
 					sorter: [
-						{ path: 'PurchaseOrder', descending: false, group: true },
+						{ path: 'PurchaseOrder', descending: true, group: true },
 						{ path: 'PurchaseOrderItem', descending: false }
 					],
 					filters : [
@@ -60,19 +60,19 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 				</headerToolbar>
 
 				<columns>
-					<Column width="auto" >
+					<Column>
 						<Text text="Item" />
 					</Column>
-					<Column width="auto" >
+					<Column>
 						<Text text="Description" />
 					</Column>
-					<Column width="20%" minScreenWidth="Tablet" demandPopin="true" >
+					<Column minScreenWidth="Tablet" demandPopin="true" >
 						<Text text="Plant" />
 					</Column>
-					<Column width="20%" minScreenWidth="Tablet" demandPopin="true">
+					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Storage Location" />
 					</Column>
-					<Column width="auto">
+					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Order Qty" />
 					</Column>
 				</columns>
@@ -80,13 +80,13 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 				<items>
 					<ColumnListItem type="Navigation" press="onPress">
 						<cells>
-							<ObjectIdentifier title="{purchOrderSrv>PurchaseOrderItem}" />
-							<ObjectIdentifier title="{purchOrderSrv>PurchaseOrderItemText}" text="{purchOrderSrv>Material}" />
-							<ObjectIdentifier title="{purchOrderSrv>Plant}" text="{ path: 'purchOrderSrv>Plant', formatter: '.formatter.plantDesc' }" />
-							<ObjectIdentifier title="{purchOrderSrv>StorageLocation}" text="{ path: 'purchOrderSrv>StorageLocation', formatter: '.formatter.slocDesc' }" />
+							<ObjectIdentifier title="{customPOItemSrv>PurchaseOrderItem}" />
+							<ObjectIdentifier title="{customPOItemSrv>PurchaseOrderItemText}" text="{customPOItemSrv>Material}" />
+							<ObjectIdentifier title="{customPOItemSrv>Plant}" text="{ path: 'customPOItemSrv>Plant', formatter: '.formatter.plantDesc' }" />
+							<ObjectIdentifier title="{customPOItemSrv>StorageLocation}" text="{ path: 'customPOItemSrv>StorageLocation', formatter: '.formatter.slocDesc' }" />
 							<ObjectNumber
-								number="{ path: 'purchOrderSrv>OrderQuantity', formatter: '.formatter.numberUnit' }"
-								unit="{purchOrderSrv>PurchaseOrderQuantityUnit}" />
+								number="{customPOItemSrv>OrderQuantity}"
+								unit="{customPOItemSrv>PurchaseOrderQuantityUnit}" />
 						</cells>
 					</ColumnListItem>
 				</items>

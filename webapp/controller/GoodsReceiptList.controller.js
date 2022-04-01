@@ -89,7 +89,7 @@ sap.ui.define([
 				// refresh the list binding.
 				this.onRefresh();
 			} else {
-				var aTableSearchState = [new Filter("IsCompletelyDelivered", FilterOperator.EQ, false)];
+				var aTableSearchState = [new Filter("IsCompletelyDelivered", FilterOperator.EQ, false), new Filter("OrderQuantity", FilterOperator.GT, 0)];
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery && sQuery.length > 0) {
@@ -117,13 +117,13 @@ sap.ui.define([
 		 * @public
 		 */
 		onPress : function (oEvent) {
-			var oObject = this.getModel("purchOrderSrv").getProperty(oEvent.getSource().getBindingContextPath());
+			var oObject = this.getModel("customPOItemSrv").getProperty(oEvent.getSource().getBindingContextPath());
 			this.getRouter().navTo("goodsReceiptDetail", {
 				purchaseOrder: oObject.PurchaseOrder
 			});
 		},
 		
-		onGroupHeader : function (oGroup){
+		onGroupHeader : function(oGroup) {
 			return new sap.m.GroupHeaderListItem( {
 				title: oGroup.key,
 				upperCase: false

@@ -303,14 +303,12 @@ sap.ui.define([
 			this._oViewModel.setProperty("/busy", true);
 			this._oViewModel.setProperty("/purchaseOrder", this._sPurchaseOrder);
 			
-			this._oCustPOItems = new JSONModel(this._dataSources.CustomPOItem.uri + "YY1_Warehouse_POItem?$format=json&$filter=PurchaseOrder eq '" + this._sPurchaseOrder + "'");
-			
 			var that = this;
-			var oPurchOrder = new JSONModel(this._dataSources.PurchOrder.uri + "A_PurchaseOrder('" + this._sPurchaseOrder + "')?$expand=to_PurchaseOrderItem&$format=json");
+			var oPurchOrder = new JSONModel(this._dataSources.CustomPOItem.uri + "YY1_Warehouse_POItem?$filter=PurchaseOrder eq '" + this._sPurchaseOrder + "'&$expand=to_POHist&$format=json");
 			
 			oPurchOrder.attachRequestCompleted({}, function(oEvent) {
 				that._handleJSONModelError(oEvent);
-				that._setSupplierDescModel(oPurchOrder.getProperty("/d/Supplier"));
+				that._setSupplierDescModel(oPurchOrder.getProperty("/d/results/0/Supplier"));
 				that._createODataModel(oPurchOrder.getData());
 				that._oViewModel.setProperty("/busy", false);
 			});
@@ -330,20 +328,14 @@ sap.ui.define([
 				"to_MaterialDocumentItem"	 : { "results":[] }
 			};
 			
-			var aItems = purchOrder.d.to_PurchaseOrderItem.results;
+			var aItems = purchOrder.d.results;
 			for (var i = 0; i < aItems.length; i++) {
 				if (!aItems[i].IsCompletelyDelivered && aItems[i].OrderQuantity > 0) {
 					
-					var aCustItems = this._oCustPOItems.getData().d.results;
-					var oCustItem = aCustItems.find(function(obj) {
-						return obj.PurchaseOrderItem === that._pad(aItems[i].PurchaseOrderItem, 5);
-					});
-					
 					var openQty = aItems[i].OrderQuantity;
-					if (oCustItem) {
-						openQty = aItems[i].OrderQuantity - oCustItem.GoodsRcptQty;
+					if (aItems[i].to_POHist.results[0]) {
+						openQty = aItems[i].OrderQuantity - aItems[i].to_POHist.results[0].GoodsRcptQty;
 					}
-					
 					if (openQty > 0) {
 						matDocData.to_MaterialDocumentItem.results.push({
 							"Material"				   : aItems[i].Material,
@@ -353,10 +345,10 @@ sap.ui.define([
 							"PurchaseOrderItem"		   : aItems[i].PurchaseOrderItem,
 							"GoodsMovementType"		   : "101",
 							"GoodsMovementRefDocType"  : "B",
-							"InventoryUsabilityCode"   : this._convertInventoryStockType(oCustItem),
-							"QuantityInEntryUnit"	   : openQty.toString(),
-							"EntryUnit"				   : aItems[i].PurchaseOrderQuantityUnit,
+							"InventoryUsabilityCode"   : aItems[i].StockType ? aItems[i].StockType : " ",
 							"MaterialDocumentItemText" : aItems[i].PurchaseOrderItemText,
+							"EntryUnit"				   : aItems[i].PurchaseOrderQuantityUnit,
+							"QuantityInEntryUnit"	   : openQty.toString(),
 							"TempOpenQty"			   : openQty.toString()
 						});		
 					}
@@ -365,32 +357,6 @@ sap.ui.define([
 			
 			this._oCreateModel = new JSONModel(matDocData);
 			this.setModel(this._oCreateModel, "createModel");
-		},
-		
-		_convertInventoryStockType: function(oCustItem) {
-			
-			// FIX THIS
-			// WHAT ABOUT STOCK TYPE THAT DOESN"T HAVE GR YET!!!!
-			
-			if (oCustItem && oCustItem.StockType) {
-				return oCustItem.StockType;
-			} else {
-				return " ";		// Unrestricted-Use
-			}
-			/*
-			if (oCustItem) {
-				switch (oCustItem.StockType) {
-				case "X":
-					return "02";	// Quality Inspection
-				case "S":
-					return "07";	// Blocked
-				default:
-					return "01";	// Unrestricted-Use
-				}
-			} else {
-				return "01";		// Unrestricted-Use
-			}
-			*/
 		},
 		
 		/**
