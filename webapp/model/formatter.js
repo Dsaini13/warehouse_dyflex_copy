@@ -30,6 +30,10 @@ sap.ui.define([], function () {
 			return sDateAsString;
 		},
 		
+		openQuantity: function (orderQty, grQty) {
+			return grQty ? orderQty - grQty : orderQty;
+		},
+		
 		plantDesc: function(sValue) {
 			if (sValue && sap.ui.getCore().getModel("plantGlobal")) {
 				var aData = sap.ui.getCore().getModel("plantGlobal").getData().d.results;

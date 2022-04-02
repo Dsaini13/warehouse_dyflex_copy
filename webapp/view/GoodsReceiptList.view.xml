@@ -29,6 +29,9 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 						{ path : 'IsCompletelyDelivered', operator : 'EQ', value1 : false },
 						{ path : 'OrderQuantity', operator : 'GT', value1 : 0 }
 					],
+					parameters: {
+						expand: 'to_POHist'
+					},
 					groupHeaderFactory: '.onGroupHeader'
 				}"
 				noDataText="{listView>/tableNoDataText}"
@@ -64,7 +67,7 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 						<Text text="Item" />
 					</Column>
 					<Column>
-						<Text text="Description" />
+						<Text text="Product" />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true" >
 						<Text text="Plant" />
@@ -75,8 +78,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Order Qty" />
 					</Column>
+					<Column>
+						<Text text="Open Qty" />
+					</Column>
 				</columns>
-
 				<items>
 					<ColumnListItem type="Navigation" press="onPress">
 						<cells>
@@ -86,6 +91,15 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 							<ObjectIdentifier title="{customPOItemSrv>StorageLocation}" text="{ path: 'customPOItemSrv>StorageLocation', formatter: '.formatter.slocDesc' }" />
 							<ObjectNumber
 								number="{customPOItemSrv>OrderQuantity}"
+								unit="{customPOItemSrv>PurchaseOrderQuantityUnit}" />
+							<ObjectNumber
+								number="{
+									parts: [
+										{ path: 'customPOItemSrv>OrderQuantity' },
+										{ path: 'customPOItemSrv>to_POHist/GoodsRcptQty' }
+									],
+									formatter: '.formatter.openQuantity'
+								}"
 								unit="{customPOItemSrv>PurchaseOrderQuantityUnit}" />
 						</cells>
 					</ColumnListItem>

@@ -315,7 +315,6 @@ sap.ui.define([
 		},
 		
 		_createODataModel: function(purchOrder) {
-			var that = this;
 			
 			var matDocData = {
 				"GoodsMovementCode"			 : "01",
@@ -333,8 +332,8 @@ sap.ui.define([
 				if (!aItems[i].IsCompletelyDelivered && aItems[i].OrderQuantity > 0) {
 					
 					var openQty = aItems[i].OrderQuantity;
-					if (aItems[i].to_POHist.results[0]) {
-						openQty = aItems[i].OrderQuantity - aItems[i].to_POHist.results[0].GoodsRcptQty;
+					if (aItems[i].to_POHist) {
+						openQty = aItems[i].OrderQuantity - aItems[i].to_POHist.GoodsRcptQty;
 					}
 					if (openQty > 0) {
 						matDocData.to_MaterialDocumentItem.results.push({
