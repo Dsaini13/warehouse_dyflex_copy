@@ -49,7 +49,11 @@
 				<cells>
 					<Text text="{createModel>PurchaseOrderItem}"/>
 					
-					<ObjectIdentifier title="{createModel>MaterialDocumentItemText}" text="{createModel>Material}"/>
+					<ObjectIdentifier
+						title="{createModel>Material}"
+						text="{createModel>MaterialDocumentItemText}"
+						titleActive="true"
+						titlePress="onMaterialLinkPress(${createModel>Material})" />
 					
 					<ObjectNumber
 						number="{createModel>TempOpenQty}"

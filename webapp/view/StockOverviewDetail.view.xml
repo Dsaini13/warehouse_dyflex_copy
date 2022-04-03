@@ -19,11 +19,11 @@
 		</semantic:titleHeading>
 		
 		<semantic:titleSnappedContent>
-			<Text text="{stockModel>/d/Material}"/>
+			<Link text="{stockModel>/d/Material}" press="onMaterialLinkPress(${stockModel>/d/Material})" />
 		</semantic:titleSnappedContent>
 
 		<semantic:titleExpandedContent>
-			<Text text="{stockModel>/d/Material}"/>
+			<Link text="{stockModel>/d/Material}" press="onMaterialLinkPress(${stockModel>/d/Material})" />
 		</semantic:titleExpandedContent>
 		
 		<semantic:headerContent>

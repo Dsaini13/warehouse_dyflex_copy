@@ -17,7 +17,9 @@
 		busyIndicatorDelay="{viewModel>/delay}">
 
 		<semantic:titleHeading>
-			<Title text="{viewModel>/purchaseOrder}" level="H2"/>
+			<Title level="H2" >
+				<Link text="{viewModel>/purchaseOrder}" press="onPurchaseOrderLinkPress(${viewModel>/purchaseOrder})" />
+			</Title>
 		</semantic:titleHeading>
 		
 		<semantic:headerContent>

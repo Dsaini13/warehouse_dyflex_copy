@@ -83,16 +83,24 @@
 						type="Navigation"
 						press="onPress">
 						<cells>
-							<ObjectIdentifier title="{customStockSrv>Material}" text="{customStockSrv>ProductName}" />
+							<ObjectIdentifier
+								title="{customStockSrv>Material}"
+								text="{customStockSrv>ProductName}"
+								titleActive="true"
+								titlePress="onMaterialLinkPress(${customStockSrv>Material})" />
+								
 							<ObjectIdentifier title="{customStockSrv>Plant}" text="{customStockSrv>PlantName}" />
 							<ObjectIdentifier title="{customStockSrv>StorageLocation}" text="{customStockSrv>StorageLocationName}" />
 							<ObjectIdentifier title="{customStockSrv>Batch}"/>
+							
 							<ObjectNumber
 								number="{ path: 'customStockSrv>StockOnHand', formatter: '.formatter.numberUnit' }"
 								unit="{customStockSrv>MaterialBaseUnit}" />
+							
 							<ObjectNumber
 								number="{ path: 'customStockSrv>StockQuality', formatter: '.formatter.numberUnit' }"
 								unit="{customStockSrv>MaterialBaseUnit}" />
+							
 							<ObjectNumber
 								number="{ path: 'customStockSrv>StockBlocked', formatter: '.formatter.numberUnit' }"
 								unit="{customStockSrv>MaterialBaseUnit}" />

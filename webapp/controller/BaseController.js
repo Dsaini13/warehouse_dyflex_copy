@@ -183,6 +183,36 @@ sap.ui.define([
 		},
 		
 		/* =========================================================== */
+		/* Cross App Navigations                                       */
+		/* =========================================================== */
+		
+		onMaterialLinkPress: function(materialNo) {
+			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
+			oCrossAppNavigator.toExternal({
+				target: {
+					semanticObject: "Material",
+					action: "manage"
+				},
+				params: {
+					Product: materialNo
+				}
+			});
+		},
+		
+		onPurchaseOrderLinkPress: function(purOrderNo) {
+			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
+			oCrossAppNavigator.toExternal({
+				target: {
+					semanticObject: "PurchaseOrder",
+					action: "displayFactSheet"
+				},
+				params: {
+					PurchaseOrder: purOrderNo
+				}
+			});
+		},
+		
+		/* =========================================================== */
 		/* Description Models                                          */
 		/* =========================================================== */
 		
