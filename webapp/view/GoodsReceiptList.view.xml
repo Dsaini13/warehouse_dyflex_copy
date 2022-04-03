@@ -85,7 +85,7 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 				<items>
 					<ColumnListItem type="Navigation" press="onPress">
 						<cells>
-							<ObjectIdentifier title="{customPOItemSrv>PurchaseOrderItem}" />
+							<ObjectIdentifier text="{ path: 'customPOItemSrv>PurchaseOrderItem', formatter: '.formatter.removeLeadingZeroes' }" />
 								
 							<ObjectIdentifier
 								title="{customPOItemSrv>Material}"

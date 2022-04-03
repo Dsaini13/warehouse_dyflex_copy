@@ -30,6 +30,19 @@ sap.ui.define([], function () {
 			return sDateAsString;
 		},
 		
+		/**
+		 * Remove the leading zeros in a number.
+		 * @param {number} num The number to format 
+		 * @returns {string} unpadded number
+		 */
+		removeLeadingZeroes: function(num) {
+			var s = "";
+			if (num) {
+				s = num.replace(/^0+/, "");
+			} 
+			return s;
+		},
+		
 		openQuantity: function (orderQty, grQty) {
 			return grQty ? orderQty - grQty : orderQty;
 		},

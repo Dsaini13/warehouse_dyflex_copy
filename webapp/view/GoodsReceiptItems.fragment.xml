@@ -47,7 +47,7 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<Text text="{createModel>PurchaseOrderItem}"/>
+					<Text text="{ path: 'createModel>PurchaseOrderItem', formatter: '.formatter.removeLeadingZeroes' }"/>
 					
 					<ObjectIdentifier
 						title="{createModel>Material}"
