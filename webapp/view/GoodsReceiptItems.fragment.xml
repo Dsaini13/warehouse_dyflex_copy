@@ -125,6 +125,7 @@
 							text="S/N"
 							tooltip="Add serial number"
 							class="sapUiSmallMarginEnd"
+							enabled="{createModel>TempEnableSerialNo}"
 							press="onSerialNoShow">
 							<customData>
 								<BadgeCustomData

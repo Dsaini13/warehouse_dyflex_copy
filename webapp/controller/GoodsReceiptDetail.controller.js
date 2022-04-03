@@ -92,6 +92,7 @@ sap.ui.define([
 			// Remove temp fields
 			for (var i = 0; i < createData.to_MaterialDocumentItem.results.length; i++) {
 				delete createData.to_MaterialDocumentItem.results[i].TempOpenQty;
+				delete createData.to_MaterialDocumentItem.results[i].TempEnableSerialNo;
 			}
 			
 			this.getModel("matDocSrv").create("/A_MaterialDocumentHeader", createData, {
@@ -348,7 +349,8 @@ sap.ui.define([
 							"MaterialDocumentItemText" : aItems[i].PurchaseOrderItemText,
 							"EntryUnit"				   : aItems[i].PurchaseOrderQuantityUnit,
 							"QuantityInEntryUnit"	   : openQty.toString(),
-							"TempOpenQty"			   : openQty.toString()
+							"TempOpenQty"			   : openQty.toString(),
+							"TempEnableSerialNo"	   : aItems[i].SerialNumberProfile ? true : false
 						});		
 					}
 				}
