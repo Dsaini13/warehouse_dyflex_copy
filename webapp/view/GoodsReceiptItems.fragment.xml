@@ -116,6 +116,7 @@
 					
 					<ComboBox
 						selectedKey="{createModel>InventoryUsabilityCode}"
+						valueState="{ path: 'createModel>InventoryUsabilityCode', formatter: '.formatter.stockTypeValueState' }"
 						selectionChange="onChanged">
 						<items>
 							<core:Item key=" " text="Unrestricted-Use"/>

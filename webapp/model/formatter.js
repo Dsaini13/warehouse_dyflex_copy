@@ -71,6 +71,10 @@ sap.ui.define([], function () {
 		
 		serialNoBadge: function(aSerialNumbers) {
 			return aSerialNumbers ? aSerialNumbers.results.length : "";
+		},
+		
+		stockTypeValueState: function(stockType) {
+			return stockType === " " ? "None" : "Warning";
 		}
 		
 	};
