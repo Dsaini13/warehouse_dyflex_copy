@@ -212,6 +212,19 @@ sap.ui.define([
 			});
 		},
 		
+		onProdOrderLinkPress: function(prodOrderNo) {
+			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
+			oCrossAppNavigator.toExternal({
+				target: {
+					semanticObject: "ProductionOrder",
+					action: "displayFactSheet"
+				},
+				params: {
+					ProductionOrder: prodOrderNo
+				}
+			});
+		},
+		
 		/* =========================================================== */
 		/* Description Models                                          */
 		/* =========================================================== */

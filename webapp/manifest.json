@@ -345,6 +345,20 @@
 					"target": [
 						"goodsReceiptDetail"
 					]
+				},
+				{
+					"pattern": "GoodsRcptProd",
+					"name": "goodsRcptProdList",
+					"target": [
+						"goodsRcptProdList"
+					]
+				},
+				{
+					"pattern": "GoodsRcptProdDetail/{manufacturingOrder}",
+					"name": "goodsRcptProdDetail",
+					"target": [
+						"goodsRcptProdDetail"
+					]
 				}
 			],
 			"targets": {
@@ -377,6 +391,16 @@
 					"viewType": "XML",
 					"viewName": "GoodsReceiptDetail",
 					"viewId": "goodsReceiptDetail"
+				},
+				"goodsRcptProdList": {
+					"viewType": "XML",
+					"viewName": "GoodsRcptProdList",
+					"viewId": "goodsRcptProdList"
+				},
+				"goodsRcptProdDetail": {
+					"viewType": "XML",
+					"viewName": "GoodsRcptProdDetail",
+					"viewId": "goodsRcptProdDetail"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",

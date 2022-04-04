@@ -44,6 +44,8 @@
 					<StandardListItem
 						title="Goods Receipt"
 						description="Production Orders"
+						press="onGoodsRcptProdPress"
+						type="Active"
 						icon="sap-icon://add-activity"
 						iconDensityAware="false"
 						iconInset="false" />

@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptDetail"
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsRcptProdDetail"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic"
@@ -12,17 +12,13 @@
 		showFooter="true"
 		busy="{viewModel>/busy}"
 		busyIndicatorDelay="{viewModel>/delay}">
-
+		
 		<semantic:titleHeading>
 			<Title level="H2" >
-				<Link text="{viewModel>/purchaseOrder}" press="onPurchaseOrderLinkPress(${viewModel>/purchaseOrder})" />
+				<Link text="{viewModel>/orderNo}" press="onProdOrderLinkPress(${viewModel>/orderNo})" />
 			</Title>
 		</semantic:titleHeading>
 		
-		<semantic:headerContent>
-			<ObjectAttribute title="Supplier" text="{supplierModel>/d/SupplierName} ({supplierModel>/d/Supplier})" />
-		</semantic:headerContent>
-
 		<semantic:content>
 			<VBox >
 				
@@ -42,7 +38,7 @@
 		<semantic:sendEmailAction>
 			<semantic:SendEmailAction press="onShareEmailPress"/>
 		</semantic:sendEmailAction>
-
+		
 		<semantic:saveAsTileAction>
 			<footerbar:AddBookmarkButton title="{viewModel>/saveAsTileTitle}"/>
 		</semantic:saveAsTileAction>
