@@ -75,6 +75,11 @@ sap.ui.define([], function () {
 		
 		stockTypeValueState: function(stockType) {
 			return stockType === " " ? "None" : "Warning";
+		},
+		
+		goodsReceiptItemNo: function(purOrdItem, prdOrdItem) {
+			var itemNo = purOrdItem ? purOrdItem : prdOrdItem;
+			return this.formatter.removeLeadingZeroes(itemNo);
 		}
 		
 	};

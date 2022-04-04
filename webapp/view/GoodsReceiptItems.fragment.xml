@@ -47,7 +47,14 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<Text text="{ path: 'createModel>PurchaseOrderItem', formatter: '.formatter.removeLeadingZeroes' }"/>
+					<Text
+						text="{
+							parts: [
+								{ path: 'createModel>PurchaseOrderItem' },
+								{ path: 'createModel>ManufacturingOrderItem' }
+							],
+							formatter: '.formatter.goodsReceiptItemNo'
+						}"/>
 					
 					<ObjectIdentifier
 						title="{createModel>Material}"
@@ -66,10 +73,11 @@
 						description="{createModel>EntryUnit}"
 						type="Number" />
 					
-					<ObjectIdentifier title="{createModel>Plant}" text="{ path: 'createModel>Plant', formatter: '.formatter.plantDesc' }" />
+					<ObjectIdentifier title="{createModel>Plant}" text="{createModel>TempPlantName}" />
 					
 					<Input
 						value="{createModel>StorageLocation}"
+						tooltip="{createModel>TempStorageLocationName}"
 						liveChange="onLiveChangeStoreLoc"
 						showValueHelp="true"
 						valueHelpRequest="onHandleValueHelpStoreLoc"

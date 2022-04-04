@@ -93,8 +93,8 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 								titleActive="true"
 								titlePress="onMaterialLinkPress(${customPOItemSrv>Material})" />
 							
-							<ObjectIdentifier title="{customPOItemSrv>Plant}" text="{ path: 'customPOItemSrv>Plant', formatter: '.formatter.plantDesc' }" />
-							<ObjectIdentifier title="{customPOItemSrv>StorageLocation}" text="{ path: 'customPOItemSrv>StorageLocation', formatter: '.formatter.slocDesc' }" />
+							<ObjectIdentifier title="{customPOItemSrv>Plant}" text="{customPOItemSrv>PlantName}" />
+							<ObjectIdentifier title="{customPOItemSrv>StorageLocation}" text="{customPOItemSrv>StorageLocationName}" />
 							<ObjectNumber
 								number="{customPOItemSrv>OrderQuantity}"
 								unit="{customPOItemSrv>PurchaseOrderQuantityUnit}" />

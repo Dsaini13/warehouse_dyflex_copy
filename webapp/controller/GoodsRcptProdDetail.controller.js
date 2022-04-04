@@ -86,7 +86,7 @@ sap.ui.define([
 					if (openQty > 0) {
 						matDocData.to_MaterialDocumentItem.results.push({
 							"Material"				   : aItems[i].Material,
-							"Plant"					   : aItems[i].Plant,
+							"Plant"					   : aItems[i].ProductionPlant,
 							"StorageLocation"		   : aItems[i].StorageLocation,
 							"ManufacturingOrder"	   : aItems[i].ManufacturingOrder,
 							"ManufacturingOrderItem"   : aItems[i].ManufacturingOrderItem,
@@ -96,6 +96,7 @@ sap.ui.define([
 							"MaterialDocumentItemText" : aItems[i].ProductName,
 							"EntryUnit"				   : aItems[i].ProductionUnit,
 							"QuantityInEntryUnit"	   : openQty.toString(),
+							
 							"TempOpenQty"			   : openQty.toString(),
 							"TempEnableSerialNo"	   : aItems[i].SerialNumberProfile ? true : false,
 							"TempPlantName"			   : aItems[i].PlantName,

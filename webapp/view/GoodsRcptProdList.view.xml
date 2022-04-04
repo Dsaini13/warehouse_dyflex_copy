@@ -89,7 +89,7 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsRcptProdList"
 								titleActive="true"
 								titlePress="onMaterialLinkPress(${customProdOrdSrv>Material})" />
 							
-							<ObjectIdentifier title="{customProdOrdSrv>Plant}" text="{customProdOrdSrv>PlantName}" />
+							<ObjectIdentifier title="{customProdOrdSrv>ProductionPlant}" text="{customProdOrdSrv>PlantName}" />
 							<ObjectIdentifier title="{customProdOrdSrv>StorageLocation}" text="{customProdOrdSrv>StorageLocationName}" />
 							<ObjectNumber
 								number="{customProdOrdSrv>MfgOrderItemPlannedTotalQty}"

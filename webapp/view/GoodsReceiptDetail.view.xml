@@ -15,7 +15,7 @@
 
 		<semantic:titleHeading>
 			<Title level="H2" >
-				<Link text="{viewModel>/purchaseOrder}" press="onPurchaseOrderLinkPress(${viewModel>/purchaseOrder})" />
+				<Link text="{viewModel>/orderNo}" press="onPurchaseOrderLinkPress(${viewModel>/orderNo})" />
 			</Title>
 		</semantic:titleHeading>
 		
