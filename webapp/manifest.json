@@ -87,6 +87,13 @@
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_POITEM_CDS/metadata.xml"
 				}
+			},
+			"CustomProdOrd": {
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_PRDORDITEM_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_PRDORDITEM_CDS/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
@@ -260,6 +267,16 @@
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "CustomPOItem",
+				"preload": true
+			},
+			"customProdOrdSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomProdOrd",
 				"preload": true
 			}
 		},

@@ -1,7 +1,7 @@
 {
   "headerWhiteList": [
-	"BusinessObjectTypeName",
-	"LinkedSAPObjectKey"
+    "BusinessObjectTypeName",
+    "LinkedSAPObjectKey"
   ],
   "routes": [
     {
