@@ -39,7 +39,7 @@ sap.ui.define([
 			
 			oProdOrder.attachRequestCompleted({}, function() {
 				that._handleJSONModelError(oEvent);
-				//that._setSupplierDescModel(oPurchOrder.getProperty("/d/results/0/Supplier"));
+				that._setMainMaterialModel(oProdOrder.getData());
 				that._createODataModel(oProdOrder.getData());
 				that._oViewModel.setProperty("/busy", false);
 			});
@@ -103,6 +103,14 @@ sap.ui.define([
 			
 			this._oCreateModel = new JSONModel(matDocData);
 			this.setModel(this._oCreateModel, "createModel");
+		},
+		
+		_setMainMaterialModel: function(prodOrder) {
+			// The main material is item 0001, see I_ManufacturingOrder
+			var oData = prodOrder.d.results.find(function(obj) {
+				return obj.ManufacturingOrderItem === "0001";
+			});
+			this._setMatlDescModel(oData.Material);
 		},
 		
 		_navToListView: function() {

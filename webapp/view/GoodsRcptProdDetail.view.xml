@@ -19,6 +19,10 @@
 			</Title>
 		</semantic:titleHeading>
 		
+		<semantic:headerContent>
+			<ObjectAttribute title="Product" text="{matlDescModel>/d/ProductDescription} ({matlDescModel>/d/Product})" />
+		</semantic:headerContent>
+		
 		<semantic:content>
 			<VBox >
 				

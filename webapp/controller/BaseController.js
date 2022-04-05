@@ -229,9 +229,9 @@ sap.ui.define([
 		/* Description Models                                          */
 		/* =========================================================== */
 		
-		_setMatlDescModel: function() {
-			if (this._sMaterial) {
-				 var requestUrl = this._dataSources.Product.uri + "A_ProductDescription(Product='" + this._sMaterial + "',Language='EN')?$format=json";
+		_setMatlDescModel: function(material) {
+			if (material) {
+				 var requestUrl = this._dataSources.Product.uri + "A_ProductDescription(Product='" + material + "',Language='EN')?$format=json";
 			}
 			var oMatlDescModel = new JSONModel(requestUrl);
 			this.setModel(oMatlDescModel, "matlDescModel");
