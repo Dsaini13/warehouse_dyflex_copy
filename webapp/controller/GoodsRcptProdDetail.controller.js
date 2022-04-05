@@ -84,7 +84,7 @@ sap.ui.define([
 					var openQty = aItems[i].MfgOrderItemPlannedTotalQty - aItems[i].MfgOrderItemGoodsReceiptQty;
 					
 					if (openQty > 0) {
-						matDocData.to_MaterialDocumentItem.results.push({
+						var oItem = {
 							"Material"				   : aItems[i].Material,
 							"Plant"					   : aItems[i].ProductionPlant,
 							"StorageLocation"		   : aItems[i].StorageLocation,
@@ -101,7 +101,18 @@ sap.ui.define([
 							"TempEnableSerialNo"	   : aItems[i].SerialNumberProfile ? true : false,
 							"TempPlantName"			   : aItems[i].PlantName,
 							"TempStorageLocationName"  : aItems[i].StorageLocationName
-						});	
+						};
+						
+						// Add Serial Numbers from the Order as default to material document
+						if (aItems[i].to_SerialNumbers.results.length > 0) {
+							oItem.to_SerialNumbers = {
+								results: aItems[i].to_SerialNumbers.results.map(function(v) {
+									return { SerialNumber: v.SerialNumber };
+								})
+							};
+						}
+						
+						matDocData.to_MaterialDocumentItem.results.push(oItem);
 					}
 				}
 			}

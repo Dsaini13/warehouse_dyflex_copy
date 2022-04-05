@@ -30,7 +30,6 @@
 						</layoutData>
 					</SearchField>
 					<ndc:BarcodeScannerButton
-						id="idBarcodeScannerButton"
 						scanSuccess="onScanSuccess"
 						scanFail="onScanError"
 						dialogTitle="Barcode Scanner" >
@@ -39,14 +38,20 @@
 			</headerToolbar>
 			
 			<columns>
-				<Column>
+				<Column width="auto">
 					<Text text="Serial No" />
 				</Column>
+				<Column width="60px" />
 			</columns>
 			<items>
 				<ColumnListItem>
 					<cells>
 						<Text text="{itemModel>SerialNumber}" />
+						
+						<Button
+							icon="sap-icon://delete"
+							tooltip="Delete item"
+							press="onSerialNoDelete" />
 					</cells> 
 				</ColumnListItem>
 			</items>

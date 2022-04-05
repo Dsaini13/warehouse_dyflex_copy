@@ -50,7 +50,6 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsRcptProdList"
 							</layoutData>
 						</SearchField>
 						<ndc:BarcodeScannerButton
-							id="idBarcodeScannerButton"
 							scanSuccess="onScanSuccess"
 							scanFail="onScanError"
 							dialogTitle="Barcode Scanner" >

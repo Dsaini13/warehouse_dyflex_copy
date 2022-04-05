@@ -178,6 +178,16 @@ sap.ui.define([
 			}
 		},
 		
+		onSerialNoDelete: function(oEvent) {
+			var path = oEvent.getSource().getParent().getBindingContextPath();
+			var index = path.match(/\d+/);
+			if (index) {
+				var itemData = this._oItemModel.getData();
+				itemData.to_SerialNumbers.results.splice(index[0], 1);
+				this._oItemModel.setData(itemData);
+			}
+		},
+		
 		/* =========================================================== */
 		/* Value Help - Storage Location                               */
 		/* =========================================================== */
