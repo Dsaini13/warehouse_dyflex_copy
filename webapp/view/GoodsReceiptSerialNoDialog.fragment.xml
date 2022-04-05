@@ -14,10 +14,12 @@
 				templateShareable: false }"
 			width="auto"
 			fixedLayout="false"
+			updateFinished="onSerialNoTableUpdate"
 			class="sapUiResponsiveMargin">
 			
 			<headerToolbar>
 				<OverflowToolbar>
+					<Title text="{viewModel>/serialNoTableTitle}"/>
 					<ToolbarSpacer />
 					<SearchField
 						fieldGroupIds="idSearchFieldGrp"
@@ -25,7 +27,7 @@
 						search="onSerialNoScan">
 						<layoutData>
 							<OverflowToolbarLayoutData
-								maxWidth="150px"
+								maxWidth="130px"
 								priority="NeverOverflow"/>
 						</layoutData>
 					</SearchField>
@@ -38,7 +40,7 @@
 			</headerToolbar>
 			
 			<columns>
-				<Column width="auto">
+				<Column width="auto" >
 					<Text text="Serial No" />
 				</Column>
 				<Column width="60px" />

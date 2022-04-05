@@ -11,27 +11,11 @@ sap.ui.define([
 		/* =========================================================== */
 		
 		/**
-		 * Called when the worklist controller is instantiated.
+		 * Called when the controller is instantiated.
 		 * @public
 		 */
 		onInit : function () {
-			
-			this._oViewModel = new JSONModel({
-					busy: true,
-					delay: 0,
-					orderNo: "",
-					enableSave: false
-				});
-			this.setModel(this._oViewModel, "viewModel");
-			
-			this.getRouter().getRoute("goodsRcptProdDetail").attachPatternMatched(this._onObjectMatched, this);
-			
-			// Set Global Models
-			this._dataSources = this.getOwnerComponent().getMetadata().getManifestEntry("sap.app").dataSources;
-			//this._setPlantGlobalModel();
-			
-			// Set Attachment Control
-			this._initAttachmentControl();
+			this._onInit("goodsRcptProdDetail");
 		},
 		
 		/* =========================================================== */

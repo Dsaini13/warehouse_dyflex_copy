@@ -15,20 +15,7 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit : function () {
-			
-			this._oViewModel = new JSONModel({
-					busy: true,
-					delay: 0,
-					orderNo: "",
-					enableSave: false
-				});
-			this.setModel(this._oViewModel, "viewModel");
-			
-			this.getRouter().getRoute("goodsReceiptDetail").attachPatternMatched(this._onObjectMatched, this);
-			
-			this._dataSources = this.getOwnerComponent().getMetadata().getManifestEntry("sap.app").dataSources;
-			
-			this._initAttachmentControl();
+			this._onInit("goodsReceiptDetail");
 		},
 		
 		/* =========================================================== */

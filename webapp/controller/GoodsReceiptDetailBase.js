@@ -13,6 +13,28 @@ sap.ui.define([
 		formatter: formatter,
 		
 		/* =========================================================== */
+		/* lifecycle methods                                           */
+		/* =========================================================== */
+		
+		_onInit: function(sRoute) {
+			
+			this._oViewModel = new JSONModel({
+					busy: true,
+					delay: 0,
+					orderNo: "",
+					enableSave: false,
+					serialNoTableTitle: ""
+				});
+			this.setModel(this._oViewModel, "viewModel");
+			
+			this.getRouter().getRoute(sRoute).attachPatternMatched(this._onObjectMatched, this);
+			
+			this._dataSources = this.getOwnerComponent().getMetadata().getManifestEntry("sap.app").dataSources;
+			
+			this._initAttachmentControl();
+		},
+		
+		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
 		
@@ -186,6 +208,17 @@ sap.ui.define([
 				itemData.to_SerialNumbers.results.splice(index[0], 1);
 				this._oItemModel.setData(itemData);
 			}
+		},
+		
+		onSerialNoTableUpdate: function(oEvent) {
+			var sTitle = "Items",
+				oTable = oEvent.getSource(),
+				iTotalItems = oEvent.getParameter("total");
+				
+			if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+				sTitle = sTitle + " (" + iTotalItems + ")";
+			}
+			this._oViewModel.setProperty("/serialNoTableTitle", sTitle);
 		},
 		
 		/* =========================================================== */
