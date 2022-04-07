@@ -14,13 +14,13 @@
 		<semantic:titleHeading>
 			<Title text="{i18n>stocktakeListTitle}" level="H2"/>
 		</semantic:titleHeading>
-
+		
 		<semantic:content>
 			<Table
 				id="idStocktakeListTable"
-				width="auto"
+				fixedLayout="false"
 				items="{
-					path: 'physInvDocSrv>/A_PhysInventoryDocItem',
+					path: 'customPhysInvSrv>/YY1_Warehouse_PhysInvItem',
 					sorter: [
 						{ path: 'PhysicalInventoryDocument', descending: true, group: true },
 						{ path: 'FiscalYear', descending: true, group: true },
@@ -68,7 +68,7 @@
 					<Column width="20%" minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Storage Location" />
 					</Column>
-					<Column width="15%" minScreenWidth="Desktop" demandPopin="true">
+					<Column width="15%" minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Batch" />
 					</Column>
 				</columns>
@@ -76,11 +76,11 @@
 				<items>
 					<ColumnListItem type="Navigation" press="onPress">
 						<cells>
-							<ObjectIdentifier title="{physInvDocSrv>PhysicalInventoryDocumentItem}" />
-							<ObjectIdentifier title="{physInvDocSrv>Material}" />
-							<ObjectIdentifier title="{physInvDocSrv>Plant}" />
-							<ObjectIdentifier title="{physInvDocSrv>StorageLocation}" />
-							<ObjectIdentifier title="{physInvDocSrv>Batch}"/>
+							<ObjectIdentifier title="{ path: 'customPhysInvSrv>PhysicalInventoryDocumentItem', formatter: '.formatter.removeLeadingZeroes' }" />
+							<ObjectIdentifier title="{customPhysInvSrv>Material}" text="{customPhysInvSrv>ProductName}" />
+							<ObjectIdentifier title="{customPhysInvSrv>Plant}" text="{customPhysInvSrv>PlantName}" />
+							<ObjectIdentifier title="{customPhysInvSrv>StorageLocation}" text="{customPhysInvSrv>StorageLocationName}" />
+							<ObjectIdentifier title="{ path: 'customPhysInvSrv>Batch', formatter: '.formatter.removeLeadingZeroes' }"/>
 						</cells>
 					</ColumnListItem>
 				</items>

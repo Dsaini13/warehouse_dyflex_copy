@@ -25,9 +25,7 @@ sap.ui.define([
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
 			var iOriginalBusyDelay = this._oTable.getBusyIndicatorDelay();
-			// keeps the search state
-			this._aTableSearchState = [];
-
+			
 			// Model used to manipulate control states
 			this._oViewModel = new JSONModel({
 				listTableTitle : this.getResourceBundle().getText("stocktakeListTableTitle"),
@@ -112,7 +110,7 @@ sap.ui.define([
 		 * @public
 		 */
 		onPress : function (oEvent) {
-			var oObject = this.getModel("physInvDocSrv").getProperty(oEvent.getSource().getBindingContextPath());
+			var oObject = this.getModel("customPhysInvSrv").getProperty(oEvent.getSource().getBindingContextPath());
 			this.getRouter().navTo("stocktakeDetail", {
 				objectId: oObject.ID
 			});

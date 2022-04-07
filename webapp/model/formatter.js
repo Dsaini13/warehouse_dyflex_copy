@@ -69,6 +69,18 @@ sap.ui.define([], function () {
 			return oData ? oData.StorageLocationName : "";
 		},
 		
+		materialDesc: function(sValue) {
+			if (sValue) {
+				var requestUrl = this._dataSources.Product.uri + "A_ProductDescription(Product='" + sValue + "',Language='EN')?$format=json";
+				var oMatlDescModel = new sap.ui.model.json.JSONModel(requestUrl);
+				oMatlDescModel.attachRequestCompleted({}, function() {
+					return oMatlDescModel.getProperty("/d/ProductDescription");
+				});
+			} else {
+				return "";
+			}
+		},
+		
 		serialNoBadge: function(aSerialNumbers) {
 			return aSerialNumbers ? aSerialNumbers.results.length : "";
 		},
