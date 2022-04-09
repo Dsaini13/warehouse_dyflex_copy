@@ -350,6 +350,13 @@
 					]
 				},
 				{
+					"pattern": "StocktakeDetail/{documentNo}/{fiscalYear}",
+					"name": "stocktakeDetail",
+					"target": [
+						"stocktakeDetail"
+					]
+				},
+				{
 					"pattern": "GoodsReceipt",
 					"name": "goodsReceiptList",
 					"target": [
@@ -398,6 +405,10 @@
 					"viewType": "XML",
 					"viewName": "StocktakeList",
 					"viewId": "stocktakeList"
+				},
+				"stocktakeDetail": {
+					"viewType": "XML",
+					"viewName": "StocktakeDetail"
 				},
 				"goodsReceiptList": {
 					"viewType": "XML",

@@ -112,7 +112,8 @@ sap.ui.define([
 		onPress : function (oEvent) {
 			var oObject = this.getModel("customPhysInvSrv").getProperty(oEvent.getSource().getBindingContextPath());
 			this.getRouter().navTo("stocktakeDetail", {
-				objectId: oObject.ID
+				documentNo: oObject.PhysicalInventoryDocument,
+				fiscalYear: oObject.FiscalYear
 			});
 		},
 		

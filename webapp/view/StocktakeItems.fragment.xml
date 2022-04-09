@@ -1,0 +1,134 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	
+	<Table 
+		items="{ 
+			path: 'createModel>/d/results', 
+			sorter: [
+				{ path: 'WarehouseStorageBin', descending: false },
+				{ path: 'Material', descending: false }
+			],
+			templateShareable: false }"
+		width="auto"
+		fixedLayout="false"
+		class="sapUiSmallMarginTopBottom"
+		noDataText="{i18n>tableNoDataText}">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Items"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column>
+				<Text text="Storage Bin"/>
+			</Column>
+			<Column>
+				<Text text="Product"/>
+			</Column>
+			<Column>
+				<Text text="Batch"/>
+			</Column>
+			<Column>
+				<Text text="Count Qty"/>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{createModel>WarehouseStorageBin}"/>
+					
+					<ObjectIdentifier
+						title="{createModel>Material}"
+						text="{createModel>ProductName}"
+						titleActive="true"
+						titlePress="onMaterialLinkPress(${createModel>Material})" />
+					
+					<Text text="{createModel>Batch}"/>
+					
+					<Input
+						value="{createModel>TempXXXX}"
+						change="onChanged"
+						fieldWidth="75%"
+						description="{createModel>MaterialBaseUnit}"
+						type="Number" />
+					
+					<HBox>
+						<Button
+							text="S/N"
+							tooltip="Add serial number"
+							class="sapUiSmallMarginEnd"
+							enabled="{createModel>TempEnableSerialNo}"
+							press="onSerialNoShow">
+							<customData>
+								<BadgeCustomData
+									key="badge"
+									value="{ path: 'createModel>to_SerialNumbers', formatter: '.formatter.serialNoBadge' }"/>
+							</customData>
+						</Button>
+						<Button
+							icon="sap-icon://delete"
+							tooltip="Delete item"
+							press="onDeleteItem" />
+					</HBox>
+							
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	
+	<!--
+	<Table
+		inset="false"
+		items="{path:'itemModel>/'}"
+		width="auto">
+		
+		<columns>
+			<Column width="10%">
+				<Text text="Material"/>
+			</Column>
+			<Column width="18%">
+				<Text text="MPN"/>
+			</Column>
+			<Column width="30%" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Description"/>
+			</Column>
+			<Column width="10%" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="SBin"/>
+			</Column>
+			<Column width="10%" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Batch"/>
+			</Column>
+			<Column width="15%" hAlign="End">
+				<Text text="Count Qty"/>
+			</Column>
+			<Column width="7%">
+				<Text text="UoM"/>
+			</Column>
+		</columns>
+		
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+					<Text text="{itemModel>Material}"/>
+					<Text text="{itemModel>MfrPartNo}"/>
+					<Text text="{itemModel>MaterialDesc}"/>
+					<Text text="{itemModel>StorageBin}"/>
+					<Text text="{itemModel>Batch}"/>
+					<Input
+						value="{itemModel>CountQty}"
+						valueState="{itemModel>CountState}"
+						type="Number"
+						placeholder="Enter count"
+						textAlign="End"
+						change="onChangeCountQty"/>
+					<Text text="{itemModel>Unit}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	-->
+</core:FragmentDefinition>

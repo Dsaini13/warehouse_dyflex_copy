@@ -10,11 +10,9 @@
 		width="auto"
 		fixedLayout="false"
 		class="sapUiSmallMarginTopBottom"
-		noDataText="{i18n>goodsReceiptItemNoData}"
-		busyIndicatorDelay="{detailView>/lineItemTableDelay}"
-		itemPress="onItemSelected">
+		noDataText="{i18n>goodsReceiptItemNoData}">
 		<headerToolbar>
-			<Toolbar id="lineItemsToolbar">
+			<Toolbar>
 				<Title text="Items"/>
 				<ToolbarSpacer/>
 			</Toolbar>

@@ -56,19 +56,22 @@
 				</headerToolbar>
 
 				<columns>
-					<Column width="auto" >
+					<Column>
 						<Text text="Item" />
 					</Column>
-					<Column width="auto" >
+					<Column>
 						<Text text="Material" />
 					</Column>
-					<Column width="auto" >
+					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Plant" />
 					</Column>
-					<Column width="20%" minScreenWidth="Tablet" demandPopin="true">
+					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Storage Location" />
 					</Column>
-					<Column width="15%" minScreenWidth="Tablet" demandPopin="true">
+					<Column>
+						<Text text="Storage Bin" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Batch" />
 					</Column>
 				</columns>
@@ -76,11 +79,12 @@
 				<items>
 					<ColumnListItem type="Navigation" press="onPress">
 						<cells>
-							<ObjectIdentifier title="{ path: 'customPhysInvSrv>PhysicalInventoryDocumentItem', formatter: '.formatter.removeLeadingZeroes' }" />
+							<ObjectIdentifier text="{ path: 'customPhysInvSrv>PhysicalInventoryDocumentItem', formatter: '.formatter.removeLeadingZeroes' }" />
 							<ObjectIdentifier title="{customPhysInvSrv>Material}" text="{customPhysInvSrv>ProductName}" />
 							<ObjectIdentifier title="{customPhysInvSrv>Plant}" text="{customPhysInvSrv>PlantName}" />
 							<ObjectIdentifier title="{customPhysInvSrv>StorageLocation}" text="{customPhysInvSrv>StorageLocationName}" />
-							<ObjectIdentifier title="{ path: 'customPhysInvSrv>Batch', formatter: '.formatter.removeLeadingZeroes' }"/>
+							<ObjectIdentifier text="{customPhysInvSrv>WarehouseStorageBin}" />
+							<ObjectIdentifier text="{ path: 'customPhysInvSrv>Batch', formatter: '.formatter.removeLeadingZeroes' }"/>
 						</cells>
 					</ColumnListItem>
 				</items>
