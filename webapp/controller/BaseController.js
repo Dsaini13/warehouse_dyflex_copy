@@ -187,41 +187,29 @@ sap.ui.define([
 		/* =========================================================== */
 		
 		onMaterialLinkPress: function(materialNo) {
-			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
-			oCrossAppNavigator.toExternal({
-				target: {
-					semanticObject: "Material",
-					action: "manage"
-				},
-				params: {
-					Product: materialNo
-				}
-			});
+			this._navigateExternalApp("Material", "manage", { Product: materialNo });
 		},
 		
 		onPurchaseOrderLinkPress: function(purOrderNo) {
-			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
-			oCrossAppNavigator.toExternal({
-				target: {
-					semanticObject: "PurchaseOrder",
-					action: "displayFactSheet"
-				},
-				params: {
-					PurchaseOrder: purOrderNo
-				}
-			});
+			this._navigateExternalApp("PurchaseOrder", "displayFactSheet", { PurchaseOrder: purOrderNo });
 		},
 		
 		onProdOrderLinkPress: function(prodOrderNo) {
+			this._navigateExternalApp("ProductionOrder", "displayFactSheet", { ProductionOrder: prodOrderNo });
+		},
+		
+		onPhysInvDocLinkPress: function(documentNo, fiscalYear) {
+			this._navigateExternalApp("PhysicalInventoryDocument", "displayFactSheet", { PhysicalInventoryDocument: documentNo, FiscalYear: fiscalYear });
+		},
+		
+		_navigateExternalApp: function(semanticObject, action, oParams) {
 			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
 			oCrossAppNavigator.toExternal({
 				target: {
-					semanticObject: "ProductionOrder",
-					action: "displayFactSheet"
+					semanticObject: semanticObject,
+					action: action
 				},
-				params: {
-					ProductionOrder: prodOrderNo
-				}
+				params: oParams
 			});
 		},
 		

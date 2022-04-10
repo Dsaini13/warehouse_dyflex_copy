@@ -12,7 +12,7 @@
 			templateShareable: false }"
 		width="auto"
 		fixedLayout="false"
-		class="sapUiSmallMarginTopBottom"
+		class="sapUiSmallMarginBottom"
 		noDataText="{i18n>tableNoDataText}">
 		<headerToolbar>
 			<Toolbar>
@@ -22,13 +22,16 @@
 		</headerToolbar>
 		<columns>
 			<Column>
-				<Text text="Storage Bin"/>
+				<Text text="Material"/>
 			</Column>
-			<Column>
-				<Text text="Product"/>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="MPN"/>
 			</Column>
-			<Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
 				<Text text="Batch"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Storage Bin"/>
 			</Column>
 			<Column>
 				<Text text="Count Qty"/>
@@ -39,15 +42,17 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<Text text="{createModel>WarehouseStorageBin}"/>
-					
 					<ObjectIdentifier
 						title="{createModel>Material}"
 						text="{createModel>ProductName}"
 						titleActive="true"
 						titlePress="onMaterialLinkPress(${createModel>Material})" />
 					
-					<Text text="{createModel>Batch}"/>
+					<Text text="{createModel>ProductManufacturerNumber}"/>
+					
+					<Text text="{ path: 'createModel>Batch', formatter: '.formatter.removeLeadingZeroes' }"/>
+					
+					<Text text="{createModel>WarehouseStorageBin}"/>
 					
 					<Input
 						value="{createModel>TempXXXX}"
@@ -74,7 +79,6 @@
 							tooltip="Delete item"
 							press="onDeleteItem" />
 					</HBox>
-							
 				</cells>
 			</ColumnListItem>
 		</items>
