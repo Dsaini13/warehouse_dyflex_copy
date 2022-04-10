@@ -226,6 +226,75 @@ sap.ui.define([
 		},
 		
 		/* =========================================================== */
+		/* Serial No Dialog                                            */
+		/* =========================================================== */
+		
+		onSerialNoShow: function(oEvent) {
+			this._oItemPath = oEvent.getSource().getParent().getParent().getBindingContextPath();
+			var itemData = jQuery.extend(true, {}, this._oCreateModel.getProperty(this._oItemPath));
+			
+			this._oItemModel = new JSONModel(itemData);
+			this.setModel(this._oItemModel, "itemModel");
+			
+			if (!this._serialNoDialog) {
+				this._serialNoDialog = sap.ui.xmlfragment("dyflex.mm.s4cloud.warehouse.view.SerialNoDialog",this);
+				this.getView().addDependent(this._serialNoDialog);
+				jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._serialNoDialog);
+			}
+			this._serialNoDialog.open();
+		},
+		
+		onSerialNoApply: function() {
+			var itemData = this._oItemModel.getData();
+			this._oCreateModel.setProperty(this._oItemPath, itemData);
+			this._serialNoDialog.close();
+		},
+		
+		onSerialNoCancel: function() {
+			this._serialNoDialog.close();
+		},
+		
+		onSerialNoScan: function(oEvent) {
+			if (!oEvent.getParameters().refreshButtonPressed) {
+				var sQuery = oEvent.getParameter("query");
+				if (sQuery && sQuery.length > 0) {
+					
+					var itemData = this._oItemModel.getData();
+					if (!itemData.to_SerialNumbers) {
+						itemData.to_SerialNumbers = { "results" : [] };
+					}
+					
+					itemData.to_SerialNumbers.results.push({
+						"SerialNumber": sQuery
+					});
+					this._oItemModel.setData(itemData);
+					oEvent.getSource().setValue("");
+				}
+			}
+		},
+		
+		onSerialNoDelete: function(oEvent) {
+			var path = oEvent.getSource().getParent().getBindingContextPath();
+			var index = path.match(/\d+/);
+			if (index) {
+				var itemData = this._oItemModel.getData();
+				itemData.to_SerialNumbers.results.splice(index[0], 1);
+				this._oItemModel.setData(itemData);
+			}
+		},
+		
+		onSerialNoTableUpdate: function(oEvent) {
+			var sTitle = "Items",
+				oTable = oEvent.getSource(),
+				iTotalItems = oEvent.getParameter("total");
+				
+			if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+				sTitle = sTitle + " (" + iTotalItems + ")";
+			}
+			this._oViewModel.setProperty("/serialNoTableTitle", sTitle);
+		},
+		
+		/* =========================================================== */
 		/* Description Models                                          */
 		/* =========================================================== */
 		

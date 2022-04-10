@@ -61,7 +61,7 @@
 							text="S/N"
 							tooltip="Add serial number"
 							class="sapUiSmallMarginEnd"
-							enabled="{createModel>TempEnableSerialNo}"
+							enabled="{= ${createModel>SerialNumberProfile} ? true : false }"
 							press="onSerialNoShow">
 							<customData>
 								<BadgeCustomData
@@ -80,55 +80,4 @@
 		</items>
 	</Table>
 	
-	<!--
-	<Table
-		inset="false"
-		items="{path:'itemModel>/'}"
-		width="auto">
-		
-		<columns>
-			<Column width="10%">
-				<Text text="Material"/>
-			</Column>
-			<Column width="18%">
-				<Text text="MPN"/>
-			</Column>
-			<Column width="30%" minScreenWidth="Tablet" demandPopin="true">
-				<Text text="Description"/>
-			</Column>
-			<Column width="10%" minScreenWidth="Tablet" demandPopin="true">
-				<Text text="SBin"/>
-			</Column>
-			<Column width="10%" minScreenWidth="Tablet" demandPopin="true">
-				<Text text="Batch"/>
-			</Column>
-			<Column width="15%" hAlign="End">
-				<Text text="Count Qty"/>
-			</Column>
-			<Column width="7%">
-				<Text text="UoM"/>
-			</Column>
-		</columns>
-		
-		<items>
-			<ColumnListItem vAlign="Middle">
-				<cells>
-					<Text text="{itemModel>Material}"/>
-					<Text text="{itemModel>MfrPartNo}"/>
-					<Text text="{itemModel>MaterialDesc}"/>
-					<Text text="{itemModel>StorageBin}"/>
-					<Text text="{itemModel>Batch}"/>
-					<Input
-						value="{itemModel>CountQty}"
-						valueState="{itemModel>CountState}"
-						type="Number"
-						placeholder="Enter count"
-						textAlign="End"
-						change="onChangeCountQty"/>
-					<Text text="{itemModel>Unit}"/>
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
-	-->
 </core:FragmentDefinition>

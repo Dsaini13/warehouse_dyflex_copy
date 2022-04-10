@@ -9,7 +9,9 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.StocktakeDetail", {
-
+		
+		formatter: formatter,
+		
 		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
@@ -24,10 +26,6 @@ sap.ui.define([
 					delay: 0,
 					documentNo: "",
 					fiscalYear: "",
-				//	plant: "",
-				//	plantDesc: "",
-				//	storeLoc: "",
-				//	storeLocDesc: "",
 					enableSave: false,
 					serialNoTableTitle: ""
 				});
@@ -121,12 +119,6 @@ sap.ui.define([
 		},
 		
 		_createODataModel: function(document) {
-			/*
-			this._oViewModel.setProperty("/plant", document.d.results[0].Plant);
-			this._oViewModel.setProperty("/plantDesc", document.d.results[0].PlantName);
-			this._oViewModel.setProperty("/storeLoc", document.d.results[0].StorageLocation);
-			this._oViewModel.setProperty("/storeLocDesc", document.d.results[0].StorageLocationName);
-			*/
 			
 				/*
 			var matDocData = {
