@@ -94,6 +94,25 @@ sap.ui.define([
 			}
 		},
 		
+		_checkIfBatchRequestSucceeded: function(oEvent) {
+			var oParams = oEvent.getParameters();
+			var aRequests = oEvent.getParameters().requests;
+			var oRequest;
+			if (oParams.success) {
+				if (aRequests) {
+					for (var i = 0; i < aRequests.length; i++) {
+						oRequest = oEvent.getParameters().requests[i];
+						if (!oRequest.success) {
+							return false;
+						}
+					}
+				}
+				return true;
+			} else {
+				return false;
+			}
+		},
+		
 		onPressMenu: function() {
 			this.getRouter().navTo("mainList", {}, true);
 		},

@@ -25,6 +25,7 @@ sap.ui.define([
 			// initialize the error handler with the component
 			this._oErrorMatStk = new ErrorHandler(this, "matlStockSrv");
 			this._oErrorMatDoc = new ErrorHandler(this, "matDocSrv");
+			this._oErrorMatDoc = new ErrorHandler(this, "physInvDocSrv");
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
