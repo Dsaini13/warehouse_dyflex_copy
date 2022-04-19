@@ -48,14 +48,9 @@ sap.ui.define([
 				
 			var iRowIndex = path.match(/\d+/);
 			if (iRowIndex) {
-				if (oData.to_MaterialDocumentItem.results[iRowIndex[0]].Existing) {
-					oData.to_MaterialDocumentItem.results[iRowIndex[0]].Deleted = true;
-				} else {
-					oData.to_MaterialDocumentItem.results.splice(iRowIndex[0], 1);
-				}
+				oData.to_MaterialDocumentItem.results.splice(iRowIndex[0], 1);
 				this._oCreateModel.setData(oData);
 			}
-			
 			this._validateSaveEnablement();
 		},
 		

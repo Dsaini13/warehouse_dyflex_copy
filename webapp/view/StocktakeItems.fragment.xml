@@ -12,7 +12,7 @@
 			templateShareable: false }"
 		width="auto"
 		fixedLayout="false"
-		class="sapUiSmallMarginBottom"
+		class="sapUiMeduimMarginBottom"
 		noDataText="{i18n>tableNoDataText}">
 		<headerToolbar>
 			<Toolbar>
@@ -55,7 +55,7 @@
 					<Text text="{createModel>WarehouseStorageBin}"/>
 					
 					<Input
-						value="{createModel>TempXXXX}"
+						value="{createModel>TempCountQty}"
 						change="onChanged"
 						fieldWidth="75%"
 						description="{createModel>MaterialBaseUnit}"

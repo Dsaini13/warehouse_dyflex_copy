@@ -46,6 +46,18 @@ sap.ui.define([
 			this._navToListView();
 		},
 		
+		onDeleteItem : function (oEvent) {
+			var path = oEvent.getSource().getParent().getParent().getBindingContextPath(),
+				oData = this._oCreateModel.getData();
+				
+			var iRowIndex = path.match(/\d+/);
+			if (iRowIndex) {
+				oData.d.results.splice(iRowIndex[0], 1);
+				this._oCreateModel.setData(oData);
+			}
+			this._validateSaveEnablement();
+		},
+		
 		onChanged: function() {
 			this._validateSaveEnablement();
 		},
@@ -115,7 +127,6 @@ sap.ui.define([
 			});
 			
 			this._resetAttachmentControl();
-			this._validateSaveEnablement();
 		},
 		
 		_createODataModel: function(document) {
@@ -165,6 +176,26 @@ sap.ui.define([
 			*/
 			this._oCreateModel = new JSONModel(document);
 			this.setModel(this._oCreateModel, "createModel");
+		},
+		
+		/**
+		 * Checks if the save button can be enabled
+		 * @private
+		 */
+		_validateSaveEnablement: function () {
+			var aItems = this._oCreateModel.getProperty("/d/results");
+			if (aItems && aItems.length === 0) {
+				this._oViewModel.setProperty("/enableSave", false);
+				return;
+			}
+			
+			for (var i = 0; i < aItems.length; i++) {
+				if (!aItems[i].TempCountQty) {
+					this._oViewModel.setProperty("/enableSave", false);
+					return;
+				}
+			}
+			this._oViewModel.setProperty("/enableSave", true);
 		},
 		
 		_navToListView: function() {
