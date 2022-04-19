@@ -86,6 +86,16 @@ sap.ui.define([
 			
 			for (var i = 0; i < aItems.length; i++) {
 				
+				var eTagParam = {
+					headers: { 
+						"If-Match": this._findDocItemETag(aItems[i])
+					}
+				};
+				
+				var docItemPath = "/A_PhysInventoryDocItem(FiscalYear='" + aItems[i].FiscalYear + 
+									"',PhysicalInventoryDocument='" + aItems[i].PhysicalInventoryDocument + 
+									"',PhysicalInventoryDocumentItem='" + aItems[i].PhysicalInventoryDocumentItem + "')";
+				
 				var oDocItem = { "d": {
 					"Material": aItems[i].Material,
 					"Batch": aItems[i].Batch,
@@ -94,16 +104,25 @@ sap.ui.define([
 					"PhysicalInventoryItemIsZero": parseFloat(aItems[i].TempCountQty) === 0 ? true : false
 				}};
 				
-				var docItemPath = "/A_PhysInventoryDocItem(FiscalYear='" + aItems[i].FiscalYear + 
-									"',PhysicalInventoryDocument='" + aItems[i].PhysicalInventoryDocument + 
-									"',PhysicalInventoryDocumentItem='" + aItems[i].PhysicalInventoryDocumentItem + "')";
+				oDataModel.update(docItemPath, oDocItem, eTagParam);
 				
-				var eTag = this._findDocItemETag(aItems[i]);
 				
-				oDataModel.update( docItemPath, oDocItem, {
-					headers: { "If-Match": eTag }
-				});
-				
+				if (aItems[i].to_SerialNumbers) {
+					var aSerialNumbers = aItems[i].to_SerialNumbers.results;
+					for (var j = 0; j < aSerialNumbers.length; j++) {
+						
+						var serialNoPath = "/A_SerialNumberPhysInventoryDoc(FiscalYear='" + aItems[i].FiscalYear + 
+											"',PhysicalInventoryDocument='" + aItems[i].PhysicalInventoryDocument + 
+											"',PhysicalInventoryDocumentItem='" + aItems[i].PhysicalInventoryDocumentItem + 
+											"',Equipment='',SerialNumberPhysicalInvtryType='2')";
+						
+						var oSerialNo = { "d": {
+							"SerialNumber": aSerialNumbers[j].SerialNumber
+						}};
+						
+						oDataModel.update(serialNoPath, oSerialNo, eTagParam);
+					}
+				}
 			}
 			oDataModel.submitChanges();
 		},
@@ -122,10 +141,10 @@ sap.ui.define([
 			var oSlug = new sap.ui.core.Item({ key: "slug", text: encodeURIComponent(oEvent.getParameters().item.getProperty("fileName")) });
 			this._oAttachmentsControl.addHeaderField(oSlug);
 
-			var oObjectType = new sap.ui.core.Item({ key: "BusinessObjectTypeName", text: "BUS2017" });
+			var oObjectType = new sap.ui.core.Item({ key: "BusinessObjectTypeName", text: "BUS2028" });
 			this._oAttachmentsControl.addHeaderField(oObjectType);
 			
-			var oObjectKey = new sap.ui.core.Item({ key: "LinkedSAPObjectKey", text: this._sMatDocNo });
+			var oObjectKey = new sap.ui.core.Item({ key: "LinkedSAPObjectKey", text: this._pad(this._sDocumentNo, 10) + this._sFiscalYear });
 			this._oAttachmentsControl.addHeaderField(oObjectKey);
 		},
 		
