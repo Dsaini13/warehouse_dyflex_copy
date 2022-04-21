@@ -1,0 +1,113 @@
+<mvc:View
+controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
+	xmlns="sap.m"
+	xmlns:ndc="sap.ndc"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>goodsIssueListTitle}" level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:content>
+			<Table
+				id="idGoodsIssueListTable"
+				width="auto"
+				items="{
+					path: 'customProdOrdSrv>/YY1_Warehouse_PrdOrdItem',
+					sorter: [
+						{ path: 'ManufacturingOrder', descending: true, group: true },
+						{ path: 'ManufacturingOrderItem', descending: false }
+					],
+					filters : [
+						{ path : 'IsCompletelyDelivered', operator : 'EQ', value1 : false }
+					],
+					groupHeaderFactory: '.onGroupHeader'
+				}"
+				noDataText="{listView>/tableNoDataText}"
+				busyIndicatorDelay="{listView>/tableBusyDelay}"
+				updateFinished="onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title
+							text="{listView>/listTableTitle}"
+							level="H3"/>
+						<ToolbarSpacer />
+						<SearchField
+							fieldGroupIds="idSearchFieldGrp"
+							search="onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="150px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+						<ndc:BarcodeScannerButton
+							scanSuccess="onScanSuccess"
+							scanFail="onScanError"
+							dialogTitle="Barcode Scanner" >
+						</ndc:BarcodeScannerButton>
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column>
+						<Text text="Item" />
+					</Column>
+					<Column>
+						<Text text="Product" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" >
+						<Text text="Plant" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Storage Location" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Order Qty" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="onPress">
+						<cells>
+							<ObjectIdentifier text="{ path: 'customProdOrdSrv>ManufacturingOrderItem', formatter: '.formatter.removeLeadingZeroes' }" />
+								
+							<ObjectIdentifier
+								title="{customProdOrdSrv>Material}"
+								text="{customProdOrdSrv>ProductName}"
+								titleActive="true"
+								titlePress="onMaterialLinkPress(${customProdOrdSrv>Material})" />
+							
+							<ObjectIdentifier title="{customProdOrdSrv>ProductionPlant}" text="{customProdOrdSrv>PlantName}" />
+							<ObjectIdentifier title="{customProdOrdSrv>StorageLocation}" text="{customProdOrdSrv>StorageLocationName}" />
+							<ObjectNumber
+								number="{customProdOrdSrv>MfgOrderItemPlannedTotalQty}"
+								unit="{customProdOrdSrv>ProductionUnit}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
+		</semantic:titleCustomIconActions>
+		
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton title="{listView>/saveAsTileTitle}" />
+		</semantic:saveAsTileAction>
+
+	</semantic:SemanticPage>
+	
+</mvc:View>

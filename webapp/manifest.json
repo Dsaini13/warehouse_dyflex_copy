@@ -383,6 +383,13 @@
 					"target": [
 						"goodsRcptProdDetail"
 					]
+				},
+				{
+					"pattern": "GoodsIssueProd",
+					"name": "goodsIssueProdList",
+					"target": [
+						"goodsIssueProdList"
+					]
 				}
 			],
 			"targets": {
@@ -429,6 +436,11 @@
 					"viewType": "XML",
 					"viewName": "GoodsRcptProdDetail",
 					"viewId": "goodsRcptProdDetail"
+				},
+				"goodsIssueProdList": {
+					"viewType": "XML",
+					"viewName": "GoodsIssueProdList",
+					"viewId": "goodsIssueProdList"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",

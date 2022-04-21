@@ -53,6 +53,8 @@
 					<StandardListItem
 						title="Goods Issue"
 						description="Production Orders"
+						press="onGoodsIssueProdPress"
+						type="Active"
 						icon="sap-icon://shipping-status"
 						iconDensityAware="false"
 						iconInset="false" />
