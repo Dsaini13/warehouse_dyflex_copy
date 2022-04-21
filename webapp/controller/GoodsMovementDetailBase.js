@@ -8,7 +8,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel, formatter, Filter, FilterOperator, MessageToast) {
 	"use strict";
 	
-	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptDetailBase", {
+	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.GoodsMovementDetailBase", {
 		
 		formatter: formatter,
 		
