@@ -390,6 +390,13 @@
 					"target": [
 						"goodsIssueProdList"
 					]
+				},
+				{
+					"pattern": "GoodsIssueProdDetail/{manufacturingOrder}",
+					"name": "goodsIssueProdDetail",
+					"target": [
+						"goodsIssueProdDetail"
+					]
 				}
 			],
 			"targets": {
@@ -441,6 +448,11 @@
 					"viewType": "XML",
 					"viewName": "GoodsIssueProdList",
 					"viewId": "goodsIssueProdList"
+				},
+				"goodsIssueProdDetail": {
+					"viewType": "XML",
+					"viewName": "GoodsIssueProdDetail",
+					"viewId": "goodsIssueProdDetail"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",

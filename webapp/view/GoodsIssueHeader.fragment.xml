@@ -1,0 +1,62 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	
+	<Panel>
+		<f:SimpleForm
+			id="idHeaderForm"
+			class="editableForm"
+			columnsL="1"
+			columnsM="1"
+			editable="true"
+			emptySpanL="3"
+			emptySpanM="2"
+			labelSpanL="3"
+			labelSpanM="3"
+			adjustLabelSpan="false"
+			layout="ResponsiveGridLayout"
+			maxContainerCols="2"
+			minWidth="1024">
+			<f:content>
+				
+				<Label text="Document Date" />
+				<DatePicker
+					id="idDocumentDate"
+					required="true"
+					change="onChanged"
+					dateValue="{createModel>/DocumentDate}"
+					displayFormat="dd.MM.yyyy" />
+					
+				<Label text="Posting Date" />
+				<DatePicker
+					id="idPostingDate"
+					required="true"
+					change="onChanged"
+					dateValue="{createModel>/PostingDate}"
+					displayFormat="dd.MM.yyyy" />
+				
+				<Label text="Printing" />
+				<ComboBox selectedKey="{createModel>/VersionForPrintingSlip}" >
+					<items>
+						<core:Item key="0" text="No Print" />
+						<core:Item key="1" text="Individual Slip" />
+						<core:Item key="2" text="Individual Slip with Inspection Text" />
+						<core:Item key="3" text="Collective Slip" />
+					</items>
+				</ComboBox>
+				
+				<Label text="Delivery Note" />
+				<Input
+					value="{createModel>/ReferenceDocument}"
+					change="onChanged"
+					required="true" />
+				
+				<Label text="Header Text" />
+				<Input value="{createModel>/MaterialDocumentHeaderText}" />
+				
+			</f:content>
+		</f:SimpleForm>
+	</Panel>
+	
+</core:FragmentDefinition>

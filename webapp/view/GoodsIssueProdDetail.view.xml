@@ -1,0 +1,60 @@
+<mvc:View
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdDetail"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:core="sap.ui.core"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		headerPinnable="true"
+		toggleHeaderOnTitleClick="true"
+		showFooter="true"
+		busy="{viewModel>/busy}"
+		busyIndicatorDelay="{viewModel>/delay}">
+		
+		<semantic:titleHeading>
+			<Title level="H2" >
+				<Link text="{viewModel>/orderNo}" press="onProdOrderLinkPress(${viewModel>/orderNo})" />
+			</Title>
+		</semantic:titleHeading>
+		
+		<semantic:headerContent>
+			<ObjectAttribute title="Product" text="{matlDescModel>/d/ProductDescription} ({matlDescModel>/d/Product})" />
+		</semantic:headerContent>
+		
+		<semantic:content>
+			<VBox >
+				
+				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.GoodsIssueHeader" type="XML" />
+				
+				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.GoodsIssueItems" type="XML" />
+				
+				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.Attachments" type="XML" />
+				
+			</VBox>
+		</semantic:content>
+		
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
+		</semantic:titleCustomIconActions>
+		
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton title="{viewModel>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+		
+		<semantic:footerMainAction>
+			<semantic:FooterMainAction text="Post" press="onPost" enabled="{viewModel>/enableSave}" />
+		</semantic:footerMainAction>
+		
+		<semantic:footerCustomActions>
+			<Button text="Cancel" press="onCancel" />
+		</semantic:footerCustomActions>
+		
+	</semantic:SemanticPage>
+
+</mvc:View>
