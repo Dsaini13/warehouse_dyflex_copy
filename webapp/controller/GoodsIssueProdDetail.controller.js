@@ -51,7 +51,7 @@ sap.ui.define([
 		_createODataModel: function(prodOrder) {
 			
 			var matDocData = {
-				"GoodsMovementCode"			 : "02",
+				"GoodsMovementCode"			 : "03",
 				"DocumentDate"				 : new Date(),
 				"PostingDate"				 : new Date(),
 				"ReferenceDocument"			 : "",

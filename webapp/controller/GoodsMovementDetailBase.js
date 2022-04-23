@@ -98,7 +98,7 @@ sap.ui.define([
 			
 			this._oViewModel.setProperty("/busy", false);
 			
-			var msg = this.getResourceBundle().getText("goodsReceiptSucessMsg", [oData.MaterialDocument, oData.MaterialDocumentYear]);
+			var msg = this.getResourceBundle().getText("materialDocSucessMsg", [oData.MaterialDocument, oData.MaterialDocumentYear]);
 			MessageToast.show( msg, {
 				duration: 5000,
 				closeOnBrowserNavigation: false
