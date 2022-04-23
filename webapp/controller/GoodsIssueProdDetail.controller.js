@@ -76,7 +76,6 @@ sap.ui.define([
 					        "Reservation"			   : aItems[i].Reservation,
 					        "ReservationItem"		   : aItems[i].ReservationItem,
 							"GoodsMovementType"		   : aItems[i].GoodsMovementType,
-							"GoodsMovementRefDocType"  : "F",
 							"InventoryUsabilityCode"   : " ",
 							"MaterialDocumentItemText" : aItems[i].ProductName,
 							"EntryUnit"				   : aItems[i].BaseUnit,
