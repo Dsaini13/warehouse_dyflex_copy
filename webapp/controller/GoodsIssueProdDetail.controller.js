@@ -35,12 +35,11 @@ sap.ui.define([
 			this._oViewModel.setProperty("/orderNo", this._sProdOrder);
 			
 			var that = this;
-			var oProdOrder = new JSONModel(this._dataSources.CustomProdOrd.uri + "YY1_Warehouse_PrdOrdItem?$filter=ManufacturingOrder eq '" + this._sProdOrder + "'&$expand=to_SerialNumbers&$format=json");
+			var oReservation = new JSONModel(this._dataSources.CustomResvItem.uri + "YY1_Warehouse_ResvItem?$filter=ManufacturingOrder eq '" + this._sProdOrder + "'&$format=json");
 			
-			oProdOrder.attachRequestCompleted({}, function() {
+			oReservation.attachRequestCompleted({}, function() {
 				that._handleJSONModelError(oEvent);
-				that._setMainMaterialModel(oProdOrder.getData());
-				that._createODataModel(oProdOrder.getData());
+				that._createODataModel(oReservation.getData());
 				that._oViewModel.setProperty("/busy", false);
 			});
 			
@@ -48,7 +47,7 @@ sap.ui.define([
 			this._validateSaveEnablement();
 		},
 		
-		_createODataModel: function(prodOrder) {
+		_createODataModel: function(oReservation) {
 			
 			var matDocData = {
 				"GoodsMovementCode"			 : "03",
@@ -61,24 +60,25 @@ sap.ui.define([
 				"to_MaterialDocumentItem"	 : { "results":[] }
 			};
 			
-			var aItems = prodOrder.d.results;
+			var aItems = oReservation.d.results;
 			for (var i = 0; i < aItems.length; i++) {
 				if (!aItems[i].IsCompletelyDelivered) {
 					
-					var openQty = aItems[i].MfgOrderItemPlannedTotalQty - aItems[i].MfgOrderItemGoodsReceiptQty;
+					var openQty = aItems[i].ResvnItmRequiredQtyInBaseUnit - aItems[i].ResvnItmWithdrawnQtyInBaseUnit;
 					
 					if (openQty > 0) {
 						var oItem = {
-							"Material"				   : aItems[i].Material,
-							"Plant"					   : aItems[i].ProductionPlant,
+							"Material"				   : aItems[i].Product,
+							"Plant"					   : aItems[i].Plant,
 							"StorageLocation"		   : aItems[i].StorageLocation,
 							"ManufacturingOrder"	   : aItems[i].ManufacturingOrder,
-							"ManufacturingOrderItem"   : aItems[i].ManufacturingOrderItem,
-							"GoodsMovementType"		   : "101",
+					        "Reservation"			   : aItems[i].Reservation,
+					        "ReservationItem"		   : aItems[i].ReservationItem,
+							"GoodsMovementType"		   : aItems[i].GoodsMovementType,
 							"GoodsMovementRefDocType"  : "F",
-							"InventoryUsabilityCode"   : aItems[i].InventoryUsabilityCode ? aItems[i].InventoryUsabilityCode : " ",
+							"InventoryUsabilityCode"   : " ",
 							"MaterialDocumentItemText" : aItems[i].ProductName,
-							"EntryUnit"				   : aItems[i].ProductionUnit,
+							"EntryUnit"				   : aItems[i].BaseUnit,
 							"QuantityInEntryUnit"	   : openQty.toString(),
 							
 							"TempOpenQty"			   : openQty.toString(),
@@ -86,16 +86,6 @@ sap.ui.define([
 							"TempPlantName"			   : aItems[i].PlantName,
 							"TempStorageLocationName"  : aItems[i].StorageLocationName
 						};
-						
-						// Add Serial Numbers from the Order as default to material document
-						if (aItems[i].to_SerialNumbers.results.length > 0) {
-							oItem.to_SerialNumbers = {
-								results: aItems[i].to_SerialNumbers.results.map(function(v) {
-									return { SerialNumber: v.SerialNumber };
-								})
-							};
-						}
-						
 						matDocData.to_MaterialDocumentItem.results.push(oItem);
 					}
 				}
@@ -103,14 +93,6 @@ sap.ui.define([
 			
 			this._oCreateModel = new JSONModel(matDocData);
 			this.setModel(this._oCreateModel, "createModel");
-		},
-		
-		_setMainMaterialModel: function(prodOrder) {
-			// The main material is item 0001, see I_ManufacturingOrder
-			var oData = prodOrder.d.results.find(function(obj) {
-				return obj.ManufacturingOrderItem === "0001";
-			});
-			this._setMatlDescModel(oData.Material);
 		},
 		
 		_navToListView: function() {

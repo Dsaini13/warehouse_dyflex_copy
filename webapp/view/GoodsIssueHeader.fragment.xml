@@ -46,11 +46,10 @@
 					</items>
 				</ComboBox>
 				
-				<Label text="Delivery Note" />
+				<Label text="Material Slip" />
 				<Input
 					value="{createModel>/ReferenceDocument}"
-					change="onChanged"
-					required="true" />
+					change="onChanged" />
 				
 				<Label text="Header Text" />
 				<Input value="{createModel>/MaterialDocumentHeaderText}" />

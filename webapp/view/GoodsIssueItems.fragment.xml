@@ -22,13 +22,13 @@
 				<Text text="Item"/>
 			</Column>
 			<Column>
-				<Text text="Product"/>
+				<Text text="Component"/>
 			</Column>
 			<Column minScreenWidth="Tablet" demandPopin="true">
 				<Text text="Open Qty"/>
 			</Column>
 			<Column>
-				<Text text="Delivered"/>
+				<Text text="Issued"/>
 			</Column>
 			<Column minScreenWidth="Desktop" demandPopin="true">
 				<Text text="Plant"/>
@@ -47,7 +47,7 @@
 				<cells>
 					<Text
 						text="{ 
-							path: 'createModel>ManufacturingOrderItem', 
+							path: 'createModel>ReservationItem', 
 							formatter: '.formatter.removeLeadingZeroes'
 						}" />
 					
