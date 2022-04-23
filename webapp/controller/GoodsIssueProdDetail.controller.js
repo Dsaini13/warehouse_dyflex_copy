@@ -39,6 +39,7 @@ sap.ui.define([
 			
 			oReservation.attachRequestCompleted({}, function() {
 				that._handleJSONModelError(oEvent);
+				that._setMainMaterialModel(oReservation.getData());
 				that._createODataModel(oReservation.getData());
 				that._oViewModel.setProperty("/busy", false);
 			});
@@ -93,6 +94,17 @@ sap.ui.define([
 			
 			this._oCreateModel = new JSONModel(matDocData);
 			this.setModel(this._oCreateModel, "createModel");
+		},
+		
+		_setMainMaterialModel: function(prodOrder) {
+			// The main material is item 0001, see I_ManufacturingOrder
+			var that = this;
+			var sFilter = "ManufacturingOrder eq '" + this._sProdOrder + "' and ManufacturingOrderItem eq '0001'";
+			var oProdOrder = new JSONModel(this._dataSources.CustomProdOrd.uri + "YY1_Warehouse_PrdOrdItem?$filter=" + sFilter + "&$format=json");
+			oProdOrder.attachRequestCompleted({}, function() {
+				that._oViewModel.setProperty("/mainProduct", oProdOrder.getProperty("/d/results/0/Material"));
+				that._oViewModel.setProperty("/mainProductDesc", oProdOrder.getProperty("/d/results/0/ProductName"));
+			});
 		},
 		
 		_navToListView: function() {
