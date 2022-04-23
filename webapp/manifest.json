@@ -101,6 +101,13 @@
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_PHYSINVITEM_CDS/metadata.xml"
 				}
+			},
+			"CustomResvItem": {
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_RESVITEM_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_RESVITEM_CDS/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
@@ -294,6 +301,16 @@
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "CustomPhysInv",
+				"preload": true
+			},
+			"customResvItemSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomResvItem",
 				"preload": true
 			}
 		},

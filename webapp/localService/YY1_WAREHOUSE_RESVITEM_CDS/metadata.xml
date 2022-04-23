@@ -1,0 +1,50 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/></edmx:Reference>
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="YY1_WAREHOUSE_RESVITEM_CDS" xml:lang="en" sap:schema-version="1"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
+			<EntityType Name="YY1_Warehouse_ResvItemType" sap:label="Warehouse Reservation Item" sap:content-version="1">
+				<Key><PropertyRef Name="Reservation"/><PropertyRef Name="ReservationItem"/><PropertyRef Name="RecordType"/></Key><Property Name="Reservation" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="NonNegative"
+					sap:required-in-filter="false" sap:label="Reservation" sap:quickinfo="Number of reservation/dependent requirements"/><Property Name="ReservationItem" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative"
+					sap:required-in-filter="false" sap:label="Item no." sap:quickinfo="Item Number of Reservation / Dependent Requirements"/><Property Name="RecordType" Type="Edm.String" Nullable="false" MaxLength="1" sap:display-format="UpperCase" sap:required-in-filter="false"
+					sap:label="Record type"/><Property Name="Product" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Material"
+					sap:quickinfo="Material Number"/><Property Name="ProductName" Type="Edm.String" MaxLength="40" sap:required-in-filter="false" sap:label="Product Description"/><Property Name="Plant" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Plant"/><Property Name="PlantName" Type="Edm.String" MaxLength="30" sap:required-in-filter="false" sap:label="Plant Name"/><Property Name="StorageLocation" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false"
+					sap:label="Storage Location"/><Property Name="StorageLocationName" Type="Edm.String" MaxLength="16" sap:required-in-filter="false" sap:label="Storage Loc. Name"
+					sap:quickinfo="Storage Location Name"/><Property Name="Batch" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Batch"
+					sap:quickinfo="Batch Number"/><Property Name="GoodsMovementType" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:required-in-filter="false"
+					sap:label="Movement Type" sap:quickinfo="Movement Type (Inventory Management)"/><Property Name="ResvnItmRequiredQtyInBaseUnit" Type="Edm.Decimal" Precision="13" Scale="3" sap:required-in-filter="false"
+					sap:unit="BaseUnit" sap:label="Requirement Quantity"/><Property Name="ResvnItmWithdrawnQtyInBaseUnit" Type="Edm.Decimal" Precision="13" Scale="3" sap:required-in-filter="false"
+					sap:unit="BaseUnit" sap:label="Quantity withdrawn"/><Property Name="BaseUnit" Type="Edm.String" MaxLength="3" sap:required-in-filter="false" sap:label="Base Unit of Measure"
+					sap:semantics="unit-of-measure"/><Property Name="GoodsRecipientName" Type="Edm.String" MaxLength="12" sap:required-in-filter="false" sap:label="Goods Recipient"/><Property Name="UnloadingPointName" Type="Edm.String" MaxLength="25" sap:required-in-filter="false" sap:label="Unloading Point"/><Property Name="OrderID" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Order"
+					sap:quickinfo="Order Number"/><Property Name="ManufacturingOrderOperation" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false"
+					sap:label="Activity" sap:quickinfo="Operation/Activity Number"/><Property Name="CostCenter" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false"
+					sap:label="Cost Center"/><Property Name="WBSElement" Type="Edm.String" MaxLength="24" sap:display-format="UpperCase" sap:required-in-filter="false"
+					sap:label="WBS Element" sap:quickinfo="Work Breakdown Structure Element (WBS Element)"/><Property Name="ReservationDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false"
+					sap:label="Base date" sap:quickinfo="Base date for reservation"/><Property Name="ReservationItemText" Type="Edm.String" MaxLength="50" sap:required-in-filter="false" sap:label="Text"
+					sap:quickinfo="Item Text"/><Property Name="SerialNumberProfile" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false"
+					sap:label="Serial No. Profile" sap:quickinfo="Serial Number Profile"/></EntityType>
+			<EntityContainer Name="YY1_WAREHOUSE_RESVITEM_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true"
+				sap:supported-formats="atom json xlsx pdf"><EntitySet Name="YY1_Warehouse_ResvItem" EntityType="YY1_WAREHOUSE_RESVITEM_CDS.YY1_Warehouse_ResvItemType" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:content-version="1"/></EntityContainer>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="YY1_WAREHOUSE_RESVITEM_CDS.YY1_WAREHOUSE_RESVITEM_CDS_Entities"><Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/></Annotations><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/opu/odata/sap/YY1_WAREHOUSE_RESVITEM_CDS/$metadata"/><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/opu/odata/sap/YY1_WAREHOUSE_RESVITEM_CDS/$metadata"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
