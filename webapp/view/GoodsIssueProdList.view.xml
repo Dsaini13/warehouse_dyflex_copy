@@ -20,13 +20,13 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
 				id="idGoodsIssueListTable"
 				width="auto"
 				items="{
-					path: 'customProdOrdSrv>/YY1_Warehouse_PrdOrdItem',
+					path: 'customResvItemSrv>/YY1_Warehouse_ResvItem',
 					sorter: [
 						{ path: 'ManufacturingOrder', descending: true, group: true },
-						{ path: 'ManufacturingOrderItem', descending: false }
+						{ path: 'ReservationItem', descending: false }
 					],
 					filters : [
-						{ path : 'IsCompletelyDelivered', operator : 'EQ', value1 : false }
+						{ path : 'OrderCategory', operator : 'EQ', value1 : '10' }
 					],
 					groupHeaderFactory: '.onGroupHeader'
 				}"
@@ -71,25 +71,37 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
 						<Text text="Storage Location" />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
-						<Text text="Order Qty" />
+						<Text text="Required Qty" />
+					</Column>
+					<Column>
+						<Text text="Open Qty" />
 					</Column>
 				</columns>
 				<items>
 					<ColumnListItem type="Navigation" press="onPress">
 						<cells>
-							<ObjectIdentifier text="{ path: 'customProdOrdSrv>ManufacturingOrderItem', formatter: '.formatter.removeLeadingZeroes' }" />
+							<ObjectIdentifier text="{ path: 'customResvItemSrv>ReservationItem', formatter: '.formatter.removeLeadingZeroes' }" />
 								
 							<ObjectIdentifier
-								title="{customProdOrdSrv>Material}"
-								text="{customProdOrdSrv>ProductName}"
+								title="{customResvItemSrv>Product}"
+								text="{customResvItemSrv>ProductName}"
 								titleActive="true"
-								titlePress="onMaterialLinkPress(${customProdOrdSrv>Material})" />
+								titlePress="onMaterialLinkPress(${customResvItemSrv>Product})" />
 							
-							<ObjectIdentifier title="{customProdOrdSrv>ProductionPlant}" text="{customProdOrdSrv>PlantName}" />
-							<ObjectIdentifier title="{customProdOrdSrv>StorageLocation}" text="{customProdOrdSrv>StorageLocationName}" />
+							<ObjectIdentifier title="{customResvItemSrv>Plant}" text="{customResvItemSrv>PlantName}" />
+							<ObjectIdentifier title="{customResvItemSrv>StorageLocation}" text="{customResvItemSrv>StorageLocationName}" />
 							<ObjectNumber
-								number="{customProdOrdSrv>MfgOrderItemPlannedTotalQty}"
-								unit="{customProdOrdSrv>ProductionUnit}" />
+								number="{customResvItemSrv>ResvnItmRequiredQtyInBaseUnit}"
+								unit="{customResvItemSrv>BaseUnit}" />
+							<ObjectNumber
+								number="{
+									parts: [
+										{ path: 'customResvItemSrv>ResvnItmRequiredQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>ResvnItmWithdrawnQtyInBaseUnit' }
+									],
+									formatter: '.formatter.openQuantity'
+								}"
+								unit="{customResvItemSrv>ProductionUnit}" />
 						</cells>
 					</ColumnListItem>
 				</items>

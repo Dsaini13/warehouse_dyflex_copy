@@ -84,13 +84,13 @@ sap.ui.define([
 				// refresh the list binding.
 				this.onRefresh();
 			} else {
-				var aTableSearchState = [new Filter("IsCompletelyDelivered", FilterOperator.EQ, false)];
+				var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, "10")];
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery && sQuery.length > 0) {
 					var aFilters = [];
 					aFilters.push(new Filter("ManufacturingOrder", FilterOperator.EQ, sQuery));
-					aFilters.push(new Filter("Material", FilterOperator.EQ, sQuery));
+					aFilters.push(new Filter("Product", FilterOperator.EQ, sQuery));
 					aTableSearchState.push(new Filter(aFilters, false));
 				}
 				this._applySearch(aTableSearchState);
@@ -112,7 +112,7 @@ sap.ui.define([
 		 * @public
 		 */
 		onPress : function (oEvent) {
-			var oObject = this.getModel("customProdOrdSrv").getProperty(oEvent.getSource().getBindingContextPath());
+			var oObject = this.getModel("customResvItemSrv").getProperty(oEvent.getSource().getBindingContextPath());
 			this.getRouter().navTo("goodsIssueProdDetail", {
 				manufacturingOrder: oObject.ManufacturingOrder
 			});
