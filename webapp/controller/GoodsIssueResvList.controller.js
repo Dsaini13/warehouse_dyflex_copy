@@ -20,14 +20,13 @@ sap.ui.define([
 			
 			var that = this;
 			this._oTable = this.byId("idGoodsIssueListTable");
+			this._aSelectedResv = [];
 			
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
 			var iOriginalBusyDelay = this._oTable.getBusyIndicatorDelay();
-			// keeps the search state
-			this._aTableSearchState = [];
-
+			
 			// Model used to manipulate control states
 			this._oViewModel = new JSONModel({
 				listTableTitle : this.getResourceBundle().getText("goodsIssueListTableTitle"),
@@ -35,7 +34,8 @@ sap.ui.define([
 				shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailListSubject"),
 				shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailListMessage", [location.href]),
 				tableNoDataText : this.getResourceBundle().getText("tableNoDataText"),
-				tableBusyDelay : 0
+				tableBusyDelay : 0,
+				buttonCountResv : 0
 			});
 			this.setModel(this._oViewModel, "listView");
 			
@@ -121,11 +121,23 @@ sap.ui.define([
 			});
 		},
 		
-		onGroupHeader : function(oGroup) {
-			return new sap.m.GroupHeaderListItem( {
-				title: oGroup.key,
-				upperCase: false
-			});
+		onSelectionChange: function(oEvent) {
+			var aItems = oEvent.getParameter("listItems");
+			var oSelected;
+			
+			function isMatched(oValue) {
+				return oValue === oSelected;
+			}
+			
+			for (var i = 0; i < aItems.length; i++) {
+				oSelected = aItems[i].getBindingContext("customResvItemSrv").getObject();
+				if (oEvent.getParameter("selected")) {
+					this._aSelectedResv.push(oSelected);
+				} else {
+					this._aSelectedResv.splice(this._aSelectedResv.findIndex(isMatched), 1);
+				}
+			}
+			this._updateButtonCounts();
 		},
 		
 		/* =========================================================== */
@@ -143,6 +155,10 @@ sap.ui.define([
 			if (aTableSearchState.length !== 0) {
 				this._oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("listNoDataWithSearchText"));
 			}
+		},
+		
+		_updateButtonCounts: function() {
+			this._oViewModel.setProperty("/buttonCountResv", this._aSelectedResv.length);
 		}
 
 	});

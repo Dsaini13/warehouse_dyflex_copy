@@ -8,6 +8,7 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 
 	<semantic:SemanticPage
 		id="page"
+		showFooter="true"
 		headerPinnable="false"
 		toggleHeaderOnTitleClick="false">
 
@@ -19,6 +20,8 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 			<Table
 				id="idGoodsIssueListTable"
 				width="auto"
+				mode="MultiSelect"
+				selectionChange="onSelectionChange"
 				items="{
 					path: 'customResvItemSrv>/YY1_Warehouse_ResvItem',
 					sorter: [
@@ -118,7 +121,15 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 		<semantic:saveAsTileAction>
 			<footerbar:AddBookmarkButton title="{listView>/saveAsTileTitle}" />
 		</semantic:saveAsTileAction>
-
+		
+		<semantic:footerCustomActions>
+			<Button
+				text="Pick and Issue{= ${listView>/buttonCountResv} > 0 ? ' (' + ${listView>/buttonCountResv} + ')' : '' }"
+				press="onPickIssue"
+				busyIndicatorDelay="0"
+				enabled="{= ${listView>/buttonCountResv} > 0 }"/>
+		</semantic:footerCustomActions>
+		
 	</semantic:SemanticPage>
 	
 </mvc:View>
