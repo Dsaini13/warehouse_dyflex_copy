@@ -1,5 +1,5 @@
 <mvc:View
-controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
+controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 	xmlns="sap.m"
 	xmlns:ndc="sap.ndc"
 	xmlns:mvc="sap.ui.core.mvc"
@@ -22,13 +22,12 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
 				items="{
 					path: 'customResvItemSrv>/YY1_Warehouse_ResvItem',
 					sorter: [
-						{ path: 'ManufacturingOrder', descending: true, group: true },
+						{ path: 'Reservation', descending: true },
 						{ path: 'ReservationItem', descending: false }
 					],
 					filters : [
-						{ path : 'OrderCategory', operator : 'EQ', value1 : '10' }
-					],
-					groupHeaderFactory: '.onGroupHeader'
+						{ path : 'OrderCategory', operator : 'NE', value1 : '10' }
+					]
 				}"
 				noDataText="{listView>/tableNoDataText}"
 				busyIndicatorDelay="{listView>/tableBusyDelay}"
@@ -59,16 +58,13 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
 
 				<columns>
 					<Column>
-						<Text text="Item" />
+						<Text text="Reservation" />
 					</Column>
 					<Column>
-						<Text text="Component" />
+						<Text text="Material" />
 					</Column>
-					<Column minScreenWidth="Tablet" demandPopin="true" >
-						<Text text="Plant" />
-					</Column>
-					<Column minScreenWidth="Tablet" demandPopin="true">
-						<Text text="Storage Location" />
+					<Column>
+						<Text text="Acct. Assign." />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Required Qty" />
@@ -78,9 +74,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
 					</Column>
 				</columns>
 				<items>
-					<ColumnListItem type="Navigation" press="onPress">
+					<ColumnListItem>
 						<cells>
-							<ObjectIdentifier text="{ path: 'customResvItemSrv>ReservationItem', formatter: '.formatter.removeLeadingZeroes' }" />
+							<ObjectIdentifier
+								title="{ path: 'customResvItemSrv>', formatter: '.formatter.resvKeysDisplay' }" />
 								
 							<ObjectIdentifier
 								title="{customResvItemSrv>Product}"
@@ -88,8 +85,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
 								titleActive="true"
 								titlePress="onMaterialLinkPress(${customResvItemSrv>Product})" />
 							
-							<ObjectIdentifier title="{customResvItemSrv>Plant}" text="{customResvItemSrv>PlantName}" />
-							<ObjectIdentifier title="{customResvItemSrv>StorageLocation}" text="{customResvItemSrv>StorageLocationName}" />
+							<ObjectIdentifier
+								title="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignObject' }"
+								text="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignDesc' }" />
+							
 							<ObjectNumber
 								number="{customResvItemSrv>ResvnItmRequiredQtyInBaseUnit}"
 								unit="{customResvItemSrv>BaseUnit}" />

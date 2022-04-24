@@ -414,62 +414,87 @@
 					"target": [
 						"goodsIssueProdDetail"
 					]
+				},
+				{
+					"pattern": "GoodsIssueResv",
+					"name": "goodsIssueResvList",
+					"target": [
+						"goodsIssueResvList"
+					]
 				}
 			],
 			"targets": {
 				"mainList": {
 					"viewType": "XML",
 					"viewName": "MainList",
-					"viewId": "mainList"
+					"viewId": "mainList",
+					"title": "{i18n>appTitle}"
 				},
 				"stockOverviewList": {
 					"viewType": "XML",
 					"viewName": "StockOverviewList",
-					"viewId": "stockOverviewList"
+					"viewId": "stockOverviewList",
+					"title": "Stock Overview"
 				},
 				"stockOverviewDetail": {
 					"viewType": "XML",
 					"viewName": "StockOverviewDetail",
-					"viewId": "stockOverviewDetail"
+					"viewId": "stockOverviewDetail",
+					"title": "Stock Overview"
 				},
 				"stocktakeList": {
 					"viewType": "XML",
 					"viewName": "StocktakeList",
-					"viewId": "stocktakeList"
+					"viewId": "stocktakeList",
+					"title": "Stocktake"
 				},
 				"stocktakeDetail": {
 					"viewType": "XML",
-					"viewName": "StocktakeDetail"
+					"viewName": "StocktakeDetail",
+					"viewId": "stocktakeDetail",
+					"title": "Stocktake"
 				},
 				"goodsReceiptList": {
 					"viewType": "XML",
 					"viewName": "GoodsReceiptList",
-					"viewId": "goodsReceiptList"
+					"viewId": "goodsReceiptList",
+					"title": "Goods Receipt of Purchase Order"
 				},
 				"goodsReceiptDetail": {
 					"viewType": "XML",
 					"viewName": "GoodsReceiptDetail",
-					"viewId": "goodsReceiptDetail"
+					"viewId": "goodsReceiptDetail",
+					"title": "Goods Receipt of Purchase Order"
 				},
 				"goodsRcptProdList": {
 					"viewType": "XML",
 					"viewName": "GoodsRcptProdList",
-					"viewId": "goodsRcptProdList"
+					"viewId": "goodsRcptProdList",
+					"title": "Goods Receipt of Production Order"
 				},
 				"goodsRcptProdDetail": {
 					"viewType": "XML",
 					"viewName": "GoodsRcptProdDetail",
-					"viewId": "goodsRcptProdDetail"
+					"viewId": "goodsRcptProdDetail",
+					"title": "Goods Receipt of Production Order"
 				},
 				"goodsIssueProdList": {
 					"viewType": "XML",
 					"viewName": "GoodsIssueProdList",
-					"viewId": "goodsIssueProdList"
+					"viewId": "goodsIssueProdList",
+					"title": "Goods Issue of Production Order"
 				},
 				"goodsIssueProdDetail": {
 					"viewType": "XML",
 					"viewName": "GoodsIssueProdDetail",
-					"viewId": "goodsIssueProdDetail"
+					"viewId": "goodsIssueProdDetail",
+					"title": "Goods Issue of Production Order"
+				},
+				"goodsIssueResvList": {
+					"viewType": "XML",
+					"viewName": "GoodsIssueResvList",
+					"viewId": "goodsIssueResvList",
+					"title": "Goods Issue of Reservations"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",

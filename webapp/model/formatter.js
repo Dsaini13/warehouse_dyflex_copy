@@ -92,8 +92,35 @@ sap.ui.define([], function () {
 		goodsReceiptItemNo: function(purOrdItem, prdOrdItem) {
 			var itemNo = purOrdItem ? purOrdItem : prdOrdItem;
 			return this.formatter.removeLeadingZeroes(itemNo);
-		}
+		},
 		
+		resvKeysDisplay: function(oData) {
+			return this.formatter.removeLeadingZeroes(oData.Reservation) + " / " + this.formatter.removeLeadingZeroes(oData.ReservationItem);
+		},
+		
+		resvAccAssignObject: function(oData) {
+			if (oData.ManufacturingOrder) {
+				return oData.ManufacturingOrder;
+			} else if (oData.CostCenter) {
+				return oData.CostCenter;
+			} else if (oData.WBSElement) {
+				return oData.WBSElement;
+			} else {
+				return "";
+			}
+		},
+		
+		resvAccAssignDesc: function(oData) {
+			if (oData.ManufacturingOrder) {
+				return oData.OrderDescription;
+			} else if (oData.CostCenter) {
+				return oData.CostCenterDescription;
+			} else if (oData.WBSElement) {
+				return oData.WBSDescription;
+			} else {
+				return "";
+			}
+		}
 	};
 
 });

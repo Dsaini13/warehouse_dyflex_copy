@@ -33,6 +33,10 @@ sap.ui.define([
 			this.getRouter().navTo("goodsIssueProdList");
 		},
 		
+		onGoodsIssueResvPress: function(oEvent) {
+			this.getRouter().navTo("goodsIssueResvList");
+		},
+		
 		onStocktakePress: function(oEvent) {
 			this.getRouter().navTo("stocktakeList");
 		}

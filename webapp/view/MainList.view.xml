@@ -61,7 +61,9 @@
 						
 					<StandardListItem
 						title="Goods Issue"
-						description="Others"
+						description="Reservations"
+						press="onGoodsIssueResvPress"
+						type="Active"
 						icon="sap-icon://checklist"
 						iconDensityAware="false"
 						iconInset="false" />
