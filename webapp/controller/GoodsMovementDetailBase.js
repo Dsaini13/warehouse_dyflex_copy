@@ -104,6 +104,7 @@ sap.ui.define([
 				closeOnBrowserNavigation: false
 			});
 			
+			this._updateListModel();
 			this._navToListView();
 		},
 		

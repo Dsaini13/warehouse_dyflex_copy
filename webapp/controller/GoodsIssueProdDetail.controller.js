@@ -106,6 +106,11 @@ sap.ui.define([
 			});
 		},
 		
+		_updateListModel: function() {
+			this.getModel("customResvItemSrv").refresh(true /*force update*/, false /*remove data*/);
+			this.getModel("customResvItemSrv").resetChanges();
+		},
+		
 		_navToListView: function() {
 			this.getRouter().navTo("goodsIssueProdList", {}, true);
 		}

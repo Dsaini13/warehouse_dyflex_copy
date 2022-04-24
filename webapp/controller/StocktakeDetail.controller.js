@@ -80,6 +80,7 @@ sap.ui.define([
 				if (that._checkIfBatchRequestSucceeded(oEvt)) {
 					that._oAttachmentsControl.upload();
 					that._showSuccessMessage();
+					that._updateListModel();
 					that._navToListView();
 				}
 			});
@@ -231,8 +232,12 @@ sap.ui.define([
 			MessageToast.show( msg, { closeOnBrowserNavigation: false });
 		},
 		
-		_navToListView: function() {
+		_updateListModel: function() {
 			this.getModel("customPhysInvSrv").refresh(true /*force update*/, false /*remove data*/);
+			this.getModel("customPhysInvSrv").resetChanges();
+		},
+		
+		_navToListView: function() {
 			this.getRouter().navTo("stocktakeList", {}, true);
 		}
 		

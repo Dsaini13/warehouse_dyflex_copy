@@ -113,6 +113,11 @@ sap.ui.define([
 			this._setMatlDescModel(oData.Material);
 		},
 		
+		_updateListModel: function() {
+			this.getModel("customProdOrdSrv").refresh(true /*force update*/, false /*remove data*/);
+			this.getModel("customProdOrdSrv").resetChanges();
+		},
+		
 		_navToListView: function() {
 			this.getRouter().navTo("goodsRcptProdList", {}, true);
 		}

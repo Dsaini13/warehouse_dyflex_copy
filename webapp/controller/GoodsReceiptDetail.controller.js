@@ -95,6 +95,11 @@ sap.ui.define([
 			this.setModel(this._oCreateModel, "createModel");
 		},
 		
+		_updateListModel: function() {
+			this.getModel("customPOItemSrv").refresh(true /*force update*/, false /*remove data*/);
+			this.getModel("customPOItemSrv").resetChanges();
+		},
+		
 		_navToListView: function() {
 			this.getRouter().navTo("goodsReceiptList", {}, true);
 		}
