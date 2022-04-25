@@ -74,6 +74,9 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 						<Text text="Acct. Assign." />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Storage Bin" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Required Qty" />
 					</Column>
 					<Column>
@@ -95,14 +98,18 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 							<ObjectIdentifier
 								title="{ path: 'customResvItemSrv>MatlCompRequirementDate', formatter: '.formatter.dateOutput' }"
 								text="{customResvItemSrv>GoodsRecipientName}" />
-							
+								
 							<ObjectIdentifier
 								title="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignObject' }"
 								text="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignDesc' }" />
-							
+								
+							<ObjectIdentifier
+								text="{customResvItemSrv>WarehouseStorageBin}" />
+								
 							<ObjectNumber
 								number="{customResvItemSrv>ResvnItmRequiredQtyInBaseUnit}"
 								unit="{customResvItemSrv>BaseUnit}" />
+								
 							<ObjectNumber
 								number="{
 									parts: [
