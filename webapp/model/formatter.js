@@ -22,11 +22,8 @@ sap.ui.define([], function () {
 		 * @return {String} formatted date value
 		 */
 		dateOutput: function (sValue) {
-			var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-				pattern: "dd.MM.yyyy"
-			});
+			var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd/MM/yyyy" });
 			var sDateAsString = oDateFormat.format(new Date(sValue));
-
 			return sDateAsString;
 		},
 		

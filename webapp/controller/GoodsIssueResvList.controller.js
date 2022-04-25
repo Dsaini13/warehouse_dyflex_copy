@@ -84,9 +84,9 @@ sap.ui.define([
 				// refresh the list binding.
 				this.onRefresh();
 			} else {
-				var aTableSearchState = [new Filter("OrderCategory", FilterOperator.NE, "10")];
+				var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10")];
 				var sQuery = oEvent.getParameter("query");
-
+				
 				if (sQuery && sQuery.length > 0) {
 					var aFilters = [];
 					aFilters.push(new Filter("Reservation", FilterOperator.EQ, sQuery));

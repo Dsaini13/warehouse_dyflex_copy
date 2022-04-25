@@ -25,10 +25,11 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 				items="{
 					path: 'customResvItemSrv>/YY1_Warehouse_ResvItem',
 					sorter: [
-						{ path: 'Reservation', descending: true },
+						{ path: 'Reservation', descending: false },
 						{ path: 'ReservationItem', descending: false }
 					],
 					filters : [
+						{ path : 'OrderCategory', operator : 'EQ', value1 : null },
 						{ path : 'OrderCategory', operator : 'NE', value1 : '10' }
 					]
 				}"
@@ -66,7 +67,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 					<Column>
 						<Text text="Material" />
 					</Column>
-					<Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Req Date / Recipient" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Acct. Assign." />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
@@ -87,6 +91,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 								text="{customResvItemSrv>ProductName}"
 								titleActive="true"
 								titlePress="onMaterialLinkPress(${customResvItemSrv>Product})" />
+								
+							<ObjectIdentifier
+								title="{ path: 'customResvItemSrv>MatlCompRequirementDate', formatter: '.formatter.dateOutput' }"
+								text="{customResvItemSrv>GoodsRecipientName}" />
 							
 							<ObjectIdentifier
 								title="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignObject' }"
