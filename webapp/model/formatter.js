@@ -121,6 +121,41 @@ sap.ui.define([], function () {
 			} else {
 				return "";
 			}
+		},
+		
+		resvStockValue: function(stockOhHand, orderQty, withdrawnQty, debitCredit) {
+			var oDisplay = this.formatter.resvStockDisplay(stockOhHand, orderQty, withdrawnQty, debitCredit);
+			return oDisplay.Icon + "  " + oDisplay.StockOnHand;
+		},
+		
+		resvStockStatus: function(stockOhHand, orderQty, withdrawnQty, debitCredit) {
+			var oDisplay = this.formatter.resvStockDisplay(stockOhHand, orderQty, withdrawnQty, debitCredit);
+			return oDisplay.Status;
+		},
+		
+		resvStockDisplay: function(stockOhHand, orderQty, withdrawnQty, debitCredit) {
+			var oData = {
+				StockOnHand: stockOhHand ? stockOhHand : 0,
+				Status: "",
+				Icon: ""
+			};
+			var pickQty = withdrawnQty ? orderQty - withdrawnQty : orderQty;
+			
+			if ( debitCredit === "S" ) {
+				oData.Status = "None";
+				oData.Icon   = "↻";
+			} else if ( Number(oData.StockOnHand) >= Number(pickQty) && Number(pickQty) > 0 ) {
+				oData.Status = "Success";
+				oData.Icon   = "✓";
+			} else if ( Number(oData.StockOnHand) < Number(pickQty) && Number(oData.StockOnHand) > 0 ) {
+				oData.Status = "Warning";
+				oData.Icon   = "<";
+			} else if ( Number(oData.StockOnHand) === 0 ) {
+				oData.Status = "Error";
+				oData.Icon   = "✕";
+			}
+			
+			return oData;
 		}
 	};
 

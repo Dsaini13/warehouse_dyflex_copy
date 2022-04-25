@@ -25,13 +25,17 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 				items="{
 					path: 'customResvItemSrv>/YY1_Warehouse_ResvItem',
 					sorter: [
+						{ path: 'MatlCompRequirementDate', descending: false },
 						{ path: 'Reservation', descending: false },
 						{ path: 'ReservationItem', descending: false }
 					],
 					filters : [
 						{ path : 'OrderCategory', operator : 'EQ', value1 : null },
 						{ path : 'OrderCategory', operator : 'NE', value1 : '10' }
-					]
+					],
+					parameters: {
+						expand: 'to_Stock'
+					}
 				}"
 				noDataText="{listView>/tableNoDataText}"
 				busyIndicatorDelay="{listView>/tableBusyDelay}"
@@ -76,10 +80,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Storage Bin" />
 					</Column>
-					<Column minScreenWidth="Tablet" demandPopin="true">
-						<Text text="Required Qty" />
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+						<Text text="Stock On Hand" />
 					</Column>
-					<Column>
+					<Column hAlign="End">
 						<Text text="Open Qty" />
 					</Column>
 				</columns>
@@ -104,12 +108,30 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 								text="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignDesc' }" />
 								
 							<ObjectIdentifier
+								title="TEST - {customResvItemSrv>Plant} - {customResvItemSrv>StorageLocation}"
 								text="{customResvItemSrv>WarehouseStorageBin}" />
-								
+							
 							<ObjectNumber
-								number="{customResvItemSrv>ResvnItmRequiredQtyInBaseUnit}"
-								unit="{customResvItemSrv>BaseUnit}" />
-								
+								number="{
+									parts: [
+										{ path: 'customResvItemSrv>to_Stock/StockOnHand' },
+										{ path: 'customResvItemSrv>ResvnItmRequiredQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>ResvnItmWithdrawnQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>DebitCreditCode' }
+									],
+									formatter: '.formatter.resvStockValue'
+								}"
+								unit="{customResvItemSrv>BaseUnit}"
+								state="{
+									parts: [
+										{ path: 'customResvItemSrv>to_Stock/StockOnHand' },
+										{ path: 'customResvItemSrv>ResvnItmRequiredQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>ResvnItmWithdrawnQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>DebitCreditCode' }
+									],
+									formatter: '.formatter.resvStockStatus'
+								}" />
+									
 							<ObjectNumber
 								number="{
 									parts: [
