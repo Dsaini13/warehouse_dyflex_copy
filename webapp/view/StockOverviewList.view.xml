@@ -90,7 +90,7 @@
 								
 							<ObjectIdentifier title="{customStockSrv>Plant}" text="{customStockSrv>PlantName}" />
 							<ObjectIdentifier title="{customStockSrv>StorageLocation}" text="{customStockSrv>StorageLocationName}" />
-							<ObjectIdentifier title="{customStockSrv>Batch}"/>
+							<ObjectIdentifier text="{ path: 'customStockSrv>Batch', formatter: '.formatter.removeLeadingZeroes' }" />
 							
 							<ObjectNumber
 								number="{ path: 'customStockSrv>StockOnHand', formatter: '.formatter.numberUnit' }"

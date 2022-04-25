@@ -153,6 +153,25 @@ sap.ui.define([
 		},
 		
 		/**
+		 * Add commas to a number for thousands separators
+		 */
+		addCommas: function(nStr) {
+			// Remove commas
+			nStr = nStr.toString().replace(/,/gi, "");
+			nStr = parseFloat(nStr);
+			// Add commas
+			nStr += "";
+			var x = nStr.split(".");
+			var x1 = x[0];
+			var x2 = x.length > 1 ? "." + x[1] : "";
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, "$1" + "," + "$2");
+			}
+			return x1 + x2;
+		},
+		
+		/**
 		* Adds a history entry in the FLP page history
 		* @public
 		* @param {object} oEntry An entry object to add to the hierachy array as expected from the ShellUIService.setHierarchy method

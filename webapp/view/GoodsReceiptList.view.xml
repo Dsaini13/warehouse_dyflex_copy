@@ -74,10 +74,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Storage Location" />
 					</Column>
-					<Column minScreenWidth="Tablet" demandPopin="true">
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
 						<Text text="Order Qty" />
 					</Column>
-					<Column>
+					<Column hAlign="End">
 						<Text text="Open Qty" />
 					</Column>
 				</columns>
@@ -95,7 +95,7 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsReceiptList"
 							<ObjectIdentifier title="{customPOItemSrv>Plant}" text="{customPOItemSrv>PlantName}" />
 							<ObjectIdentifier title="{customPOItemSrv>StorageLocation}" text="{customPOItemSrv>StorageLocationName}" />
 							<ObjectNumber
-								number="{customPOItemSrv>OrderQuantity}"
+								number="{ path: 'customPOItemSrv>OrderQuantity', formatter: '.formatter.numberUnit' }"
 								unit="{customPOItemSrv>PurchaseOrderQuantityUnit}" />
 							<ObjectNumber
 								number="{

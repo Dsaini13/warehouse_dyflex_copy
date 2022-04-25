@@ -13,7 +13,7 @@ sap.ui.define([], function () {
 			if (!sValue) {
 				return "";
 			}
-			return parseFloat(sValue).toFixed(2);
+			return this.addCommas(sValue);
 		},
 		
 		/**
@@ -41,7 +41,8 @@ sap.ui.define([], function () {
 		},
 		
 		openQuantity: function (orderQty, grQty) {
-			return grQty ? orderQty - grQty : orderQty;
+			var openQty = grQty ? orderQty - grQty : orderQty;
+			return this.addCommas(openQty);
 		},
 		
 		plantDesc: function(sValue) {
