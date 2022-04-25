@@ -92,7 +92,11 @@ sap.ui.define([], function () {
 		},
 		
 		resvKeysDisplay: function(oData) {
-			return this.formatter.removeLeadingZeroes(oData.Reservation) + " / " + this.formatter.removeLeadingZeroes(oData.ReservationItem);
+			if (oData && oData.Reservation && oData.ReservationItem) {
+				return this.formatter.removeLeadingZeroes(oData.Reservation) + " / " + this.formatter.removeLeadingZeroes(oData.ReservationItem);	
+			} else {
+				return "";
+			}
 		},
 		
 		resvAccAssignObject: function(oData) {

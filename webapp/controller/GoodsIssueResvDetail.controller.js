@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel) {
 	"use strict";
 
-	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdDetail", {
+	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvDetail", {
 		
 		/* =========================================================== */
 		/* lifecycle methods                                           */

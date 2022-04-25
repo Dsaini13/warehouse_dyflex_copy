@@ -17,16 +17,12 @@
 			<Title text="Pick and Issue" level="H2" />
 		</semantic:titleHeading>
 		
-		<semantic:headerContent>
-			<ObjectAttribute title="xxxxxxx" text="zzzzzzzzzzzz yyyyyyyyyy" />
-		</semantic:headerContent>
-		
 		<semantic:content>
 			<VBox>
 				
 				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.GoodsIssueHeader" type="XML" />
 				
-				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.GoodsIssueItems" type="XML" />
+				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.GoodsIssueResvItems" type="XML" />
 				
 				<core:Fragment fragmentName="dyflex.mm.s4cloud.warehouse.view.Attachments" type="XML" />
 				

@@ -1,0 +1,152 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	
+	<Table 
+		items="{ 
+			path: 'createModel>/to_MaterialDocumentItem/results', 
+			sorter: { path: 'PurchaseOrderItem' }, 
+			templateShareable: false }"
+		width="auto"
+		fixedLayout="false"
+		class="sapUiSmallMarginTopBottom"
+		noDataText="{i18n>goodsIssueItemNoData}">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Items"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column>
+				<Text text="Item"/>
+			</Column>
+			<Column>
+				<Text text="Component"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Open Qty"/>
+			</Column>
+			<Column>
+				<Text text="Issued"/>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<Text text="Plant"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true" >
+				<Text text="Store Loc"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true" >
+				<Text text="Stock Type"/>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text
+						text="{ path: 'createModel>', formatter: '.formatter.resvKeysDisplay' }" />
+					
+					<ObjectIdentifier
+						title="{createModel>Material}"
+						text="{createModel>MaterialDocumentItemText}"
+						titleActive="true"
+						titlePress="onMaterialLinkPress(${createModel>Material})" />
+					
+					<ObjectNumber
+						number="{createModel>TempOpenQty}"
+						unit="{createModel>EntryUnit}" />
+						
+					<Input
+						value="{createModel>QuantityInEntryUnit}"
+						change="onChanged"
+						fieldWidth="75%"
+						description="{createModel>EntryUnit}"
+						type="Number" />
+					
+					<ObjectIdentifier title="{createModel>Plant}" text="{createModel>TempPlantName}" />
+					
+					<Input
+						value="{createModel>StorageLocation}"
+						tooltip="{createModel>TempStorageLocationName}"
+						liveChange="onLiveChangeStoreLoc"
+						showValueHelp="true"
+						valueHelpRequest="onHandleValueHelpStoreLoc"
+						showSuggestion="true"
+						maxSuggestionWidth="50%"
+						suggest="onHandleSuggestStoreLoc"
+						filterSuggests="false"
+						suggestionRows="{
+							path: 'customMatSLocSrv>/YY1_Warehouse_MatSLoc',
+							sorter: { path: 'StorageLocation', descending: false },
+							templateShareable: false
+						}"
+						suggestionItemSelected="onHandleValueHelpStoreLocClose">
+						<suggestionColumns>
+							<Column
+								hAlign="Begin"
+								width="30%"
+								popinDisplay="Inline"
+								demandPopin="true">
+								<Label text="Store Loc" />
+							</Column>
+							<Column
+								hAlign="Begin"
+								width="70%"
+								popinDisplay="Inline"
+								demandPopin="true"
+								minScreenWidth="Tablet">
+								<Label text="Description" />
+							</Column>
+						</suggestionColumns>
+						<suggestionRows>
+							<ColumnListItem>
+								<cells>
+									<Label text="{customMatSLocSrv>StorageLocation}" />
+									<Label text="{customMatSLocSrv>StorageLocationName}" />
+								</cells>
+							</ColumnListItem>
+						</suggestionRows>
+						<customData>
+							<core:CustomData key="Material" value="{createModel>Material}" />
+							<core:CustomData key="Plant" value="{createModel>Plant}" />
+						</customData>
+					</Input>
+					
+					<ComboBox
+						selectedKey="{createModel>InventoryUsabilityCode}"
+						valueState="{ path: 'createModel>InventoryUsabilityCode', formatter: '.formatter.stockTypeValueState' }"
+						selectionChange="onChanged">
+						<items>
+							<core:Item key=" " text="Unrestricted-Use"/>
+							<core:Item key="X" text="Quality Inspection"/>
+							<core:Item key="S" text="Blocked"/>
+						</items>
+					</ComboBox>
+					
+					<HBox>
+						<Button
+							text="S/N"
+							tooltip="Add serial number"
+							class="sapUiSmallMarginEnd"
+							enabled="{createModel>TempEnableSerialNo}"
+							press="onSerialNoShow">
+							<customData>
+								<BadgeCustomData
+									key="badge"
+									value="{ path: 'createModel>to_SerialNumbers', formatter: '.formatter.serialNoBadge' }"/>
+							</customData>
+						</Button>
+						<Button
+							icon="sap-icon://delete"
+							tooltip="Delete item"
+							press="onDeleteItem" />
+					</HBox>
+							
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	
+</core:FragmentDefinition>
