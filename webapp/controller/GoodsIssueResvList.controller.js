@@ -109,15 +109,9 @@ sap.ui.define([
 			this._oTable.getBinding("items").refresh();
 		},
 		
-		/**
-		 * Event handler when a table item gets pressed
-		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
-		 * @public
-		 */
-		onPress : function (oEvent) {
-			var oObject = this.getModel("customResvItemSrv").getProperty(oEvent.getSource().getBindingContextPath());
-			this.getRouter().navTo("goodsIssueResvDetail", {
-				manufacturingOrder: oObject.ManufacturingOrder
+		onPickIssue: function() {
+			this.getRouter().getTargets().display("goodsIssueResvDetail", {
+				selectedResv: this._aSelectedResv
 			});
 		},
 		

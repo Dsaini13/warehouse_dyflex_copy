@@ -496,6 +496,12 @@
 					"viewId": "goodsIssueResvList",
 					"title": "Goods Issue of Reservations"
 				},
+				"goodsIssueResvDetail": {
+					"viewType": "XML",
+					"viewName": "GoodsIssueResvDetail",
+					"viewId": "goodsIssueResvDetail",
+					"title": "Goods Issue of Reservations"
+				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",
 					"viewId": "objectNotFound"
