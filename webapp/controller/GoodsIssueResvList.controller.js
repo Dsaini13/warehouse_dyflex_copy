@@ -124,7 +124,10 @@ sap.ui.define([
 			}
 			
 			for (var i = 0; i < aItems.length; i++) {
-				oSelected = aItems[i].getBindingContext("customResvItemSrv").getObject();
+				var oBindingContext = aItems[i].getBindingContext("customResvItemSrv");
+				oSelected = oBindingContext.getObject();
+				oSelected.to_Stock = oBindingContext.getModel().getProperty(oBindingContext.sPath + "/to_Stock");
+				
 				if (oEvent.getParameter("selected")) {
 					this._aSelectedResv.push(oSelected);
 				} else {

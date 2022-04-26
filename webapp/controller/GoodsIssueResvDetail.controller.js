@@ -58,6 +58,7 @@ sap.ui.define([
 			for (var i = 0; i < aSelectedResv.length; i++) {
 				
 				var openQty = aSelectedResv[i].ResvnItmRequiredQtyInBaseUnit - aSelectedResv[i].ResvnItmWithdrawnQtyInBaseUnit;
+				var stockOnHand = aSelectedResv[i].to_Stock ? aSelectedResv[i].to_Stock.StockOnHand : 0;
 				
 				if (openQty > 0) {
 					var oItem = {
@@ -73,10 +74,11 @@ sap.ui.define([
 						"EntryUnit"				   : aSelectedResv[i].BaseUnit,
 						"QuantityInEntryUnit"	   : openQty.toString(),
 						
-						"TempOpenQty"			   : openQty.toString(),
+						"TempStockOnHand"		   : stockOnHand.toString(),
 						"TempEnableSerialNo"	   : aSelectedResv[i].SerialNumberProfile ? true : false,
 						"TempPlantName"			   : aSelectedResv[i].PlantName,
-						"TempStorageLocationName"  : aSelectedResv[i].StorageLocationName
+						"TempStorageLocationName"  : aSelectedResv[i].StorageLocationName,
+						"TempWarehouseStorageBin"  : aSelectedResv[i].WarehouseStorageBin
 					};
 					matDocData.to_MaterialDocumentItem.results.push(oItem);
 				}

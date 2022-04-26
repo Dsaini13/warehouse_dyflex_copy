@@ -80,9 +80,11 @@ sap.ui.define([
 			// Remove temp fields
 			for (var i = 0; i < createData.to_MaterialDocumentItem.results.length; i++) {
 				delete createData.to_MaterialDocumentItem.results[i].TempOpenQty;
+				delete createData.to_MaterialDocumentItem.results[i].TempStockOnHand;
 				delete createData.to_MaterialDocumentItem.results[i].TempEnableSerialNo;
 				delete createData.to_MaterialDocumentItem.results[i].TempPlantName;
 				delete createData.to_MaterialDocumentItem.results[i].TempStorageLocationName;
+				delete createData.to_MaterialDocumentItem.results[i].TempWarehouseStorageBin;
 			}
 			
 			this.getModel("matDocSrv").create("/A_MaterialDocumentHeader", createData, {

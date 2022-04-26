@@ -25,7 +25,7 @@
 				<Text text="Component"/>
 			</Column>
 			<Column minScreenWidth="Tablet" demandPopin="true">
-				<Text text="Open Qty"/>
+				<Text text="Stock On Hand"/>
 			</Column>
 			<Column>
 				<Text text="Issued"/>
@@ -36,8 +36,8 @@
 			<Column minScreenWidth="Tablet" demandPopin="true" >
 				<Text text="Store Loc"/>
 			</Column>
-			<Column minScreenWidth="Tablet" demandPopin="true" >
-				<Text text="Stock Type"/>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Storage Bin" />
 			</Column>
 			<Column minScreenWidth="Desktop" demandPopin="true">
 			</Column>
@@ -55,7 +55,7 @@
 						titlePress="onMaterialLinkPress(${createModel>Material})" />
 					
 					<ObjectNumber
-						number="{ path: 'createModel>TempOpenQty', formatter: '.formatter.numberUnit' }"
+						number="{ path: 'createModel>TempStockOnHand', formatter: '.formatter.numberUnit' }"
 						unit="{createModel>EntryUnit}" />
 						
 					<Input
@@ -67,63 +67,9 @@
 					
 					<ObjectIdentifier title="{createModel>Plant}" text="{createModel>TempPlantName}" />
 					
-					<Input
-						value="{createModel>StorageLocation}"
-						tooltip="{createModel>TempStorageLocationName}"
-						liveChange="onLiveChangeStoreLoc"
-						showValueHelp="true"
-						valueHelpRequest="onHandleValueHelpStoreLoc"
-						showSuggestion="true"
-						maxSuggestionWidth="50%"
-						suggest="onHandleSuggestStoreLoc"
-						filterSuggests="false"
-						suggestionRows="{
-							path: 'customMatSLocSrv>/YY1_Warehouse_MatSLoc',
-							sorter: { path: 'StorageLocation', descending: false },
-							templateShareable: false
-						}"
-						suggestionItemSelected="onHandleValueHelpStoreLocClose">
-						<suggestionColumns>
-							<Column
-								hAlign="Begin"
-								width="30%"
-								popinDisplay="Inline"
-								demandPopin="true">
-								<Label text="Store Loc" />
-							</Column>
-							<Column
-								hAlign="Begin"
-								width="70%"
-								popinDisplay="Inline"
-								demandPopin="true"
-								minScreenWidth="Tablet">
-								<Label text="Description" />
-							</Column>
-						</suggestionColumns>
-						<suggestionRows>
-							<ColumnListItem>
-								<cells>
-									<Label text="{customMatSLocSrv>StorageLocation}" />
-									<Label text="{customMatSLocSrv>StorageLocationName}" />
-								</cells>
-							</ColumnListItem>
-						</suggestionRows>
-						<customData>
-							<core:CustomData key="Material" value="{createModel>Material}" />
-							<core:CustomData key="Plant" value="{createModel>Plant}" />
-						</customData>
-					</Input>
+					<ObjectIdentifier title="{createModel>StorageLocation}" text="{createModel>TempStorageLocationName}" />
 					
-					<ComboBox
-						selectedKey="{createModel>InventoryUsabilityCode}"
-						valueState="{ path: 'createModel>InventoryUsabilityCode', formatter: '.formatter.stockTypeValueState' }"
-						selectionChange="onChanged">
-						<items>
-							<core:Item key=" " text="Unrestricted-Use"/>
-							<core:Item key="X" text="Quality Inspection"/>
-							<core:Item key="S" text="Blocked"/>
-						</items>
-					</ComboBox>
+					<ObjectIdentifier text="{createModel>TempWarehouseStorageBin}" />
 					
 					<HBox>
 						<Button
