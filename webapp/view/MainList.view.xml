@@ -28,6 +28,8 @@
 						
 					<StandardListItem
 						title="Stock Transfer"
+						press="onStockTransferPress"
+						type="Active"
 						icon="sap-icon://journey-arrive"
 						iconDensityAware="false"
 						iconInset="false" />

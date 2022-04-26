@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		title="Select a Plant"
+		class="sapUiPopupWithPadding"
+		items="{
+			path: 'customPlantMaterialSrv>/YY1_Warehouse_MatPlant',
+			sorter: { path: 'Plant', descending: false },
+			templateShareable: false
+		}"
+		search="onHandleValueHelpPlantSearch"
+		confirm="onHandleValueHelpPlantClose"
+		cancel="onHandleValueHelpPlantClose">
+		<StandardListItem
+			title="{customPlantMaterialSrv>Plant}"
+			description="{customPlantMaterialSrv>PlantName}" />
+	</SelectDialog>
+</core:FragmentDefinition>

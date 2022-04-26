@@ -1,0 +1,250 @@
+<mvc:View
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.StockTransferDetail"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		headerPinnable="true"
+		toggleHeaderOnTitleClick="true"
+		busy="{detailView>/busy}"
+		busyIndicatorDelay="{detailView>/delay}"
+		showFooter="true">
+		
+		<semantic:titleHeading>
+			<Title text="Stock Transfer" level="H2"/>
+		</semantic:titleHeading>
+		
+		<semantic:headerContent>
+			<ObjectAttribute title="Material" text="{stockModelST>/d/ProductName}" press="onMaterialLinkPress(${stockModel>/d/Material})" />
+			<ObjectAttribute title="Material Number" text="{stockModelST>/d/Material}" />
+			<ObjectAttribute title="Material Type" text="{materialModelST>/d/ProductType}" />
+			<ObjectAttribute title="Material Group" text="{materialModelST>/d/ProductGroup}" />
+		</semantic:headerContent>
+
+		<semantic:content>
+			<f:SimpleForm
+				editable="false"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="5"
+				labelSpanL="5"
+				labelSpanM="6"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="0"
+				emptySpanL="0"
+				emptySpanM="0"
+				emptySpanS="0"
+				columnsXL="1"
+				columnsL="1"
+				columnsM="1"
+				singleContainerFullSize="false" >
+				<f:content>
+					
+					<!-- Stock Details -->
+					<core:Title text="Current Stock Details" />
+					
+					<Label text="Current Plant" />
+					<Text text="{stockModelST>/d/PlantName} ({stockModelST>/d/Plant})" />
+					
+					<Label text="Current Storage Location" />
+					<Text text="{stockModelST>/d/StorageLocationName} ({stockModelST>/d/StorageLocation})" />
+					
+					<Label text="Current Batch" />
+					<Text text="{stockModelST>/d/Batch}" />
+								
+					<Label text="Current Stock Type" />
+					<ComboBox
+						selectedKey="{createModel>/TempCurrentType}"
+						id="idCurrentStockType"
+						selectionChange="onChanged">
+						<items>
+							<core:Item key=" " text="Unrestricted-Use"/>
+							<core:Item key="X" text="Quality Inspection"/>
+							<core:Item key="S" text="Blocked"/>
+						</items>
+					</ComboBox>
+					
+					<Label text="Current Stock on Hand" />
+					<ObjectNumber number="{ path: 'stockModelST>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
+					unit="{stockModelST>/d/MaterialBaseUnit}" />
+					
+	
+					
+					
+					<!-- Material Details -->
+					<core:Title text="Transfer Details" />
+					
+					<Label text="Document Date" />
+					<DatePicker
+						id="idDocumentDate"
+						required="true"
+						change="onChanged"
+						dateValue="{createModel>/DocumentDate}"
+						displayFormat="dd.MM.yyyy" />
+					
+					<Label text="Posting Date" />
+					<DatePicker
+						id="idPostingDate"
+						required="true"
+						change="onChanged"
+						dateValue="{createModel>/PostingDate}"
+						displayFormat="dd.MM.yyyy" />
+					
+					<Label text="Printing" />
+					<ComboBox selectedKey="{createModel>/VersionForPrintingSlip}" >
+						<items>
+							<core:Item key="0" text="No Print" />
+							<core:Item key="1" text="Individual Slip" />
+							<core:Item key="2" text="Individual Slip with Inspection Text" />
+							<core:Item key="3" text="Collective Slip" />
+						</items>
+					</ComboBox>
+
+					<Label text="Header Text" />
+					<Input value="{createModel>/MaterialDocumentHeaderText}" />
+				
+					<Label text="Transfer to Plant" />
+					<Input
+						value="{createModel>/to_MaterialDocumentItem/results/0/IssuingOrReceivingPlant}"
+						tooltip=""
+						liveChange="onLiveChangePlant"
+						showValueHelp="true"
+						valueHelpRequest="onHandleValueHelpPlant"
+						showSuggestion="true"
+						maxSuggestionWidth="50%"
+						suggest="onHandleSuggestPlant"
+						filterSuggests="false"
+						suggestionRows="{
+							path: 'customPlantMaterialSrv>/YY1_Warehouse_MatPlant',
+							sorter: { path: 'Plant', descending: false },
+							templateShareable: false
+						}"
+						suggestionItemSelected="onHandleValueHelpPlantClose">
+						<suggestionColumns>
+							<Column
+								hAlign="Begin"
+								width="30%"
+								popinDisplay="Inline"
+								demandPopin="true">
+								<Label text="Store Loc" />
+							</Column>
+							<Column
+								hAlign="Begin"
+								width="70%"
+								popinDisplay="Inline"
+								demandPopin="true"
+								minScreenWidth="Tablet">
+								<Label text="Description" />
+							</Column>
+						</suggestionColumns>
+						<suggestionRows>
+							<ColumnListItem>
+								<cells>
+									<Label text="{customPlantMaterialSrv>Plant}" />
+									<Label text="{customPlantMaterialSrv>PlantName}" />
+								</cells>
+							</ColumnListItem>
+						</suggestionRows>
+						<customData>
+							<core:CustomData key="Material" value="{stockModelST>/d/Material}" />
+						</customData>
+					</Input>
+					
+					<Label text="Transfer to Storage Location" />
+						<Input
+						value="{createModel>/to_MaterialDocumentItem/results/0/IssuingOrReceivingStorageLoc}"
+						tooltip=""
+						liveChange="onLiveChangeStoreLoc"
+						showValueHelp="true"
+						valueHelpRequest="onHandleValueHelpStoreLoc"
+						showSuggestion="true"
+						maxSuggestionWidth="50%"
+						suggest="onHandleSuggestStoreLoc"
+						filterSuggests="false"
+						suggestionRows="{
+							path: 'customMatSLocSrv>/YY1_Warehouse_MatSLoc',
+							sorter: { path: 'StorageLocation', descending: false },
+							templateShareable: false
+						}"
+						suggestionItemSelected="onHandleValueHelpStoreLocClose">
+						<suggestionColumns>
+							<Column
+								hAlign="Begin"
+								width="30%"
+								popinDisplay="Inline"
+								demandPopin="true">
+								<Label text="Store Loc" />
+							</Column>
+							<Column
+								hAlign="Begin"
+								width="70%"
+								popinDisplay="Inline"
+								demandPopin="true"
+								minScreenWidth="Tablet">
+								<Label text="Description" />
+							</Column>
+						</suggestionColumns>
+						<suggestionRows>
+							<ColumnListItem>
+								<cells>
+									<Label text="{customMatSLocSrv>StorageLocation}" />
+									<Label text="{customMatSLocSrv>StorageLocationName}" />
+								</cells>
+							</ColumnListItem>
+						</suggestionRows>
+						<customData>
+							<core:CustomData key="Material" value="{stockModelST>/d/Material}" />
+							<core:CustomData key="Plant" value="3010" />
+						</customData>
+					</Input>
+					
+					<Label text="Transfer to Stock Type" />
+					<ComboBox
+						selectedKey="{createModel>/TempTransferType}"
+						id="idTransferStockType"
+						selectionChange="onChanged">
+						<items>
+							<core:Item key=" " text="Unrestricted-Use"/>
+							<core:Item key="X" text="Quality Inspection"/>
+							<core:Item key="S" text="Blocked"/>
+						</items>
+					</ComboBox>
+					
+					<Label text="Transfer Batch Number" />
+					<Input value="{createModel>/to_MaterialDocumentItem/results/0/IssgOrRcvgBatch}" />
+					
+					<Label text="Quantity to Transfer" />
+					<Input value="{createModel>/to_MaterialDocumentItem/results/0/QuantityInEntryUnit}" />
+
+				</f:content>
+			</f:SimpleForm>
+		</semantic:content>
+		
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
+		</semantic:titleCustomIconActions>
+		
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton title="{detailView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+
+		<semantic:footerMainAction>
+			<semantic:FooterMainAction text="Post" press="onPostST" enabled="true" />
+		</semantic:footerMainAction>
+
+		<semantic:footerCustomActions>
+			<Button text="Cancel" press="onCancel" />
+		</semantic:footerCustomActions>
+		
+	</semantic:SemanticPage>
+
+</mvc:View>

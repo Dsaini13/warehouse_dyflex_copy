@@ -108,6 +108,13 @@
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_RESVITEM_CDS/metadata.xml"
 				}
+			},
+			"CustomPlantMaterial": {
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_MATPLANT_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_MATPLANT_CDS/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
@@ -312,6 +319,16 @@
 				},
 				"dataSource": "CustomResvItem",
 				"preload": true
+			},
+			"customPlantMaterialSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomPlantMaterial",
+				"preload": true
 			}
 		},
 		"services": {
@@ -357,6 +374,20 @@
 					"name": "stockOverviewDetail",
 					"target": [
 						"stockOverviewDetail"
+					]
+				},
+				{
+					"pattern": "StockTransfer",
+					"name": "stockTransferList",
+					"target": [
+						"stockTransferList"
+					]
+				},
+				{
+					"pattern": "StockTransferDetail/{objectId}",
+					"name": "stockTransferDetail",
+					"target": [
+						"stockTransferDetail"
 					]
 				},
 				{
@@ -441,6 +472,18 @@
 					"viewName": "StockOverviewDetail",
 					"viewId": "stockOverviewDetail",
 					"title": "Stock Overview"
+				},
+				"stockTransferList": {
+					"viewType": "XML",
+					"viewName": "StockTransferList",
+					"viewId": "stockTransferList",
+					"title": "Stock Transfer"
+				},
+				"stockTransferDetail": {
+					"viewType": "XML",
+					"viewName": "StockTransferDetail",
+					"viewId": "stockTransferDetail",
+					"title": "Stock Transfer"
 				},
 				"stocktakeList": {
 					"viewType": "XML",
