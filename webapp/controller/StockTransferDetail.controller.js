@@ -4,8 +4,9 @@ sap.ui.define([
 	"../model/formatter",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
-	"sap/m/MessageToast"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator, MessageToast) {
+	"sap/m/MessageToast",
+	"sap/m/MessageBox"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, MessageToast, MessageBox) {
 	"use strict";
 
 	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.StockTransferDetail", {
@@ -105,6 +106,12 @@ sap.ui.define([
 				}
 			}
 			createData.to_MaterialDocumentItem.results[0].GoodsMovementType = codeToUse;
+			
+			if (!codeToUse) {
+				this._oViewModel.setProperty("/busy", false);
+				MessageBox.error("Transfer FROM and TO combination is not valid");
+				return;
+			}
 			
 			// Adjust From and To Plant and SLOC if reversal movement code
 			if (reserseCode) {
@@ -397,7 +404,7 @@ sap.ui.define([
 				"QuantityInEntryUnit": "",
 				"IssuingOrReceivingPlant": "",
 				"IssuingOrReceivingStorageLoc" : "",
-				"IssgOrRcvgBatch": oMaterial.d.Batch
+				"IssgOrRcvgBatch": ""
 			};
 			
 			matDocData.to_MaterialDocumentItem.results.push(oItem);

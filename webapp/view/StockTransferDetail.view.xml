@@ -249,7 +249,7 @@
 							text="S/N"
 							tooltip="Add serial number"
 							class="sapUiSmallMarginEnd"
-							enabled="{createModel>TempEnableSerialNo}"
+							enabled="{= ${plantModelST>/d/SerialNumberProfile} !== '' ? true : false }"
 							press="onSerialNoShow">
 							<customData>
 								<BadgeCustomData
