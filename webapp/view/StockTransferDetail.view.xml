@@ -20,64 +20,31 @@
 		</semantic:titleHeading>
 		
 		<semantic:headerContent>
-			<ObjectAttribute title="Material" text="{stockModelST>/d/ProductName}" press="onMaterialLinkPress(${stockModel>/d/Material})" />
-			<ObjectAttribute title="Material Number" text="{stockModelST>/d/Material}" />
-			<ObjectAttribute title="Material Type" text="{materialModelST>/d/ProductType}" />
-			<ObjectAttribute title="Material Group" text="{materialModelST>/d/ProductGroup}" />
+			<ObjectAttribute
+				title="Material"
+				text="{stockModelST>/d/ProductName} ({stockModelST>/d/Material})"
+				active="true"
+				press="onMaterialLinkPress(${stockModelST>/d/Material})" />
 		</semantic:headerContent>
 
 		<semantic:content>
 			<f:SimpleForm
-				editable="false"
-				layout="ResponsiveGridLayout"
-				labelSpanXL="5"
-				labelSpanL="5"
-				labelSpanM="6"
-				labelSpanS="12"
-				adjustLabelSpan="false"
-				emptySpanXL="0"
-				emptySpanL="0"
-				emptySpanM="0"
-				emptySpanS="0"
-				columnsXL="1"
+				class="editableForm"
+				editable="true"
 				columnsL="1"
 				columnsM="1"
-				singleContainerFullSize="false" >
+				emptySpanL="2"
+				emptySpanM="2"
+				labelSpanL="3"
+				labelSpanM="3"
+				adjustLabelSpan="false"
+				layout="ResponsiveGridLayout"
+				maxContainerCols="2"
+				minWidth="1024">
 				<f:content>
 					
-					<!-- Stock Details -->
-					<core:Title text="Current Stock Details" />
-					
-					<Label text="Current Plant" />
-					<Text text="{stockModelST>/d/PlantName} ({stockModelST>/d/Plant})" />
-					
-					<Label text="Current Storage Location" />
-					<Text text="{stockModelST>/d/StorageLocationName} ({stockModelST>/d/StorageLocation})" />
-					
-					<Label text="Current Batch" />
-					<Text text="{stockModelST>/d/Batch}" />
-								
-					<Label text="Current Stock Type" />
-					<ComboBox
-						selectedKey="{createModel>/TempCurrentType}"
-						id="idCurrentStockType"
-						selectionChange="onChanged">
-						<items>
-							<core:Item key=" " text="Unrestricted-Use"/>
-							<core:Item key="X" text="Quality Inspection"/>
-							<core:Item key="S" text="Blocked"/>
-						</items>
-					</ComboBox>
-					
-					<Label text="Current Stock on Hand" />
-					<ObjectNumber number="{ path: 'stockModelST>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
-					unit="{stockModelST>/d/MaterialBaseUnit}" />
-					
-	
-					
-					
-					<!-- Material Details -->
-					<core:Title text="Transfer Details" />
+					<!-- Header -->
+					<core:Title text="Header" />
 					
 					<Label text="Document Date" />
 					<DatePicker
@@ -104,11 +71,60 @@
 							<core:Item key="3" text="Collective Slip" />
 						</items>
 					</ComboBox>
-
+					
 					<Label text="Header Text" />
 					<Input value="{createModel>/MaterialDocumentHeaderText}" />
+					
+					
+					<!-- Transfer From -->
+					<core:Title text="Transfer From" />
+					
+					<Label text="Plant" />
+					<Text text="{stockModelST>/d/PlantName} ({stockModelST>/d/Plant})" />
+					
+					<Label text="Storage Location" />
+					<Text text="{stockModelST>/d/StorageLocationName} ({stockModelST>/d/StorageLocation})" />
+					
+					<Label text="Batch" visible="{= ${stockModelST>/d/Batch} !== '' ? true : false }" />
+					<Text
+						text="{ path: 'stockModelST>/d/Batch', formatter: '.formatter.removeLeadingZeroes' }"
+						visible="{= ${stockModelST>/d/Batch} !== '' ? true : false }" />
+								
+					<Label text="Stock Type" />
+					<ComboBox
+						selectedKey="{createModel>/TempCurrentType}"
+						id="idCurrentStockType"
+						selectionChange="onChanged">
+						<items>
+							<core:Item key=" " text="Unrestricted-Use"/>
+							<core:Item key="X" text="Quality Inspection"/>
+							<core:Item key="S" text="Blocked"/>
+						</items>
+					</ComboBox>
+					
+					<Label text="Unrestricted Stock" visible="{= ${createModel>/TempCurrentType} === ' ' ? true : false }" />
+					<ObjectNumber
+						visible="{= ${createModel>/TempCurrentType} === ' ' ? true : false }"
+						number="{ path: 'stockModelST>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
+						unit="{stockModelST>/d/MaterialBaseUnit}" />
+						
+					<Label text="Quality Stock" visible="{= ${createModel>/TempCurrentType} === 'X' ? true : false }" />
+					<ObjectNumber
+						visible="{= ${createModel>/TempCurrentType} === 'X' ? true : false }"
+						number="{ path: 'stockModelST>/d/StockQuality', formatter: '.formatter.numberUnit' }"
+						unit="{stockModelST>/d/MaterialBaseUnit}" />
+						
+					<Label text="Blocked Stock" visible="{= ${createModel>/TempCurrentType} === 'S' ? true : false }" />
+					<ObjectNumber
+						visible="{= ${createModel>/TempCurrentType} === 'S' ? true : false }"
+						number="{ path: 'stockModelST>/d/StockBlocked', formatter: '.formatter.numberUnit' }"
+						unit="{stockModelST>/d/MaterialBaseUnit}" />
+					
+					
+					<!-- Transfer To -->
+					<core:Title text="Transfer To" />
 				
-					<Label text="Transfer to Plant" />
+					<Label text="Plant" />
 					<Input
 						value="{createModel>/to_MaterialDocumentItem/results/0/IssuingOrReceivingPlant}"
 						tooltip=""
@@ -155,7 +171,7 @@
 						</customData>
 					</Input>
 					
-					<Label text="Transfer to Storage Location" />
+					<Label text="Storage Location" />
 						<Input
 						value="{createModel>/to_MaterialDocumentItem/results/0/IssuingOrReceivingStorageLoc}"
 						tooltip=""
@@ -203,7 +219,12 @@
 						</customData>
 					</Input>
 					
-					<Label text="Transfer to Stock Type" />
+					<Label text="Batch" visible="{= ${stockModelST>/d/Batch} !== '' ? true : false }" />
+					<Input
+						value="{createModel>/to_MaterialDocumentItem/results/0/IssgOrRcvgBatch}"
+						visible="{= ${stockModelST>/d/Batch} !== '' ? true : false }" />
+					
+					<Label text="Stock Type" />
 					<ComboBox
 						selectedKey="{createModel>/TempTransferType}"
 						id="idTransferStockType"
@@ -215,12 +236,13 @@
 						</items>
 					</ComboBox>
 					
-					<Label text="Transfer Batch Number" />
-					<Input value="{createModel>/to_MaterialDocumentItem/results/0/IssgOrRcvgBatch}" />
 					
-					<Label text="Quantity to Transfer" />
+					<!-- Transfer From -->
+					<core:Title text="Quantity" />
+					
+					<Label text="Quantity" />
 					<Input value="{createModel>/to_MaterialDocumentItem/results/0/QuantityInEntryUnit}" />
-
+					
 				</f:content>
 			</f:SimpleForm>
 		</semantic:content>

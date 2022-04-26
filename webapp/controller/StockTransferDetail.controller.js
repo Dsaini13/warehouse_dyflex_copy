@@ -173,7 +173,7 @@ sap.ui.define([
 		
 		
 		/* =========================================================== */
-		/* Value Help - Plant               */
+		/* Value Help - Plant               						   */
 		/* =========================================================== */
 		
 		onHandleValueHelpPlant: function(oEvent) {
@@ -258,8 +258,8 @@ sap.ui.define([
 				"MaterialDocumentHeaderText" : "",
 				"VersionForPrintingSlip"	 : "0",
 				"ManualPrintIsTriggered"	 : "",
-				"TempCurrentType"			 : "",
-				"TempTransferType"			 : "",
+				"TempCurrentType"			 : " ",
+				"TempTransferType"			 : " ",
 				"to_MaterialDocumentItem"	 : { "results":[] }
 			};
 			//need batches check manufacting order and goods movement
