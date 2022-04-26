@@ -243,6 +243,22 @@
 					<Label text="Quantity" />
 					<Input value="{createModel>/to_MaterialDocumentItem/results/0/QuantityInEntryUnit}" />
 					
+					<Label text="Serial Numbers" />
+					<HBox>
+						<Button
+							text="S/N"
+							tooltip="Add serial number"
+							class="sapUiSmallMarginEnd"
+							enabled="{createModel>TempEnableSerialNo}"
+							press="onSerialNoShow">
+							<customData>
+								<BadgeCustomData
+									key="badge"
+									value="{ path: 'createModel>/to_MaterialDocumentItem/results/0/to_SerialNumbers', formatter: '.formatter.serialNoBadge' }"/>
+							</customData>
+						</Button>
+					</HBox>
+						
 				</f:content>
 			</f:SimpleForm>
 		</semantic:content>
