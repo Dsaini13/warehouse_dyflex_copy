@@ -108,7 +108,6 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 								text="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignDesc' }" />
 								
 							<ObjectIdentifier
-								title="TEST - {customResvItemSrv>Plant} - {customResvItemSrv>StorageLocation}"
 								text="{customResvItemSrv>WarehouseStorageBin}" />
 							
 							<ObjectNumber

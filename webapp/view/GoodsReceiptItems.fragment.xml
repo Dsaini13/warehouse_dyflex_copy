@@ -61,7 +61,7 @@
 						titlePress="onMaterialLinkPress(${createModel>Material})" />
 					
 					<ObjectNumber
-						number="{createModel>TempOpenQty}"
+						number="{ path: 'createModel>TempOpenQty', formatter: '.formatter.numberUnit' }"
 						unit="{createModel>EntryUnit}" />
 						
 					<Input
