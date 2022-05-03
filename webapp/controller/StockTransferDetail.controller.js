@@ -247,8 +247,15 @@ sap.ui.define([
 			
 			andFilter.push(new Filter("Product", FilterOperator.EQ, this.savedStoreLocInputField.data("Material")));
 			andFilter.push(new Filter("Plant", FilterOperator.EQ, this.savedStoreLocInputField.data("Plant")));
+			andFilter.push(new Filter("StorageLocation", FilterOperator.Contains, sValue));
 			orFilter.push(new Filter(andFilter, true));
-
+			
+			andFilter = [];
+			andFilter.push(new Filter("Product", FilterOperator.EQ, this.savedStoreLocInputField.data("Material")));
+			andFilter.push(new Filter("Plant", FilterOperator.EQ, this.savedStoreLocInputField.data("Plant")));
+			andFilter.push(new Filter("StorageLocationName", FilterOperator.Contains, sValue));
+			orFilter.push(new Filter(andFilter, true));
+			
 			return new Filter(orFilter, false);
 		},
 		
@@ -320,8 +327,14 @@ sap.ui.define([
 			var andFilter = [];
 			
 			andFilter.push(new Filter("Product", FilterOperator.EQ, this.savedPlantInputField.data("Material")));
+			andFilter.push(new Filter("Plant", FilterOperator.Contains, sValue));
 			orFilter.push(new Filter(andFilter, true));
-	
+			
+			andFilter = [];
+			andFilter.push(new Filter("Product", FilterOperator.EQ, this.savedPlantInputField.data("Material")));
+			andFilter.push(new Filter("PlantName", FilterOperator.Contains, sValue));
+			orFilter.push(new Filter(andFilter, true));
+			
 			return new Filter(orFilter, false);
 		},
 		

@@ -215,7 +215,7 @@
 						</suggestionRows>
 						<customData>
 							<core:CustomData key="Material" value="{stockModelST>/d/Material}" />
-							<core:CustomData key="Plant" value="3010" />
+							<core:CustomData key="Plant" value="{createModel>/to_MaterialDocumentItem/results/0/IssuingOrReceivingPlant}" />
 						</customData>
 					</Input>
 					
