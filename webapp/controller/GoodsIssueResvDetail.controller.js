@@ -74,6 +74,9 @@ sap.ui.define([
 						"EntryUnit"				   : aSelectedResv[i].BaseUnit,
 						"QuantityInEntryUnit"	   : openQty.toString(),
 						
+						"CostCenter"			   : aSelectedResv[i].CostCenter,
+						"WBSElement"			   : aSelectedResv[i].WBSElement,
+						
 						"TempStockOnHand"		   : stockOnHand.toString(),
 						"TempEnableSerialNo"	   : aSelectedResv[i].SerialNumberProfile ? true : false,
 						"TempPlantName"			   : aSelectedResv[i].PlantName,
