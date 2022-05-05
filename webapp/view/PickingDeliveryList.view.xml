@@ -1,0 +1,117 @@
+<mvc:View
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.PickingDeliveryList"
+	xmlns="sap.m"
+	xmlns:ndc="sap.ndc"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>pickingDeliveryListTitle}" level="H2"/>
+		</semantic:titleHeading>
+		
+		<semantic:content>
+			<Table
+				id="idPickingDeliveryListTable"
+				fixedLayout="false"
+				width="auto"
+				items="{
+					path: 'customDlvItemSrv>/YY1_Warehouse_DlvItem',
+					sorter: [
+						{ path: 'ListHeader', descending: false, group: true },
+						{ path: 'DeliveryDocumentItem', descending: false }
+					],
+					groupHeaderFactory: '.onGroupHeader'
+				}"
+				noDataText="{listView>/tableNoDataText}"
+				busyIndicatorDelay="{listView>/tableBusyDelay}"
+				updateFinished="onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title
+							text="{listView>/listTableTitle}"
+							level="H3"/>
+						<ToolbarSpacer />
+						<SearchField
+							fieldGroupIds="idSearchFieldGrp"
+							search="onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="150px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+						<ndc:BarcodeScannerButton
+							scanSuccess="onScanSuccess"
+							scanFail="onScanError"
+							dialogTitle="Barcode Scanner" >
+						</ndc:BarcodeScannerButton>
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column>
+						<Text text="Item" />
+					</Column>
+					<Column>
+						<Text text="Material" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Plant" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Storage Location" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Storage Bin" />
+					</Column>
+					<Column hAlign="End">
+						<Text text="Delivery Qty" />
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem type="Navigation" press="onPress">
+						<cells>
+							<ObjectIdentifier text="{ path: 'customDlvItemSrv>DeliveryDocumentItem', formatter: '.formatter.removeLeadingZeroes' }" />
+							
+							<ObjectIdentifier
+								title="{customDlvItemSrv>Material}"
+								text="{customDlvItemSrv>DeliveryDocumentItemText}"
+								titleActive="true"
+								titlePress="onMaterialLinkPress(${customDlvItemSrv>Material})" />
+								
+							<ObjectIdentifier title="{customDlvItemSrv>Plant}" text="{customDlvItemSrv>PlantName}" />
+							<ObjectIdentifier title="{customDlvItemSrv>StorageLocation}" text="{customDlvItemSrv>StorageLocationName}" />
+							<ObjectIdentifier text="{customDlvItemSrv>WarehouseStorageBin}" />
+							
+							<ObjectNumber
+								number="{ path: 'customDlvItemSrv>ActualDeliveryQuantity', formatter: '.formatter.numberUnit' }"
+								unit="{customDlvItemSrv>DeliveryQuantityUnit}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
+		</semantic:titleCustomIconActions>
+		
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton title="{listView>/saveAsTileTitle}" />
+		</semantic:saveAsTileAction>
+
+	</semantic:SemanticPage>
+	
+</mvc:View>

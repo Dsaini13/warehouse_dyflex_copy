@@ -43,6 +43,10 @@ sap.ui.define([
 		
 		onStocktakePress: function(oEvent) {
 			this.getRouter().navTo("stocktakeList");
+		},
+		
+		onPickingDeliveryPress: function(oEvent) {
+			this.getRouter().navTo("pickingDeliveryList");
 		}
 
 	});

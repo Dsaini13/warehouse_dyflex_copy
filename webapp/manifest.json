@@ -115,6 +115,13 @@
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_MATPLANT_CDS/metadata.xml"
 				}
+			},
+			"CustomDlvItem": {
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_DLVITEM_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_DLVITEM_CDS/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
@@ -329,6 +336,16 @@
 				},
 				"dataSource": "CustomPlantMaterial",
 				"preload": true
+			},
+			"customDlvItemSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomDlvItem",
+				"preload": true
 			}
 		},
 		"services": {
@@ -452,6 +469,13 @@
 					"target": [
 						"goodsIssueResvList"
 					]
+				},
+				{
+					"pattern": "PickingDelivery",
+					"name": "pickingDeliveryList",
+					"target": [
+						"pickingDeliveryList"
+					]
 				}
 			],
 			"targets": {
@@ -544,6 +568,12 @@
 					"viewName": "GoodsIssueResvDetail",
 					"viewId": "goodsIssueResvDetail",
 					"title": "Goods Issue of Reservations"
+				},
+				"pickingDeliveryList": {
+					"viewType": "XML",
+					"viewName": "PickingDeliveryList",
+					"viewId": "pickingDeliveryList",
+					"title": "Picking Outbound Delivery"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",

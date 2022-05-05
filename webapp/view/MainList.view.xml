@@ -82,6 +82,8 @@
 					<StandardListItem
 						title="Picking"
 						description="Outbound Delivery"
+						press="onPickingDeliveryPress"
+						type="Active"
 						icon="sap-icon://cart-3"
 						iconDensityAware="false"
 						iconInset="false" />
