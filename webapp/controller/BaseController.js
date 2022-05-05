@@ -344,6 +344,14 @@ sap.ui.define([
 			this.setModel(oModel, "supplierModel");
 		},
 		
+		_setCustomerDescModel: function(customer) {
+			if (customer) {
+				 var requestUrl = this._dataSources.BusinessPartner.uri + "A_Customer('" + customer + "')?$format=json";
+			}
+			var oModel = new JSONModel(requestUrl);
+			this.setModel(oModel, "customerModel");
+		},
+		
 		_setPlantGlobalModel: function() {
 			if (!sap.ui.getCore().getModel("plantGlobal")) {
 				var oModel = new JSONModel(this._dataSources.CustomPlant.uri + "YY1_Warehouse_Plant?$format=json");

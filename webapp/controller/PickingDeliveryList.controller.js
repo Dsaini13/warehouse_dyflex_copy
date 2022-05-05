@@ -116,13 +116,6 @@ sap.ui.define([
 			});
 		},
 		
-		onGroupHeader : function (oGroup){
-			return new sap.m.GroupHeaderListItem( {
-				title: oGroup.key,
-				upperCase: false
-			});
-		},
-		
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */

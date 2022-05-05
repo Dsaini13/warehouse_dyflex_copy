@@ -20,7 +20,7 @@
 		</semantic:titleHeading>
 		
 		<semantic:headerContent>
-			<ObjectAttribute title="Ship-to Party" text="yyyyyyyy xxxxxxxxxxxx" />
+			<ObjectAttribute title="Ship-to Party" text="{customerModel>/d/CustomerName} ({customerModel>/d/Customer})" />
 		</semantic:headerContent>
 
 		<semantic:content>

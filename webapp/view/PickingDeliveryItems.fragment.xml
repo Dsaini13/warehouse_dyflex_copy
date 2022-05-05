@@ -9,7 +9,6 @@
 				{ path: 'ListHeader', descending: false, group: true },
 				{ path: 'DeliveryDocumentItem', descending: false }
 			],
-			groupHeaderFactory: '.onGroupHeader',
 			templateShareable: false
 		}"
 		width="auto"

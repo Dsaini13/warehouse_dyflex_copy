@@ -136,6 +136,7 @@ sap.ui.define([
 			
 			this._oCreateModel.attachRequestCompleted({}, function() {
 				that._handleJSONModelError(oEvent);
+				that._setCustomerDescModel(that._oCreateModel.getProperty("/d/results/0/SoldToParty"));
 				that._oViewModel.setProperty("/busy", false);
 			});
 		},
