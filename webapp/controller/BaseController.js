@@ -240,6 +240,10 @@ sap.ui.define([
 			this._navigateExternalApp("PhysicalInventoryDocument", "displayFactSheet", { PhysicalInventoryDocument: documentNo, FiscalYear: fiscalYear });
 		},
 		
+		onDeliveryLinkPress: function(deliveryNo) {
+			this._navigateExternalApp("OutboundDelivery", "displayFactSheet", { OutboundDelivery: deliveryNo });
+		},
+		
 		_navigateExternalApp: function(semanticObject, action, oParams) {
 			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
 			oCrossAppNavigator.toExternal({

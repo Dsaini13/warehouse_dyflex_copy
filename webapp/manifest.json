@@ -476,6 +476,13 @@
 					"target": [
 						"pickingDeliveryList"
 					]
+				},
+				{
+					"pattern": "PickingDeliveryDetail/{documentNo}",
+					"name": "pickingDeliveryDetail",
+					"target": [
+						"pickingDeliveryDetail"
+					]
 				}
 			],
 			"targets": {
@@ -573,6 +580,12 @@
 					"viewType": "XML",
 					"viewName": "PickingDeliveryList",
 					"viewId": "pickingDeliveryList",
+					"title": "Picking Outbound Delivery"
+				},
+				"pickingDeliveryDetail": {
+					"viewType": "XML",
+					"viewName": "PickingDeliveryDetail",
+					"viewId": "pickingDeliveryDetail",
 					"title": "Picking Outbound Delivery"
 				},
 				"objectNotFound": {

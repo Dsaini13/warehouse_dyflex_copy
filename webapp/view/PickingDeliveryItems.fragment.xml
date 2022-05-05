@@ -1,0 +1,85 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	
+	<Table 
+		items="{
+			path: 'createModel>/d/results',
+			sorter: [
+				{ path: 'ListHeader', descending: false, group: true },
+				{ path: 'DeliveryDocumentItem', descending: false }
+			],
+			groupHeaderFactory: '.onGroupHeader',
+			templateShareable: false
+		}"
+		width="auto"
+		fixedLayout="false"
+		class="sapUiMeduimMarginBottom"
+		noDataText="{i18n>tableNoDataText}">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Items"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column>
+				<Text text="Item" />
+			</Column>
+			<Column>
+				<Text text="Material" />
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Plant" />
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Storage Location" />
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Storage Bin" />
+			</Column>
+			<Column hAlign="End">
+				<Text text="Delivery Qty" />
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier text="{ path: 'createModel>DeliveryDocumentItem', formatter: '.formatter.removeLeadingZeroes' }" />
+					
+					<ObjectIdentifier
+						title="{createModel>Material}"
+						text="{createModel>DeliveryDocumentItemText}"
+						titleActive="true"
+						titlePress="onMaterialLinkPress(${createModel>Material})" />
+						
+					<ObjectIdentifier title="{createModel>Plant}" text="{createModel>PlantName}" />
+					<ObjectIdentifier title="{createModel>StorageLocation}" text="{createModel>StorageLocationName}" />
+					<ObjectIdentifier text="{createModel>WarehouseStorageBin}" />
+					
+					<ObjectNumber
+						number="{ path: 'createModel>ActualDeliveryQuantity', formatter: '.formatter.numberUnit' }"
+						unit="{createModel>DeliveryQuantityUnit}" />
+						
+					<HBox alignContent="Center">
+						<Button
+							text="S/N"
+							tooltip="Add serial number"
+							class="sapUiSmallMarginEnd"
+							enabled="{= ${createModel>SerialNumberProfile} ? true : false }"
+							press="onSerialNoShow">
+							<customData>
+								<BadgeCustomData
+									key="badge"
+									value="{ path: 'createModel>to_SerialNumbers', formatter: '.formatter.serialNoBadge' }"/>
+							</customData>
+						</Button>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	
+</core:FragmentDefinition>
