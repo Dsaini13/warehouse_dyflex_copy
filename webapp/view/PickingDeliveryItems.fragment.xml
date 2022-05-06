@@ -37,13 +37,13 @@
 			<Column minScreenWidth="Tablet" demandPopin="true">
 				<Text text="Storage Bin" />
 			</Column>
-			<Column hAlign="End">
+			<Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
 				<Text text="Delivery Qty" />
 			</Column>
 			<Column>
 				<Text text="Picked" />
 			</Column>
-			<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+			<Column minScreenWidth="Desktop" demandPopin="true">
 			</Column>
 		</columns>
 		<items>
@@ -84,6 +84,10 @@
 									value="{ path: 'createModel>to_SerialNumbers', formatter: '.formatter.serialNoBadge' }"/>
 							</customData>
 						</Button>
+						<Button
+							icon="sap-icon://delete"
+							tooltip="Delete item"
+							press="onDeleteItem" />
 					</HBox>
 				</cells>
 			</ColumnListItem>

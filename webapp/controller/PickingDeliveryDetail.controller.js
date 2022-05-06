@@ -43,6 +43,18 @@ sap.ui.define([
 			this._navToListView();
 		},
 		
+		onDeleteItem : function (oEvent) {
+			var path = oEvent.getSource().getParent().getParent().getBindingContextPath(),
+				oData = this._oCreateModel.getData();
+				
+			var iRowIndex = path.match(/\d+/);
+			if (iRowIndex) {
+				oData.d.results.splice(iRowIndex[0], 1);
+				this._oCreateModel.setData(oData);
+			}
+			this._validateSaveEnablement();
+		},
+		
 		/* =========================================================== */
 		/* POST Methods                                                */
 		/* =========================================================== */
@@ -132,6 +144,19 @@ sap.ui.define([
 				that._setCustomerDescModel(that._oCreateModel.getProperty("/d/results/0/SoldToParty"));
 				that._oViewModel.setProperty("/busy", false);
 			});
+		},
+		
+		/**
+		 * Checks if the save button can be enabled
+		 * @private
+		 */
+		_validateSaveEnablement: function () {
+			var aItems = this._oCreateModel.getProperty("/d/results");
+			if (aItems && aItems.length === 0) {
+				this._oViewModel.setProperty("/enableSave", false);
+				return;
+			}
+			this._oViewModel.setProperty("/enableSave", true);
 		},
 		
 		_showSuccessMessage: function() {
