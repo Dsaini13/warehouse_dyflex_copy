@@ -40,6 +40,9 @@
 			<Column hAlign="End">
 				<Text text="Delivery Qty" />
 			</Column>
+			<Column>
+				<Text text="Picked" />
+			</Column>
 			<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 			</Column>
 		</columns>
@@ -61,7 +64,13 @@
 					<ObjectNumber
 						number="{ path: 'createModel>ActualDeliveryQuantity', formatter: '.formatter.numberUnit' }"
 						unit="{createModel>DeliveryQuantityUnit}" />
-						
+					
+					<Input
+						value="{createModel>PickedQtyInSalesUnit}"
+						description="{createModel>DeliveryQuantityUnit}"
+						fieldWidth="75%"
+						type="Number"/>
+					
 					<HBox alignContent="Center">
 						<Button
 							text="S/N"

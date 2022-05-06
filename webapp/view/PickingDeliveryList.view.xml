@@ -76,6 +76,9 @@
 					<Column hAlign="End">
 						<Text text="Delivery Qty" />
 					</Column>
+					<Column hAlign="End">
+						<Text text="Picked Qty" />
+					</Column>
 				</columns>
 
 				<items>
@@ -96,6 +99,11 @@
 							<ObjectNumber
 								number="{ path: 'customDlvItemSrv>ActualDeliveryQuantity', formatter: '.formatter.numberUnit' }"
 								unit="{customDlvItemSrv>DeliveryQuantityUnit}" />
+							
+							<ObjectNumber
+								number="{ path: 'customDlvItemSrv>PickedQtyInSalesUnit', formatter: '.formatter.numberUnit' }"
+								unit="{customDlvItemSrv>DeliveryQuantityUnit}" />
+								
 						</cells>
 					</ColumnListItem>
 				</items>
