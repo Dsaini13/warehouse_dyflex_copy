@@ -122,6 +122,13 @@
 				"settings": {
 					"localUri": "localService/YY1_WAREHOUSE_DLVITEM_CDS/metadata.xml"
 				}
+			},
+			"OutbDelivery": {
+				"uri": "/sap/opu/odata/sap/API_OUTBOUND_DELIVERY_SRV;v=0002/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/API_OUTBOUND_DELIVERY_SRV/metadata.xml"
+				}
 			}
 		},
 		"sourceTemplate": {
@@ -345,6 +352,16 @@
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "CustomDlvItem",
+				"preload": true
+			},
+			"outbDeliverySrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "OutbDelivery",
 				"preload": true
 			}
 		},

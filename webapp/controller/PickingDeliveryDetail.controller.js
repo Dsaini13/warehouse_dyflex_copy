@@ -47,10 +47,9 @@ sap.ui.define([
 		/* POST Methods                                                */
 		/* =========================================================== */
 		
-		/*
 		onPost: function (oEvent) {
 			var that = this;
-			var oDataModel = this.getModel("physInvDocSrv");
+			var oDataModel = this.getModel("outbDeliverySrv");
 			
 			this._oViewModel.setProperty("/busy", true);
 			var createData = jQuery.extend(true, {}, this._oCreateModel.getData());
@@ -60,7 +59,6 @@ sap.ui.define([
 			oDataModel.attachEventOnce("batchRequestCompleted", function(oEvt) {
 				that._oViewModel.setProperty("/busy", false);
 				if (that._checkIfBatchRequestSucceeded(oEvt)) {
-					that._oAttachmentsControl.upload();
 					that._showSuccessMessage();
 					that._updateListModel();
 					that._navToListView();
@@ -69,27 +67,22 @@ sap.ui.define([
 			
 			for (var i = 0; i < aItems.length; i++) {
 				
-				var eTagParam = {
-					headers: { 
-						"If-Match": this._findDocItemETag(aItems[i])
-					}
+				var oParams = {
+					"DeliveryDocument": aItems[i].DeliveryDocument,
+					"DeliveryDocumentItem": aItems[i].DeliveryDocumentItem,
+					"ActualDeliveryQuantity": aItems[i].PickedQtyInSalesUnit,
+					"DeliveryQuantityUnit": aItems[i].DeliveryQuantityUnit
 				};
 				
-				var docItemPath = "/A_PhysInventoryDocItem(FiscalYear='" + aItems[i].FiscalYear + 
-									"',PhysicalInventoryDocument='" + aItems[i].PhysicalInventoryDocument + 
-									"',PhysicalInventoryDocumentItem='" + aItems[i].PhysicalInventoryDocumentItem + "')";
+				oDataModel.callFunction("/PickOneItemWithSalesQuantity", {
+					method: "POST",
+					urlParameters: oParams,
+					headers: { 
+						"If-Match": "W/\"'" + aItems[i].DeliveryVersion + "'\""
+					}
+				});
 				
-				var oDocItem = { "d": {
-					"Material": aItems[i].Material,
-					"Batch": aItems[i].Batch,
-					"QuantityInUnitOfEntry": aItems[i].TempCountQty,
-					"UnitOfEntry": aItems[i].MaterialBaseUnit,
-					"PhysicalInventoryItemIsZero": parseFloat(aItems[i].TempCountQty) === 0 ? true : false
-				}};
-				
-				oDataModel.update(docItemPath, oDocItem, eTagParam);
-				
-				
+				/*
 				if (aItems[i].to_SerialNumbers) {
 					var aSerialNumbers = aItems[i].to_SerialNumbers.results;
 					for (var j = 0; j < aSerialNumbers.length; j++) {
@@ -106,10 +99,11 @@ sap.ui.define([
 						oDataModel.update(serialNoPath, oSerialNo, eTagParam);
 					}
 				}
+				*/
+				
 			}
 			oDataModel.submitChanges();
 		},
-		*/
 		
 		/* =========================================================== */
 		/* internal methods                                            */
@@ -129,7 +123,6 @@ sap.ui.define([
 			
 			var that = this;
 			var sFilter = "DeliveryDocument eq '" + this._sDocumentNo + "'";
-			//this._oDocETag = new JSONModel(this._dataSources.PhysInvDoc.uri + "A_PhysInventoryDocItem?$filter=" + sFilter + "&$format=json");
 			
 			this._oCreateModel = new JSONModel(this._dataSources.CustomDlvItem.uri + "YY1_Warehouse_DlvItem?$filter=" + sFilter + "&$format=json");
 			this.setModel(this._oCreateModel, "createModel");
@@ -140,17 +133,6 @@ sap.ui.define([
 				that._oViewModel.setProperty("/busy", false);
 			});
 		},
-		
-		/*
-		_findDocItemETag: function(oItem) {
-			var that = this;
-			var aItems = this._oDocETag.getData().d.results;
-			var oData = aItems.find(function(obj) {
-				return that._pad(obj.PhysicalInventoryDocumentItem, 3) === oItem.PhysicalInventoryDocumentItem;
-			});
-			return oData.__metadata ? oData.__metadata.etag : "";
-		},
-		*/
 		
 		_showSuccessMessage: function() {
 			var msg = this.getResourceBundle().getText("pickingDeliverySuccessMsg", [this._sDocumentNo]);
