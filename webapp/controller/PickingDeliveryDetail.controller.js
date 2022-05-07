@@ -79,6 +79,8 @@ sap.ui.define([
 			
 			for (var i = 0; i < aItems.length; i++) {
 				
+				var itemETag = "W/\"'" + aItems[i].DeliveryVersion + "'\"";
+				
 				var oParams = {
 					"DeliveryDocument": aItems[i].DeliveryDocument,
 					"DeliveryDocumentItem": aItems[i].DeliveryDocumentItem,
@@ -90,29 +92,45 @@ sap.ui.define([
 					method: "POST",
 					urlParameters: oParams,
 					headers: { 
-						"If-Match": "W/\"'" + aItems[i].DeliveryVersion + "'\""
+						"If-Match": itemETag
 					}
 				});
 				
-				/*
+				// Update Serial No
 				if (aItems[i].to_SerialNumbers) {
+					/*
+					// Delete Old Serial Numbers
+					oDataModel.callFunction("/DeleteAllSerialNumbersFromDeliveryItem", {
+						method: "POST",
+						urlParameters: {
+							"DeliveryDocument": aItems[i].DeliveryDocument,
+							"DeliveryDocumentItem": aItems[i].DeliveryDocumentItem
+						},
+						headers: { 
+							"If-Match": itemETag
+						}
+					});
+					*/
+					
+					// Add the New Serial Numbers
+					// Newly added serial numbers doesn't have Delivery Document 
 					var aSerialNumbers = aItems[i].to_SerialNumbers.results;
 					for (var j = 0; j < aSerialNumbers.length; j++) {
-						
-						var serialNoPath = "/A_SerialNumberPhysInventoryDoc(FiscalYear='" + aItems[i].FiscalYear + 
-											"',PhysicalInventoryDocument='" + aItems[i].PhysicalInventoryDocument + 
-											"',PhysicalInventoryDocumentItem='" + aItems[i].PhysicalInventoryDocumentItem + 
-											"',Equipment='',SerialNumberPhysicalInvtryType='2')";
-						
-						var oSerialNo = { "d": {
-							"SerialNumber": aSerialNumbers[j].SerialNumber
-						}};
-						
-						oDataModel.update(serialNoPath, oSerialNo, eTagParam);
+						if (!aSerialNumbers[j].DeliveryDocument) {
+							oDataModel.callFunction("/AddSerialNumberToDeliveryItem", {
+								method: "POST",
+								urlParameters: {
+									"DeliveryDocument": aItems[i].DeliveryDocument,
+									"DeliveryDocumentItem": aItems[i].DeliveryDocumentItem,
+									"SerialNumber": aSerialNumbers[j].SerialNumber
+								},
+								headers: { 
+									"If-Match": itemETag
+								}
+							});	
+						}
 					}
 				}
-				*/
-				
 			}
 			oDataModel.submitChanges();
 		},
@@ -136,7 +154,7 @@ sap.ui.define([
 			var that = this;
 			var sFilter = "DeliveryDocument eq '" + this._sDocumentNo + "'";
 			
-			this._oCreateModel = new JSONModel(this._dataSources.CustomDlvItem.uri + "YY1_Warehouse_DlvItem?$filter=" + sFilter + "&$format=json");
+			this._oCreateModel = new JSONModel(this._dataSources.CustomDlvItem.uri + "YY1_Warehouse_DlvItem?$filter=" + sFilter + "&$expand=to_SerialNumbers&$format=json");
 			this.setModel(this._oCreateModel, "createModel");
 			
 			this._oCreateModel.attachRequestCompleted({}, function() {
