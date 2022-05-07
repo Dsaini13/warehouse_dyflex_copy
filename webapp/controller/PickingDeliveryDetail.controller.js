@@ -56,6 +56,28 @@ sap.ui.define([
 		},
 		
 		/* =========================================================== */
+		/* Serial No Dialog                                            */
+		/* =========================================================== */
+		
+		onSerialNoDelete: function(oEvent) {
+			// Redefined this from BaseController so we can save the deleted
+			// serial number as this is needed for posting later
+			var path = oEvent.getSource().getParent().getBindingContextPath();
+			var index = path.match(/\d+/);
+			if (index) {
+				var itemData = this._oItemModel.getData();
+				var aDeleted = itemData.to_SerialNumbers.results.splice(index[0], 1);
+				
+				if (!itemData.DeletedSerialNo) {
+					itemData.DeletedSerialNo = [];
+				}
+				itemData.DeletedSerialNo.push(aDeleted[0]);
+				
+				this._oItemModel.setData(itemData);
+			}
+		},
+		
+		/* =========================================================== */
 		/* POST Methods                                                */
 		/* =========================================================== */
 		
@@ -96,24 +118,9 @@ sap.ui.define([
 					}
 				});
 				
-				// Update Serial No
+				// Add the new Serial Numbers
+				// Newly added serial numbers doesn't have Delivery Document 
 				if (aItems[i].to_SerialNumbers) {
-					/*
-					// Delete Old Serial Numbers
-					oDataModel.callFunction("/DeleteAllSerialNumbersFromDeliveryItem", {
-						method: "POST",
-						urlParameters: {
-							"DeliveryDocument": aItems[i].DeliveryDocument,
-							"DeliveryDocumentItem": aItems[i].DeliveryDocumentItem
-						},
-						headers: { 
-							"If-Match": itemETag
-						}
-					});
-					*/
-					
-					// Add the New Serial Numbers
-					// Newly added serial numbers doesn't have Delivery Document 
 					var aSerialNumbers = aItems[i].to_SerialNumbers.results;
 					for (var j = 0; j < aSerialNumbers.length; j++) {
 						if (!aSerialNumbers[j].DeliveryDocument) {
@@ -131,6 +138,28 @@ sap.ui.define([
 						}
 					}
 				}
+				
+				// Remove deleted Serial Numbers
+				// Existing serial numbers have Delivery Document 
+				if (aItems[i].DeletedSerialNo) {
+					var aDeletedSerialNo = aItems[i].DeletedSerialNo;
+					for (var k = 0; k < aDeletedSerialNo.length; k++) {
+						if (aDeletedSerialNo[k].DeliveryDocument) {
+							oDataModel.callFunction("/DeleteSerialNumberFromDeliveryItem", {
+								method: "POST",
+								urlParameters: {
+									"DeliveryDocument": aDeletedSerialNo[k].DeliveryDocument,
+									"DeliveryDocumentItem": aDeletedSerialNo[k].DeliveryDocumentItem,
+									"SerialNumber": aDeletedSerialNo[k].SerialNumber
+								},
+								headers: { 
+									"If-Match": itemETag
+								}
+							});	
+						}
+					}
+				}
+				
 			}
 			oDataModel.submitChanges();
 		},
