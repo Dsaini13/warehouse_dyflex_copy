@@ -54,7 +54,7 @@
 					<!-- Stock Details -->
 					<core:Title text="Stock Details" />
 					
-					<Label text="Stock on Hand" />
+					<Label text="Unrestricted" />
 					<ObjectNumber
 						number="{ path: 'stockModel>/d/StockOnHand', formatter: '.formatter.numberUnit' }"
 						unit="{stockModel>/d/MaterialBaseUnit}" />

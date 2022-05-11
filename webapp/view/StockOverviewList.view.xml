@@ -67,7 +67,7 @@
 						<Text text="Batch" />
 					</Column>
 					<Column width="auto" hAlign="End">
-						<Text text="Stock on Hand" />
+						<Text text="Unrestricted" />
 					</Column>
 					<Column width="10%" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
 						<Text text="Quality" />

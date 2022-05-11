@@ -25,7 +25,7 @@
 				<Text text="Material"/>
 			</Column>
 			<Column minScreenWidth="Tablet" demandPopin="true">
-				<Text text="Stock On Hand"/>
+				<Text text="Unrestricted Stock"/>
 			</Column>
 			<Column>
 				<Text text="Issued"/>
