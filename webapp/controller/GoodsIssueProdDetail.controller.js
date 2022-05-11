@@ -35,7 +35,8 @@ sap.ui.define([
 			this._oViewModel.setProperty("/orderNo", this._sProdOrder);
 			
 			var that = this;
-			var oReservation = new JSONModel(this._dataSources.CustomResvItem.uri + "YY1_Warehouse_ResvItem?$filter=ManufacturingOrder eq '" + this._sProdOrder + "'&$format=json");
+			var filter = "$filter=ManufacturingOrder eq '" + this._sProdOrder + "' and MatlCompIsMarkedForBackflush eq false";
+			var oReservation = new JSONModel(this._dataSources.CustomResvItem.uri + "YY1_Warehouse_ResvItem?" + filter + "&$format=json");
 			
 			oReservation.attachRequestCompleted({}, function() {
 				that._handleJSONModelError(oEvent);

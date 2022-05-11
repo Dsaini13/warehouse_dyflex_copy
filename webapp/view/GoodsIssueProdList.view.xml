@@ -26,7 +26,8 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueProdList"
 						{ path: 'ReservationItem', descending: false }
 					],
 					filters : [
-						{ path : 'OrderCategory', operator : 'EQ', value1 : '10' }
+						{ path : 'OrderCategory', operator : 'EQ', value1 : '10' },
+						{ path : 'MatlCompIsMarkedForBackflush', operator : 'EQ', value1 : false }
 					],
 					groupHeaderFactory: '.onGroupHeader'
 				}"

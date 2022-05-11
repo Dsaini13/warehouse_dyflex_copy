@@ -84,7 +84,7 @@ sap.ui.define([
 				// refresh the list binding.
 				this.onRefresh();
 			} else {
-				var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, "10")];
+				var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, "10"), new Filter("MatlCompIsMarkedForBackflush", FilterOperator.EQ, false)];
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery && sQuery.length > 0) {

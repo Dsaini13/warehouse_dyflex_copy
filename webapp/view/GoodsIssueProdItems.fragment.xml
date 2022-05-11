@@ -5,7 +5,7 @@
 	<Table 
 		items="{ 
 			path: 'createModel>/to_MaterialDocumentItem/results', 
-			sorter: { path: 'PurchaseOrderItem' }, 
+			sorter: { path: 'ReservationItem' }, 
 			templateShareable: false }"
 		width="auto"
 		fixedLayout="false"
