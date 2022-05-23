@@ -60,11 +60,14 @@
 					<Column width="auto" >
 						<Text text="Plant" />
 					</Column>
-					<Column width="17.5%" minScreenWidth="Tablet" demandPopin="true">
+					<Column width="12.5%" minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Storage Location" />
 					</Column>
-					<Column width="15%" minScreenWidth="Desktop" demandPopin="true">
+					<Column width="10%" minScreenWidth="Desktop" demandPopin="true">
 						<Text text="Batch" />
+					</Column>
+					<Column width="10%" minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Storage Bin" />
 					</Column>
 					<Column width="auto" hAlign="End">
 						<Text text="Unrestricted" />
@@ -91,6 +94,7 @@
 							<ObjectIdentifier title="{customStockSrv>Plant}" text="{customStockSrv>PlantName}" />
 							<ObjectIdentifier title="{customStockSrv>StorageLocation}" text="{customStockSrv>StorageLocationName}" />
 							<ObjectIdentifier text="{ path: 'customStockSrv>Batch', formatter: '.formatter.removeLeadingZeroes' }" />
+							<ObjectIdentifier text="{customStockSrv>WarehouseStorageBin}" />
 							
 							<ObjectNumber
 								number="{ path: 'customStockSrv>StockOnHand', formatter: '.formatter.numberUnit' }"

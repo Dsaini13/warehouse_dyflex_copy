@@ -30,6 +30,7 @@
 			<ObjectAttribute title="Plant" text="{stockModel>/d/PlantName} ({stockModel>/d/Plant})" />
 			<ObjectAttribute title="Store Loc" text="{stockModel>/d/StorageLocationName} ({stockModel>/d/StorageLocation})" />
 			<ObjectAttribute title="Batch" text="{stockModel>/d/Batch}" />
+			<ObjectAttribute title="Storage Bin" text="{stockModel>/d/WarehouseStorageBin}" />
 		</semantic:headerContent>
 
 		<semantic:content>
