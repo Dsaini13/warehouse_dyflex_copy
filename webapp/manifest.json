@@ -109,6 +109,27 @@
 					"localUri": "localService/YY1_WAREHOUSE_RESVITEM_CDS/metadata.xml"
 				}
 			},
+			"CustomResvHead": {
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_RESVHEADER_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_RESVHEADER_CDS/metadata.xml"
+				}
+			},
+			"CustomResvStaging": {
+				"uri": "/sap/opu/odata/sap/YY1_RESVITEMSTAGINGAREA_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_RESVITEMSTAGINGAREA_CDS/metadata.xml"
+				}
+			},
+			"CustomStagedResv": {
+				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_STAGEDRESVIT_CDS/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/YY1_WAREHOUSE_STAGEDRESVIT_CDS/metadata.xml"
+				}
+			},
 			"CustomPlantMaterial": {
 				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_MATPLANT_CDS/",
 				"type": "OData",
@@ -334,6 +355,36 @@
 				"dataSource": "CustomResvItem",
 				"preload": true
 			},
+			"customResvHeadSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomResvHead",
+				"preload": true
+			},
+			"customResvStagingSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomResvStaging",
+				"preload": true
+			},
+			"customStagedResvSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "CustomStagedResv",
+				"preload": true
+			},
 			"customPlantMaterialSrv": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
@@ -500,6 +551,27 @@
 					"target": [
 						"pickingDeliveryDetail"
 					]
+				},
+				{
+					"pattern": "PickingResvList",
+					"name": "pickingResvList",
+					"target": [
+						"pickingResvList"
+					]
+				},
+				{
+					"pattern": "PickingResvDetail//{documentNo}",
+					"name": "pickingResvDetail",
+					"target": [
+						"pickingResvDetails"
+					]
+				},
+				{
+					"pattern": "StagedResvList",
+					"name": "stagedResvList",
+					"target": [
+						"stagedResvList"
+					]
 				}
 			],
 			"targets": {
@@ -604,6 +676,24 @@
 					"viewName": "PickingDeliveryDetail",
 					"viewId": "pickingDeliveryDetail",
 					"title": "Picking Outbound Delivery"
+				},
+				"pickingResvList": {
+					"viewType": "XML",
+					"viewName": "PickingResvList",
+					"viewId": "pickingResvList",
+					"title": "Picking Reservation"
+				},
+				"pickingResvDetail": {
+					"viewType": "XML",
+					"viewName": "PickingResvDetail",
+					"viewId": "pickingResvDetail",
+					"title": "Picking Reservation"
+				},
+				"stagedResvList": {
+					"viewType": "XML",
+					"viewName": "StagedResvList",
+					"viewId": "stagedResvList",
+					"title": "Staged Reservation"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",

@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		title="Select an Order"
+		class="sapUiPopupWithPadding"
+		items="{
+			path: 'customResvItemSrv>/YY1_Warehouse_ResvItem',
+			sorter: { path: 'Order', descending: false },
+			templateShareable: false
+		}"
+		search="onHandleValueHelpPlantSearch"
+		confirm="onHandleValueHelpPlantClose"
+		cancel="onHandleValueHelpPlantClose">
+		<StandardListItem
+			title="{customResvItemSrv>ManufacturingOrder}" />
+	</SelectDialog>
+</core:FragmentDefinition>

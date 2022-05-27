@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	
+	<Table 
+		items="{ 
+			path: 'createModel>/to_MaterialDocumentItem/results', 
+			sorter: { path: 'PurchaseOrderItem' }, 
+			templateShareable: false }"
+		width="auto"
+		fixedLayout="false"
+		class="sapUiSmallMarginTopBottom"
+		noDataText="{i18n>pickingResvItemNoData}">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Items"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column>
+				<Text text="Item"/>
+			</Column>
+			<Column>
+				<Text text="Material"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Stock On Hand"/>
+			</Column>
+			<Column>
+				<Text text="Issued"/>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<Text text="Plant"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true" >
+				<Text text="Store Loc"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="Storage Bin" />
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text
+						text="{ path: 'createModel>', formatter: '.formatter.resvKeysDisplay' }" />
+					
+					<ObjectIdentifier
+						title="{createModel>Material}"
+						text="{createModel>MaterialDocumentItemText}"
+						titleActive="true"
+						titlePress="onMaterialLinkPress(${createModel>Material})" />
+					
+					<ObjectNumber
+						number="{ path: 'createModel>TempStockOnHand', formatter: '.formatter.numberUnit' }"
+						unit="{createModel>EntryUnit}" />
+						
+					<Input
+						value="{createModel>QuantityInEntryUnit}"
+						change="onChanged"
+						fieldWidth="75%"
+						description="{createModel>EntryUnit}"
+						type="Number" />
+					
+					<ObjectIdentifier title="{createModel>Plant}" text="{createModel>TempPlantName}" />
+					
+					<ObjectIdentifier title="{createModel>StorageLocation}" text="{createModel>TempStorageLocationName}" />
+					
+					<ObjectIdentifier text="{createModel>TempWarehouseStorageBin}" />
+					
+					<HBox>
+						<Button
+							text="S/N"
+							tooltip="Add serial number"
+							class="sapUiSmallMarginEnd"
+							enabled="{createModel>TempEnableSerialNo}"
+							press="onSerialNoShow">
+							<customData>
+								<BadgeCustomData
+									key="badge"
+									value="{ path: 'createModel>to_SerialNumbers', formatter: '.formatter.serialNoBadge' }"/>
+							</customData>
+						</Button>
+						<Button
+							icon="sap-icon://delete"
+							tooltip="Delete item"
+							press="onDeleteItem" />
+					</HBox>
+							
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	
+</core:FragmentDefinition>

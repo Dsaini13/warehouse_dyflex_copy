@@ -100,6 +100,8 @@ sap.ui.define([], function () {
 			}
 		},
 		
+		
+		
 		resvAccAssignObject: function(oData) {
 			if (oData.ManufacturingOrder) {
 				return oData.ManufacturingOrder;

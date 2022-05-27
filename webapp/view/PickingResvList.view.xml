@@ -1,0 +1,306 @@
+<mvc:View
+	controllerName="dyflex.mm.s4cloud.warehouse.controller.PickingResvList"
+	height="100%"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:ndc="sap.ndc"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:layout="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:vm="sap.ui.comp.variants"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+	
+	<f:DynamicPage id="dynamicPageId" headerExpanded="{/headerExpanded}" showFooter="true">
+			<f:title>
+				<f:DynamicPageTitle>
+					<f:heading>
+						<vm:VariantManagement standardItemText="{i18n>pickingResvListTitle}">
+						</vm:VariantManagement>
+					</f:heading>
+					<f:actions>
+						<ToolbarSpacer/>
+							<OverflowToolbarButton
+							icon="sap-icon://menu" text="Menu" press="onPressMenu"/>
+							<MenuButton icon="sap-icon://action">
+								<Menu>
+									<MenuItem text="Send Email" icon="sap-icon://email" press="onShareEmailPress" />
+									<MenuItem text="Save as Tile" icon="sap-icon://add-favorite"/>
+								</Menu>
+							</MenuButton>
+					</f:actions>
+				</f:DynamicPageTitle>
+			</f:title>
+
+			<f:header>
+				<f:DynamicPageHeader pinnable="true">
+					<f:content>
+						<fb:FilterBar id="filterbar" clear="onClear" reset="onReset" search="onFilterBarGo" useToolbar="false" showGoOnFB="true" showClearOnFB="true">
+							<fb:filterGroupItems>
+								
+							<!--	<fb:FilterGroupItem groupName="Reservations" groupTitle="Reservations" name="StagingStatus" label="Staging Status" visibleInFilterBar="true">
+									<fb:control>
+										<ComboBox id="iStageFilter" change="onChange">
+											<items>
+												<core:Item key="001" text="Initial"/>
+												<core:Item key="002" text="Staged"/>
+												<core:Item key="003" text="Handed out to Requestor"/>
+											</items>
+										</ComboBox>
+									</fb:control>
+								</fb:FilterGroupItem>-->
+								
+								<fb:FilterGroupItem groupName="Reservations" groupTitle="Reservations" name="ResNo" label="Reservation Number" visibleInFilterBar="true">
+									<fb:control>
+										<Input
+											value="{customResvHeadSrv>Reservation}"
+											tooltip=""
+											liveChange="onLiveChange"
+											showValueHelp="true"
+											valueHelpRequest="onHandleValueHelpReservation"
+											showSuggestion="true"
+											maxSuggestionWidth="50%"
+											suggest="onHandleSuggest"
+											filterSuggests="false"
+											suggestionRows="{
+												path: 'customResvHeadSrv>/YY1_Warehouse_ResvHeader',
+												sorter: { path: 'Reservation', descending: false },
+												templateShareable: false
+											}"
+											suggestionItemSelected="onHandleValueHelp">
+											<suggestionColumns>
+												<Column
+													hAlign="Begin"
+													width="100%"
+													popinDisplay="Inline"
+													demandPopin="true">
+													<Label text="Reservation" />
+												</Column>
+											</suggestionColumns>
+											<suggestionRows>
+												<ColumnListItem>
+													<cells>
+														<Label text="{customResvHeadSrv>Reservation}" />
+													</cells>
+												</ColumnListItem>
+											</suggestionRows>
+										</Input>
+									</fb:control>
+								</fb:FilterGroupItem>
+								
+<!--								<fb:FilterGroupItem groupName="Reservations" groupTitle="Reservations" name="ReservationNo" label="Reservation Number" visibleInFilterBar="true">
+									<fb:control>
+										<Input id="iResFilter" type="Text" change="onChange"/>
+									</fb:control>
+								</fb:FilterGroupItem>-->
+								
+								<fb:FilterGroupItem groupName="Reservations" name="PlantList" label="Plant" visibleInFilterBar="true">
+									<fb:control>
+										<Select
+											id="sPlant"
+											change="onPlantSelect"
+											forceSelection="false"
+											items="{
+                                                    path: 'customPlantSrv>/YY1_Warehouse_Plant'
+                                                }"
+                                            selectedKey="{customPlantSrv>Plant}">
+											<core:Item key="{customPlantSrv>Plant}" text="{customPlantSrv>PlantName} ({customPlantSrv>Plant})"/>
+										</Select>
+									</fb:control>				
+								</fb:FilterGroupItem>
+								
+								<fb:FilterGroupItem groupName="Reservations" name="SLList" label="Storage Location" visibleInFilterBar="true">
+									<fb:control>
+										<Select
+											id="sStorageLoc"
+											change="onSelectChange"
+											forceSelection="false"
+											items="{
+                                                    path: 'customSLocSrv>/YY1_Warehouse_StoreLoc'
+                                                }"
+                                            selectedKey="{customSLocSrv>StorageLocation}">
+											<core:Item key="{customSLocSrv>StorageLocation}" text="{customSLocSrv>StorageLocationName} ({customSLocSrv>StorageLocation})"/>
+										</Select>
+									</fb:control>				
+								</fb:FilterGroupItem>
+
+								<fb:FilterGroupItem groupName="Reservations" groupTitle="Reservations" name="OrderNo" label="Work Order Number" visibleInFilterBar="true">
+									<fb:control>
+										<Input id="iOrderNo" type="Text" change="onChange"/>
+									</fb:control>
+								</fb:FilterGroupItem>
+								
+
+								
+							</fb:filterGroupItems>
+						</fb:FilterBar>
+					</f:content>
+				</f:DynamicPageHeader>
+			</f:header>
+
+		<f:content>
+			<Table
+				id="idGoodsIssueListTable"
+				width="auto"
+				mode="MultiSelect"
+				selectionChange="onSelectionChange"
+				items="{
+					path: 'customResvItemSrv>/YY1_Warehouse_ResvItem',
+					sorter: [
+						{ path: 'MatlCompRequirementDate', descending: false },
+						{ path: 'Reservation', descending: false },
+						{ path: 'ReservationItem', descending: false }
+					],
+					filters : [
+						{ path : 'OrderCategory', operator : 'EQ', value1 : null },
+						{ path : 'OrderCategory', operator : 'NE', value1 : '10' }
+					],
+					parameters: {
+						expand: 'to_Stock'
+					}
+				}"
+				noDataText="{listView>/tableNoDataText}"
+				busyIndicatorDelay="{listView>/tableBusyDelay}"
+				updateFinished="onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title
+							text="{listView>/listTableTitle}"
+							level="H3"/>
+						<ToolbarSpacer />
+						
+						<SearchField
+							fieldGroupIds="idSearchFieldGrp"
+							search="onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									maxWidth="150px"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+						<ndc:BarcodeScannerButton
+							scanSuccess="onScanSuccess"
+							scanFail="onScanError"
+							dialogTitle="Barcode Scanner" >
+						</ndc:BarcodeScannerButton>
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column>
+						<Text text="Reservation" />
+					</Column>
+					<Column>
+						<Text text="Material" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Req Date" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Acct. Assign." />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="EAM Work Order" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Plant" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Storage Location" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Storage Bin" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+						<Text text="Stock On Hand" />
+					</Column>
+					<Column hAlign="End">
+						<Text text="Open Qty" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier
+								title="{ path: 'customResvItemSrv>', formatter: '.formatter.resvKeysDisplay' }" />
+								
+							<ObjectIdentifier
+								title="{customResvItemSrv>Product}"
+								text="{customResvItemSrv>ProductName}"
+								titleActive="true"
+								titlePress="onMaterialLinkPress(${customResvItemSrv>Product})" />
+								
+							<ObjectIdentifier
+								title="{ path: 'customResvItemSrv>MatlCompRequirementDate', formatter: '.formatter.dateOutput' }"
+								text="{customResvItemSrv>GoodsRecipientName}" />
+								
+							<ObjectIdentifier
+								text="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignDesc' }" />
+							
+							<ObjectIdentifier
+								title="{customResvItemSrv>ManufacturingOrder}" />
+							
+							<ObjectIdentifier
+								title="{customResvItemSrv>Plant}"
+								text="{customResvItemSrv>PlantName}" />
+							
+							<ObjectIdentifier
+								title="{customResvItemSrv>StorageLocation}"
+								text="{customResvItemSrv>StorageLocationName}" />
+								
+							<ObjectIdentifier
+								text="{customResvItemSrv>WarehouseStorageBin}" />
+							
+							<ObjectNumber
+								number="{
+									parts: [
+										{ path: 'customResvItemSrv>to_Stock/StockOnHand' },
+										{ path: 'customResvItemSrv>ResvnItmRequiredQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>ResvnItmWithdrawnQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>DebitCreditCode' }
+									],
+									formatter: '.formatter.resvStockValue'
+								}"
+								unit="{customResvItemSrv>BaseUnit}"
+								state="{
+									parts: [
+										{ path: 'customResvItemSrv>to_Stock/StockOnHand' },
+										{ path: 'customResvItemSrv>ResvnItmRequiredQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>ResvnItmWithdrawnQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>DebitCreditCode' }
+									],
+									formatter: '.formatter.resvStockStatus'
+								}" />
+									
+							<ObjectNumber
+								number="{
+									parts: [
+										{ path: 'customResvItemSrv>ResvnItmRequiredQtyInBaseUnit' },
+										{ path: 'customResvItemSrv>ResvnItmWithdrawnQtyInBaseUnit' }
+									],
+									formatter: '.formatter.openQuantity'
+								}"
+								unit="{customResvItemSrv>BaseUnit}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</f:content>
+		
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+			<Button
+					text="Pick and Issue{= ${listView>/buttonCountResv} > 0 ? ' (' + ${listView>/buttonCountResv} + ')' : '' }"
+					press="onPickIssue"
+					busyIndicatorDelay="0"
+					enabled="{= ${listView>/buttonCountResv} > 0 }"/>
+			</OverflowToolbar>
+		</f:footer>
+
+		
+		</f:DynamicPage>
+	
+</mvc:View>

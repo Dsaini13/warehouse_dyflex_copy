@@ -47,6 +47,14 @@ sap.ui.define([
 		
 		onPickingDeliveryPress: function(oEvent) {
 			this.getRouter().navTo("pickingDeliveryList");
+		},
+		
+		onPickingResvPress: function(oEvent) {
+			this.getRouter().navTo("pickingResvList");
+		},
+		
+		onStagedResvPress: function(oEvent) {
+			this.getRouter().navTo("stagedResvList");
 		}
 
 	});

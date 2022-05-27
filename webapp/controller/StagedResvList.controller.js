@@ -3,42 +3,44 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/m/MessageToast",
+	"sap/m/MessageBox"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, MessageToast, MessageBox) {
 	"use strict";
 
-	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.StockOverviewList", {
-		
+	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.StagedResvList", {
+
 		formatter: formatter,
 		
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf dyflex.mm.s4cloud.warehouse.view.StockOverviewList
+		 * @memberOf dyflex.mm.s4cloud.warehouse.view.GoodsIssueResvList
 		 */
 		onInit: function () {
 			
 			var that = this;
-			this._oTable = this.byId("idStockOverviewListTable");
+			this._oTable = this.byId("idGoodsIssueListTable");
+			this._aSelectedResv = [];
 			
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
 			var iOriginalBusyDelay = this._oTable.getBusyIndicatorDelay();
-			// keeps the search state
-			this._aTableSearchState = [];
-
+			
 			// Model used to manipulate control states
 			this._oViewModel = new JSONModel({
-				listTableTitle : this.getResourceBundle().getText("stockOverviewListTableTitle"),
-				saveAsTileTitle: this.getResourceBundle().getText("saveAsTileTitle", this.getResourceBundle().getText("stockOverviewListTitle")),
+				listTableTitle : this.getResourceBundle().getText("goodsIssueListTableTitle"),
+				saveAsTileTitle: this.getResourceBundle().getText("saveAsTileTitle", this.getResourceBundle().getText("goodsIssueListTitle")),
 				shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailListSubject"),
 				shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailListMessage", [location.href]),
 				tableNoDataText : this.getResourceBundle().getText("tableNoDataText"),
-				tableBusyDelay : 0
+				tableBusyDelay : 0,
+				buttonCountResv : 0
 			});
 			this.setModel(this._oViewModel, "listView");
-
+			
 			// Make sure, busy indication is showing immediately so there is no
 			// break after the busy indication for loading the view's meta data is
 			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
@@ -69,9 +71,9 @@ sap.ui.define([
 			// only update the counter if the length is final and
 			// the table is not empty
 			if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-				sTitle = this.getResourceBundle().getText("stockOverviewListTableTitleCount", [iTotalItems]);
+				sTitle = this.getResourceBundle().getText("goodsIssueListTableTitleCount", [iTotalItems]);
 			} else {
-				sTitle = this.getResourceBundle().getText("stockOverviewListTableTitle");
+				sTitle = this.getResourceBundle().getText("goodsIssueListTableTitle");
 			}
 			this._oViewModel.setProperty("/listTableTitle", sTitle);
 		},
@@ -84,11 +86,18 @@ sap.ui.define([
 				// refresh the list binding.
 				this.onRefresh();
 			} else {
-				var aTableSearchState = [];
+				var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10"), new Filter("StagingStatus", FilterOperator.NE, null)];
+				//var aTableSearchState = [];
 				var sQuery = oEvent.getParameter("query");
-
+				
 				if (sQuery && sQuery.length > 0) {
-					aTableSearchState = [new Filter("Material", FilterOperator.EQ, sQuery)];
+					var aFilters = [];
+					aFilters.push(new Filter("Reservation", FilterOperator.EQ, sQuery));
+					aFilters.push(new Filter("Product", FilterOperator.EQ, sQuery));
+					aFilters.push(new Filter("ManufacturingOrder", FilterOperator.EQ, sQuery));
+					aFilters.push(new Filter("CostCenter", FilterOperator.EQ, sQuery));
+					aFilters.push(new Filter("WBSElement", FilterOperator.EQ, sQuery));
+					aTableSearchState.push(new Filter(aFilters, false));
 				}
 				this._applySearch(aTableSearchState);
 			}
@@ -103,16 +112,73 @@ sap.ui.define([
 			this._oTable.getBinding("items").refresh();
 		},
 		
-		/**
-		 * Event handler when a table item gets pressed
-		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
-		 * @public
-		 */
-		onPress : function (oEvent) {
-			var oObject = this.getModel("customStockSrv").getProperty(oEvent.getSource().getBindingContextPath());
-			this.getRouter().navTo("stockOverviewDetail", {
-				objectId: oObject.ID
+		onHandedToRequestor: function(oEvent) {
+			
+			for (var i = 0; i < this._aSelectedResv.length; i++) {
+					
+					var uuid = this._aSelectedResv[i].SAP_UUID;
+					var stagingAreaData = {
+					"CombinedKey"		: this._aSelectedResv[i].Reservation.replace(/^0+/, "") + "-" + this._aSelectedResv[i].ReservationItem.replace(/^0+/, ""),
+					"SAP_Description"	: "upload",
+					"ReservationID"		: this._aSelectedResv[i].Reservation,
+					"ReservationLineID"	: this._aSelectedResv[i].ReservationItem,
+					"StagingStatus"		: "Handed out to Requestor",
+					"StagingArea"		: this._aSelectedResv[i].StagingArea
+					};
+					
+					this.getModel("customResvStagingSrv").update("/YY1_RESVITEMSTAGINGAREA(guid'" + uuid + "')", stagingAreaData, {
+						success: this._saveEntitySuccess,
+						error: this._saveEntityFailed
+					});
+					
+					this._oTable = this.byId("idGoodsIssueListTable");
+					this._oTable.getBinding("items").refresh();
+
+					MessageToast.show( "Reservation(s) updated", {
+						duration: 5000,
+						closeOnBrowserNavigation: false
+					});
+			}
+		},
+		
+		_saveEntitySuccess: function(oData, response) {
+			this._oViewModel.setProperty("/busy", false);
+			
+			//var msg = this.getResourceBundle().getText("materialDocSucessMsg", [oData.MaterialDocument, oData.MaterialDocumentYear]);
+			MessageToast.show( "Success", {
+				duration: 5000,
+				closeOnBrowserNavigation: false
 			});
+			
+		},
+		
+		_saveEntityFailed: function(oData) {
+			this._oViewModel.setProperty("/busy", false);
+						MessageToast.show( "Fail", {
+				duration: 5000,
+				closeOnBrowserNavigation: false
+			});
+		},
+		
+		onSelectionChange: function(oEvent) {
+			var aItems = oEvent.getParameter("listItems");
+			var oSelected;
+			
+			function isMatched(oValue) {
+				return oValue === oSelected;
+			}
+			
+			for (var i = 0; i < aItems.length; i++) {
+				var oBindingContext = aItems[i].getBindingContext("customStagedResvSrv");
+				oSelected = oBindingContext.getObject();
+				
+				if (oEvent.getParameter("selected")) {
+					this._aSelectedResv.push(oSelected);
+				} else {
+					this._aSelectedResv.splice(this._aSelectedResv.findIndex(isMatched), 1);
+				}
+			}
+			this._updateButtonCounts();
 		},
 		
 		onPlantSelect: function(oEvent)
@@ -135,18 +201,30 @@ sap.ui.define([
 		
 		onFilterBarGo: function (oEvent) {
 		
-			var aTableSearchState = [];
+			var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10")];
 			
-			var sMaterial = oEvent.getParameter("selectionSet")[0].getProperty("value");
-			var sPlant =  oEvent.getParameter("selectionSet")[1].getProperty("selectedKey");
-			var sStoreLoc = oEvent.getParameter("selectionSet")[2].getProperty("selectedKey");
-			var sOrderNo = oEvent.getParameter("selectionSet")[3].getProperty("value");
+			var sStagingStatusKey = oEvent.getParameter("selectionSet")[0].getProperty("selectedKey");
+			var sStagingStatus = "Staged";
+			if(sStagingStatusKey == "002")
+			{
+				sStagingStatus = "Handed out to Requestor";
+			}
+			
+			var sReservationNo = oEvent.getParameter("selectionSet")[1].getProperty("value");
+			var sPlant =  oEvent.getParameter("selectionSet")[2].getProperty("selectedKey");
+			var sStoreLoc = oEvent.getParameter("selectionSet")[3].getProperty("selectedKey");
+			var sOrderNo = oEvent.getParameter("selectionSet")[4].getProperty("value");
 
 			var aFilters = [];
 			var addtoSearchState = false;
-			if (sMaterial.length > 0)
+			if (sStagingStatus.length > 0)
 			{
-		 		aFilters.push(new Filter("Material", FilterOperator.EQ, sMaterial));
+		 		aFilters.push(new Filter("StagingStatus", FilterOperator.EQ, sStagingStatus));
+		 		addtoSearchState = true;
+			}
+			if (sReservationNo.length > 0)
+			{
+		 		aFilters.push(new Filter("Reservation", FilterOperator.Contains, sReservationNo));
 		 		addtoSearchState = true;
 			}
 			if (sPlant.length > 0)
@@ -179,7 +257,8 @@ sap.ui.define([
 			oEvent.getParameter("selectionSet")[1].setValue("");
 			oEvent.getParameter("selectionSet")[2].setValue("");
 			oEvent.getParameter("selectionSet")[3].setValue("");
-
+			oEvent.getParameter("selectionSet")[4].setValue("");
+			
 			this._oTable = this.byId("idGoodsIssueListTable");
 			this._oTable.getBinding("items").refresh();
 			//this.onRefresh();
@@ -192,7 +271,7 @@ sap.ui.define([
 		/* PICKLISTS
 		/* =========================================================== */
 		
-		onHandleValueHelpMaterial: function(oEvent) {
+		onHandleValueHelpOrder: function(oEvent) {
 			var sInputValue = oEvent.getSource().getValue();
 			if (sInputValue.length > 20) {
 				sInputValue = sInputValue.substring(0, 20);
@@ -200,24 +279,46 @@ sap.ui.define([
 			this.savedOrderInputField = oEvent.getSource();
 			
 			// create value help dialog
-			if (!this._valueHelpDialogMaterial) {
-				this._valueHelpDialogMaterial = sap.ui.xmlfragment( "dyflex.mm.s4cloud.warehouse.view.ValueHelpMaterial", this );
-				this.getView().addDependent(this._valueHelpDialogMaterial);
-				jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._valueHelpDialogMaterial);
+			if (!this._valueHelpDialogOrder) {
+				this._valueHelpDialogOrder = sap.ui.xmlfragment( "dyflex.mm.s4cloud.warehouse.view.ValueHelpOrder", this );
+				this.getView().addDependent(this._valueHelpDialogOrder);
+				jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._valueHelpDialogOrder);
 			}
 			
 			// create a filter for the binding
 			//var aFilters = this._createFilter(sInputValue);
-			//this._valueHelpDialogMaterial.getBinding("items").filter(aFilters);
+			//this._valueHelpDialogPlant.getBinding("items").filter(aFilters);
 			
 			// open value help dialog filtered by the input value
-			this._valueHelpDialogMaterial.open(sInputValue);
+			this._valueHelpDialogOrder.open(sInputValue);
+		},
+		
+		onHandleValueHelpReservation: function(oEvent) {
+			var sInputValue = oEvent.getSource().getValue();
+			if (sInputValue.length > 20) {
+				sInputValue = sInputValue.substring(0, 20);
+			}
+			this.savedInputField = oEvent.getSource();
+			
+			// create value help dialog
+			if (!this._valueHelpDialogReservation) {
+				this._valueHelpDialogReservation = sap.ui.xmlfragment( "dyflex.mm.s4cloud.warehouse.view.ValueHelpReservation", this );
+				this.getView().addDependent(this._valueHelpDialogReservation);
+				jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._valueHelpDialogReservation);
+			}
+			
+			// create a filter for the binding
+			//var aFilters = this._createFilter(sInputValue);
+			//this._valueHelpDialogPlant.getBinding("items").filter(aFilters);
+			
+			// open value help dialog filtered by the input value
+			this._valueHelpDialogReservation.open(sInputValue);
 		},
 		
 		onHandleSuggest: function(oEvent) {
 			this.savedInputField = oEvent.getSource();
 			var sInputValue = oEvent.getSource().getValue();
-			var aFilters = this._createFilter("Product", sInputValue);
+			var aFilters = this._createFilter("Reservation", sInputValue);
 			oEvent.getSource().getBinding("suggestionRows").filter(aFilters);
 		},
 		
@@ -226,7 +327,7 @@ sap.ui.define([
 			if (sValue.length > 20) {
 				sValue = sValue.substring(0, 20);
 			}
-			var aFilters = this._createFilter("Product", sValue);
+			var aFilters = this._createFilter("Reservation", sValue);
 			oEvent.getSource().getBinding("items").filter(aFilters);
 		},
 		
@@ -259,8 +360,11 @@ sap.ui.define([
 			return new Filter(orFilter, false);
 		},
 		
+		onLiveChangeOrder: function(oEvent) {
+			oEvent.getSource().setTooltip("");
+		},
 		
-		
+	
 		
 		
 		/* =========================================================== */
@@ -278,8 +382,12 @@ sap.ui.define([
 			if (aTableSearchState.length !== 0) {
 				this._oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("listNoDataWithSearchText"));
 			}
-		}
+		},
 		
+		_updateButtonCounts: function() {
+			this._oViewModel.setProperty("/buttonCountResv", this._aSelectedResv.length);
+		}
+
 	});
 
 });

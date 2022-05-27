@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		title="Select an Material"
+		class="sapUiPopupWithPadding"
+		items="{
+			path: 'productSrv>/A_Product',
+			sorter: { path: 'Product', descending: false },
+			templateShareable: false
+		}"
+		search="onHandleValueHelpSearch"
+		confirm="onHandleValueHelpClose"
+		cancel="onHandleValueHelpClose">
+		<StandardListItem
+			title="{productSrv>Product}" />
+	</SelectDialog>
+</core:FragmentDefinition>

@@ -88,6 +88,24 @@
 						iconDensityAware="false"
 						iconInset="false" />
 						
+					<StandardListItem
+						title="Picking"
+						description="Reservation"
+						press="onPickingResvPress"
+						type="Active"
+						icon="sap-icon://action"
+						iconDensityAware="false"
+						iconInset="false" />
+						
+					<StandardListItem
+						title="Staged"
+						description="Reservation"
+						press="onStagedResvPress"
+						type="Active"
+						icon="sap-icon://action"
+						iconDensityAware="false"
+						iconInset="false" />
+						
 				</items>
 			</List>
 		</semantic:content>

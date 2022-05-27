@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		title="Select an Reservation"
+		class="sapUiPopupWithPadding"
+		items="{
+			path: 'customResvHeadSrv>/YY1_Warehouse_ResvHeader',
+			sorter: { path: 'Reservation', descending: false },
+			templateShareable: false
+		}"
+		search="onHandleValueHelpSearch"
+		confirm="onHandleValueHelpClose"
+		cancel="onHandleValueHelpClose">
+		<StandardListItem
+			title="{customResvHeadSrv>Reservation}" />
+	</SelectDialog>
+</core:FragmentDefinition>

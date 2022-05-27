@@ -78,6 +78,7 @@ sap.ui.define([
 			}
 			
 			// Remove temp fields
+			delete createData.TempStagingArea;
 			for (var i = 0; i < createData.to_MaterialDocumentItem.results.length; i++) {
 				delete createData.to_MaterialDocumentItem.results[i].TempOpenQty;
 				delete createData.to_MaterialDocumentItem.results[i].TempStockOnHand;
