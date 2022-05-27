@@ -140,7 +140,7 @@ sap.ui.define([
 			var sMaterial = oEvent.getParameter("selectionSet")[0].getProperty("value");
 			var sPlant =  oEvent.getParameter("selectionSet")[1].getProperty("selectedKey");
 			var sStoreLoc = oEvent.getParameter("selectionSet")[2].getProperty("selectedKey");
-			var sOrderNo = oEvent.getParameter("selectionSet")[3].getProperty("value");
+			var sStorageBin = oEvent.getParameter("selectionSet")[3].getProperty("value");
 
 			var aFilters = [];
 			var addtoSearchState = false;
@@ -159,15 +159,15 @@ sap.ui.define([
 				aFilters.push(new Filter("StorageLocation", FilterOperator.EQ, sStoreLoc));
 				addtoSearchState = true;
 			}
-			if (sOrderNo.length > 0)
+			if (sStorageBin.length > 0)
 			{
-				aFilters.push(new Filter("ManufacturingOrder", FilterOperator.Contains, sOrderNo));
+				aFilters.push(new Filter("WarehouseStorageBin", FilterOperator.Contains, sStorageBin));
 				addtoSearchState = true;
 			}
 			
 			if (addtoSearchState == true)
 			{
-				aTableSearchState.push(new Filter(aFilters, false));
+				aTableSearchState.push(new Filter(aFilters, true));
 			}
 			
 			this._applySearch(aTableSearchState);
@@ -180,12 +180,15 @@ sap.ui.define([
 			oEvent.getParameter("selectionSet")[2].setValue("");
 			oEvent.getParameter("selectionSet")[3].setValue("");
 
-			this._oTable = this.byId("idGoodsIssueListTable");
+		
+			this._oTable = this.byId("idStockOverviewListTable");
+			this._oTable.getBinding("items").aFilters = null;
+			this._oTable.getBinding("items").aApplicationFilters = null;
 			this._oTable.getBinding("items").refresh();
 			//this.onRefresh();
 				
-		//var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10")];
-		//	this._applySearch(aTableSearchState);
+			var aTableSearchState = [];
+			this._applySearch(aTableSearchState);
 		},
 		
 		/* =========================================================== */
@@ -258,9 +261,6 @@ sap.ui.define([
 
 			return new Filter(orFilter, false);
 		},
-		
-		
-		
 		
 		
 		/* =========================================================== */

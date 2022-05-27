@@ -55,7 +55,7 @@
 				<Label text="Header Text" />
 				<Input value="{createModel>/MaterialDocumentHeaderText}" />
 				
-				<Label text="Staging Area (Optional)" />
+				<Label text="Staging Area" />
 				<Input 	id="idStageArea" fieldGroupIds="idStagingAreaGrp" value="{createModel>/TempStagingArea}"/>
 				
 				<ndc:BarcodeScannerButton
@@ -64,6 +64,7 @@
 					scanFail="onScanError"
 					dialogTitle="Barcode Scanner" >
 				</ndc:BarcodeScannerButton>
+			
 				
 			</f:content>
 		</f:SimpleForm>

@@ -2,20 +2,122 @@
 	controllerName="dyflex.mm.s4cloud.warehouse.controller.StockOverviewList"
 	xmlns="sap.m"
 	xmlns:ndc="sap.ndc"
+	xmlns:f="sap.f"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
 	xmlns:semantic="sap.f.semantic"
+	xmlns:layout="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:vm="sap.ui.comp.variants"
 	xmlns:footerbar="sap.ushell.ui.footerbar">
 
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false">
+	<f:DynamicPage id="page" headerExpanded="{/headerExpanded}" showFooter="true">
+		<f:title>
+				<f:DynamicPageTitle>
+					<f:heading>
+						<vm:VariantManagement standardItemText="{i18n>stockOverviewListTitle}">
+						</vm:VariantManagement>
+					</f:heading>
+					<f:actions>
+						<ToolbarSpacer/>
+							<OverflowToolbarButton
+							icon="sap-icon://menu" text="Menu" press="onPressMenu"/>
+							<MenuButton icon="sap-icon://action">
+								<Menu>
+									<MenuItem text="Send Email" icon="sap-icon://email" press="onShareEmailPress" />
+									<MenuItem text="Save as Tile" icon="sap-icon://add-favorite"/>
+								</Menu>
+							</MenuButton>
+					</f:actions>
+				</f:DynamicPageTitle>
+			</f:title>
+			
+			<f:header>
+				<f:DynamicPageHeader pinnable="true">
+					<f:content>
+						<fb:FilterBar id="filterbar" clear="onClear" reset="onReset" search="onFilterBarGo" useToolbar="false" showGoOnFB="true" showClearOnFB="true">
+							<fb:filterGroupItems>
+								
+								<fb:FilterGroupItem groupName="StockOverview" groupTitle="StockOverview" name="MatNo" label="Material" visibleInFilterBar="true">
+									<fb:control>
+										<Input
+											value="{productSrv>Product}"
+											tooltip=""
+											liveChange="onLiveChange"
+											showValueHelp="true"
+											valueHelpRequest="onHandleValueHelpMaterial"
+											showSuggestion="true"
+											maxSuggestionWidth="50%"
+											suggest="onHandleSuggest"
+											filterSuggests="false"
+											suggestionRows="{
+												path: 'productSrv>/A_Product',
+												sorter: { path: 'Product', descending: false },
+												templateShareable: false
+											}"
+											suggestionItemSelected="onHandleValueHelp">
+											<suggestionColumns>
+												<Column
+													hAlign="Begin"
+													width="100%"
+													popinDisplay="Inline"
+													demandPopin="true">
+													<Label text="Product" />
+												</Column>
+											</suggestionColumns>
+											<suggestionRows>
+												<ColumnListItem>
+													<cells>
+														<Label text="{productSrv>Product}" />
+													</cells>
+												</ColumnListItem>
+											</suggestionRows>
+										</Input>
+									</fb:control>
+								</fb:FilterGroupItem>
+								
+								<fb:FilterGroupItem groupName="StockOverview" groupTitle="StockOverview" name="PlantList" label="Plant" visibleInFilterBar="true">
+									<fb:control>
+										<Select
+											id="sPlant"
+											change="onPlantSelect"
+											forceSelection="false"
+											items="{
+                                                    path: 'customPlantSrv>/YY1_Warehouse_Plant'
+                                                }"
+                                            selectedKey="{customPlantSrv>Plant}">
+											<core:Item key="{customPlantSrv>Plant}" text="{customPlantSrv>PlantName} ({customPlantSrv>Plant})"/>
+										</Select>
+									</fb:control>				
+								</fb:FilterGroupItem>
+								
+								<fb:FilterGroupItem groupName="StockOverview" groupTitle="StockOverview" name="SLList" label="Storage Location" visibleInFilterBar="true">
+									<fb:control>
+										<Select
+											id="sStorageLoc"
+											change="onSelectChange"
+											forceSelection="false"
+											items="{
+                                                    path: 'customSLocSrv>/YY1_Warehouse_StoreLoc'
+                                                }"
+                                            selectedKey="{customSLocSrv>StorageLocation}">
+											<core:Item key="{customSLocSrv>StorageLocation}" text="{customSLocSrv>StorageLocationName} ({customSLocSrv>StorageLocation})"/>
+										</Select>
+									</fb:control>				
+								</fb:FilterGroupItem>
 
-		<semantic:titleHeading>
-			<Title text="{i18n>stockOverviewListTitle}" level="H2"/>
-		</semantic:titleHeading>
+								<fb:FilterGroupItem groupName="StockOverview" groupTitle="StockOverview" name="StorageBin" label="Storage Bin" visibleInFilterBar="true">
+									<fb:control>
+										<Input id="iOrderNo" type="Text" change="onChange"/>
+									</fb:control>
+								</fb:FilterGroupItem>
+							</fb:filterGroupItems>
+						</fb:FilterBar>
+					</f:content>
+				</f:DynamicPageHeader>
+			</f:header>
 
-		<semantic:content>
+		<f:content>
 			<Table
 				id="idStockOverviewListTable"
 				width="auto"
@@ -111,20 +213,8 @@
 					</ColumnListItem>
 				</items>
 			</Table>
-		</semantic:content>
+		</f:content>
 		
-		<semantic:titleCustomIconActions>
-			<OverflowToolbarButton icon="sap-icon://menu" text="Menu" press="onPressMenu" />
-		</semantic:titleCustomIconActions>
-		
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
-		<semantic:saveAsTileAction>
-			<footerbar:AddBookmarkButton title="{listView>/saveAsTileTitle}" />
-		</semantic:saveAsTileAction>
-
-	</semantic:SemanticPage>
+	</f:DynamicPage>
 	
 </mvc:View>

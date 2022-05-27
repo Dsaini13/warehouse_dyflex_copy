@@ -113,6 +113,7 @@ sap.ui.define([
 			this.getRouter().getTargets().display("pickingResvDetail", {
 				selectedResv: this._aSelectedResv
 			});
+			this._aSelectedResv = [];
 		},
 		
 		onSelectionChange: function(oEvent) {

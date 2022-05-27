@@ -131,7 +131,7 @@
 
 		<f:content>
 			<Table
-				id="idGoodsIssueListTable"
+				id="idStagedReservationListTable"
 				width="auto"
 				mode="MultiSelect"
 				selectionChange="onSelectionChange"
@@ -176,6 +176,10 @@
 							scanFail="onScanError"
 							dialogTitle="Barcode Scanner" >
 						</ndc:BarcodeScannerButton>
+						<OverflowToolbarButton
+							icon="sap-icon://refresh" text="Refresh" press="onSearch"/>
+							
+							
 					</OverflowToolbar>
 				</headerToolbar>
 

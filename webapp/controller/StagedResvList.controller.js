@@ -21,7 +21,7 @@ sap.ui.define([
 		onInit: function () {
 			
 			var that = this;
-			this._oTable = this.byId("idGoodsIssueListTable");
+			this._oTable = this.byId("idStagedReservationListTable");
 			this._aSelectedResv = [];
 			
 			// Put down worklist table's original value for busy indicator delay,
@@ -31,8 +31,8 @@ sap.ui.define([
 			
 			// Model used to manipulate control states
 			this._oViewModel = new JSONModel({
-				listTableTitle : this.getResourceBundle().getText("goodsIssueListTableTitle"),
-				saveAsTileTitle: this.getResourceBundle().getText("saveAsTileTitle", this.getResourceBundle().getText("goodsIssueListTitle")),
+				listTableTitle : this.getResourceBundle().getText("stagedResvListTableTitle"),
+				saveAsTileTitle: this.getResourceBundle().getText("saveAsTileTitle", this.getResourceBundle().getText("stagedResvListTitle")),
 				shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailListSubject"),
 				shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailListMessage", [location.href]),
 				tableNoDataText : this.getResourceBundle().getText("tableNoDataText"),
@@ -86,7 +86,15 @@ sap.ui.define([
 				// refresh the list binding.
 				this.onRefresh();
 			} else {
-				var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10"), new Filter("StagingStatus", FilterOperator.NE, null)];
+				
+				this._oStagingStatus = this.byId("iStageFilter");
+				var currentStageStatusKey = this._oStagingStatus.getProperty("selectedKey");
+				var currentStageStatus = "Staged";
+				if (currentStageStatusKey == "002")
+				{	
+					currentStageStatus = "Handed out to Requestor";
+				}
+				var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10"), new Filter("StagingStatus", FilterOperator.EQ, currentStageStatus)];
 				//var aTableSearchState = [];
 				var sQuery = oEvent.getParameter("query");
 				
@@ -126,19 +134,25 @@ sap.ui.define([
 					"StagingArea"		: this._aSelectedResv[i].StagingArea
 					};
 					
-					this.getModel("customResvStagingSrv").update("/YY1_RESVITEMSTAGINGAREA(guid'" + uuid + "')", stagingAreaData, {
-						success: this._saveEntitySuccess,
-						error: this._saveEntityFailed
-					});
-					
-					this._oTable = this.byId("idGoodsIssueListTable");
-					this._oTable.getBinding("items").refresh();
-
-					MessageToast.show( "Reservation(s) updated", {
-						duration: 5000,
-						closeOnBrowserNavigation: false
-					});
+					this.getModel("customResvStagingSrv").update("/YY1_RESVITEMSTAGINGAREA(guid'" + uuid + "')", stagingAreaData);
 			}
+			
+			this._oTable = this.byId("idStagedReservationListTable");
+		
+			MessageToast.show(this._aSelectedResv.length.toString() + " Reservation(s) updated. Please refresh", {
+				duration: 5000,
+				closeOnBrowserNavigation: false
+			});
+		
+			this._aSelectedResv = [];
+			this._oTable.setMode(sap.m.ListMode.None); // Delete mode selection
+			this._oTable.setMode(sap.m.ListMode.MultiSelect);
+			this._updateButtonCounts();
+			
+			var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10"), new Filter("StagingStatus", FilterOperator.EQ, "Staged")];
+			this._applySearch(aTableSearchState);
+			this._oTable.getBinding("items").refresh();
+				
 		},
 		
 		_saveEntitySuccess: function(oData, response) {
@@ -245,7 +259,7 @@ sap.ui.define([
 			
 			if (addtoSearchState == true)
 			{
-				aTableSearchState.push(new Filter(aFilters, false));
+				aTableSearchState.push(new Filter(aFilters, true));
 			}
 			
 			this._applySearch(aTableSearchState);
@@ -253,18 +267,18 @@ sap.ui.define([
 		
 		onClear: function (oEvent) {
 		
-			oEvent.getParameter("selectionSet")[0].setValue("");
+			oEvent.getParameter("selectionSet")[0].setValue("Staged");
 			oEvent.getParameter("selectionSet")[1].setValue("");
 			oEvent.getParameter("selectionSet")[2].setValue("");
 			oEvent.getParameter("selectionSet")[3].setValue("");
 			oEvent.getParameter("selectionSet")[4].setValue("");
 			
-			this._oTable = this.byId("idGoodsIssueListTable");
+			this._oTable = this.byId("idStagedReservationListTable");
 			this._oTable.getBinding("items").refresh();
 			//this.onRefresh();
 				
-		//var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10")];
-		//	this._applySearch(aTableSearchState);
+			var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10"), new Filter("StagingStatus", FilterOperator.EQ, "Staged")];
+			this._applySearch(aTableSearchState);
 		},
 		
 		/* =========================================================== */

@@ -102,7 +102,7 @@
 						description="Reservation"
 						press="onStagedResvPress"
 						type="Active"
-						icon="sap-icon://action"
+						icon="sap-icon://duplicate"
 						iconDensityAware="false"
 						iconInset="false" />
 						

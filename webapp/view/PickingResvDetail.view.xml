@@ -42,7 +42,7 @@
 		</semantic:saveAsTileAction>
 		
 		<semantic:footerMainAction>
-			<semantic:FooterMainAction text="Postxxx" press="updateStagingArea" enabled="{viewModel>/enableSave}" />
+			<semantic:FooterMainAction text="Post" press="onPost" enabled="{viewModel>/enableSave}" />
 		</semantic:footerMainAction>
 		
 		<semantic:footerCustomActions>

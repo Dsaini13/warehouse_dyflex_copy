@@ -109,12 +109,48 @@ sap.ui.define([
 			}
 		},
 		
-		updateStagingArea: function(oEvent){
+		onPost: function(oEvent){
+			
+			var createData = jQuery.extend(true, {}, this._oCreateModel.getData());
+			
+			this._oViewModel.setProperty("/busy", true);
+	
+			// Adjust date values
+			createData.DocumentDate = this._getDateObject(this.byId("idDocumentDate"));
+			createData.PostingDate  = this._getDateObject(this.byId("idPostingDate"));
+			
+			// Adjust printing parameters
+			if (createData.VersionForPrintingSlip === "0") {
+				createData.VersionForPrintingSlip = "";
+			} else {
+				createData.ManualPrintIsTriggered = "X";
+			}
+			
+			// Remove temp fields
+			delete createData.TempStagingArea;
+			for (var i = 0; i < createData.to_MaterialDocumentItem.results.length; i++) {
+				delete createData.to_MaterialDocumentItem.results[i].TempOpenQty;
+				delete createData.to_MaterialDocumentItem.results[i].TempStockOnHand;
+				delete createData.to_MaterialDocumentItem.results[i].TempEnableSerialNo;
+				delete createData.to_MaterialDocumentItem.results[i].TempPlantName;
+				delete createData.to_MaterialDocumentItem.results[i].TempStorageLocationName;
+				delete createData.to_MaterialDocumentItem.results[i].TempWarehouseStorageBin;
+			}
+			
+			this.getModel("matDocSrv").create("/A_MaterialDocumentHeader", createData, {
+				success: this._saveEntitySuccess.bind(this),
+				error: this._saveEntityFailed.bind(this)
+			});
+			
+		},
+		
+		_saveEntitySuccess: function(oData, response) {
+			
 			
 			var createData = jQuery.extend(true, {}, this._oCreateModel.getData());
 			
 			for (var i = 0; i < createData.to_MaterialDocumentItem.results.length; i++) {
-							
+					
 				//create new odata model
 				var stagingAreaData = {
 					"CombinedKey"		: createData.to_MaterialDocumentItem.results[i].Reservation.replace(/^0+/, "") + "-" + createData.to_MaterialDocumentItem.results[i].ReservationItem.replace(/^0+/, ""),
@@ -125,39 +161,34 @@ sap.ui.define([
 					"StagingArea"		: createData.TempStagingArea
 				};
 				
+				//Set staging area
 				if (createData.TempStagingArea != "")
 				{
-				//	this.getModel("customResvStagingSrv").create("/YY1_RESVITEMSTAGINGAREASap_upsert?", stagingAreaData, {
-					this.getModel("customResvStagingSrv").create("/YY1_RESVITEMSTAGINGAREASap_upsert?CombinedKey='32-1'&SAP_Description='upload'&ReservationID='0000000032'&ReservationLineID='0001'&StagingStatus='Christine'&StagingArea='Stage1'", stagingAreaData, {
-						success: this._saveEntitySuccess.bind(this),
-						error: this._saveEntityFailed.bind(this)
-					});
+					this.getModel("customResvStagingSrv").create("/YY1_RESVITEMSTAGINGAREA", stagingAreaData);
 				}
-				//Now call the standard post
-				//this.onPost(oEvent);
-		
-			}
-
-		},
-		
-		_saveEntitySuccess: function(oData, response) {
+			}	
+			
+			
+			// Save created material document for attachment
+			this._sMatDocNo = oData.MaterialDocument + oData.MaterialDocumentYear;
+			this._oAttachmentsControl.upload();
+			
 			this._oViewModel.setProperty("/busy", false);
 			
-			//var msg = this.getResourceBundle().getText("materialDocSucessMsg", [oData.MaterialDocument, oData.MaterialDocumentYear]);
-			MessageToast.show( "Success", {
+			var msg = this.getResourceBundle().getText("materialDocSucessMsg", [oData.MaterialDocument, oData.MaterialDocumentYear]);
+			MessageToast.show( msg, {
 				duration: 5000,
 				closeOnBrowserNavigation: false
 			});
 			
+			this._updateListModel();
+			this._navToListView();
 		},
 		
 		_saveEntityFailed: function(oData) {
 			this._oViewModel.setProperty("/busy", false);
-						MessageToast.show( "Fail", {
-				duration: 5000,
-				closeOnBrowserNavigation: false
-			});
 		},
+		
 		
 		_updateListModel: function() {
 			this.getModel("customResvItemSrv").refresh(true /*force update*/, false /*remove data*/);
@@ -165,7 +196,7 @@ sap.ui.define([
 		},
 		
 		_navToListView: function() {
-			this.getRouter().getTargets().display("pickingResvList", { reset: false } );
+			this.getRouter().getTargets().display("pickingResvList", { reset: true } );
 		}
 		
 	});
