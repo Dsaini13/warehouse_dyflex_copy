@@ -157,7 +157,7 @@ sap.ui.define([
 		},
 		
 		onFilterBarGo: function (oEvent) {
-		
+			
 			var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10")];
 			
 			var sReservationNo = oEvent.getParameter("selectionSet")[0].getProperty("value");
@@ -190,7 +190,7 @@ sap.ui.define([
 			
 			if (addtoSearchState == true)
 			{
-				aTableSearchState.push(new Filter(aFilters, false));
+				aTableSearchState.push(new Filter(aFilters, true));
 			}
 			
 			this._applySearch(aTableSearchState);
@@ -200,15 +200,26 @@ sap.ui.define([
 		
 			oEvent.getParameter("selectionSet")[0].setValue("");
 			oEvent.getParameter("selectionSet")[1].setValue("");
+			oEvent.getParameter("selectionSet")[1].setSelectedKey("");
+			oEvent.getParameter("selectionSet")[2].setSelectedKey("");
 			oEvent.getParameter("selectionSet")[2].setValue("");
 			oEvent.getParameter("selectionSet")[3].setValue("");
 		
+			var plantFilter = [];
+			var aFilters = new Filter(plantFilter, false);
+			var _oSelectSL = this.getView().byId("sStorageLoc");
+			var listBinding = _oSelectSL.getBinding("items");
+			listBinding.filter(aFilters);
+			
 			this._oTable = this.byId("idGoodsIssueListTable");
+			this._oTable.getBinding("items").aFilters = null;
+			this._oTable.getBinding("items").aApplicationFilters = null;
 			this._oTable.getBinding("items").refresh();
 			//this.onRefresh();
 				
-		//var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10")];
-		//	this._applySearch(aTableSearchState);
+			var aTableSearchState = [new Filter("OrderCategory", FilterOperator.EQ, null), new Filter("OrderCategory", FilterOperator.NE, "10")];
+			this._applySearch(aTableSearchState);
+			
 		},
 		
 		/* =========================================================== */

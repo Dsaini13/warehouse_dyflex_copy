@@ -177,10 +177,17 @@ sap.ui.define([
 		
 			oEvent.getParameter("selectionSet")[0].setValue("");
 			oEvent.getParameter("selectionSet")[1].setValue("");
+			oEvent.getParameter("selectionSet")[1].setSelectedKey("");
+			oEvent.getParameter("selectionSet")[2].setSelectedKey("");
 			oEvent.getParameter("selectionSet")[2].setValue("");
 			oEvent.getParameter("selectionSet")[3].setValue("");
 
-		
+			var plantFilter = [];
+			var aFilters = new Filter(plantFilter, false);
+			var _oSelectSL = this.getView().byId("sStorageLoc");
+			var listBinding = _oSelectSL.getBinding("items");
+			listBinding.filter(aFilters);
+			
 			this._oTable = this.byId("idStockOverviewListTable");
 			this._oTable.getBinding("items").aFilters = null;
 			this._oTable.getBinding("items").aApplicationFilters = null;
