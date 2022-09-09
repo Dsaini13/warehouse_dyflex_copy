@@ -90,7 +90,7 @@ sap.ui.define([
 				{
 					codeToUse = "343";
 				}
-				else if (fromStockType === " " && toStockType === "5") //unrestr to blocked
+				else if (fromStockType === " " && toStockType === "S") //unrestr to blocked
 				{
 					codeToUse = "344";
 					reserseCode = true;
