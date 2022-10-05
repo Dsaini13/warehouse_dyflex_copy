@@ -86,6 +86,12 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 					<Column hAlign="End">
 						<Text text="Open Qty" />
 					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+						<Text text="Workorder" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+						<Text text="Cost Center" />
+					</Column>
 				</columns>
 				<items>
 					<ColumnListItem>
@@ -140,6 +146,12 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 									formatter: '.formatter.openQuantity'
 								}"
 								unit="{customResvItemSrv>BaseUnit}" />
+							
+							<ObjectIdentifier
+								text="{customResvItemSrv>ManufacturingOrder}" />
+								
+							<ObjectIdentifier
+								text="{customResvItemSrv>CostCenter}" />
 						</cells>
 					</ColumnListItem>
 				</items>

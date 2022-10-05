@@ -88,13 +88,6 @@
 					"localUri": "localService/YY1_WAREHOUSE_POITEM_CDS/metadata.xml"
 				}
 			},
-			"CustomProdOrd": {
-				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_PRDORDITEM_CDS/",
-				"type": "OData",
-				"settings": {
-					"localUri": "localService/YY1_WAREHOUSE_PRDORDITEM_CDS/metadata.xml"
-				}
-			},
 			"CustomPhysInv": {
 				"uri": "/sap/opu/odata/sap/YY1_WAREHOUSE_PHYSINVITEM_CDS/",
 				"type": "OData",
@@ -205,6 +198,9 @@
 					"lazy": true
 				}
 			}
+		},
+		"config": {
+			"fullWidth": true
 		},
 		"contentDensities": {
 			"compact": true,
@@ -323,16 +319,6 @@
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "CustomPOItem",
-				"preload": true
-			},
-			"customProdOrdSrv": {
-				"type": "sap.ui.model.odata.v2.ODataModel",
-				"settings": {
-					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneWay",
-					"defaultCountMode": "Request"
-				},
-				"dataSource": "CustomProdOrd",
 				"preload": true
 			},
 			"customPhysInvSrv": {
@@ -511,27 +497,6 @@
 					]
 				},
 				{
-					"pattern": "GoodsRcptProdDetail/{manufacturingOrder}",
-					"name": "goodsRcptProdDetail",
-					"target": [
-						"goodsRcptProdDetail"
-					]
-				},
-				{
-					"pattern": "GoodsIssueProd",
-					"name": "goodsIssueProdList",
-					"target": [
-						"goodsIssueProdList"
-					]
-				},
-				{
-					"pattern": "GoodsIssueProdDetail/{manufacturingOrder}",
-					"name": "goodsIssueProdDetail",
-					"target": [
-						"goodsIssueProdDetail"
-					]
-				},
-				{
 					"pattern": "GoodsIssueResv",
 					"name": "goodsIssueResvList",
 					"target": [
@@ -628,30 +593,6 @@
 					"viewName": "GoodsReceiptDetail",
 					"viewId": "goodsReceiptDetail",
 					"title": "Goods Receipt of Purchase Order"
-				},
-				"goodsRcptProdList": {
-					"viewType": "XML",
-					"viewName": "GoodsRcptProdList",
-					"viewId": "goodsRcptProdList",
-					"title": "Goods Receipt of Production Order"
-				},
-				"goodsRcptProdDetail": {
-					"viewType": "XML",
-					"viewName": "GoodsRcptProdDetail",
-					"viewId": "goodsRcptProdDetail",
-					"title": "Goods Receipt of Production Order"
-				},
-				"goodsIssueProdList": {
-					"viewType": "XML",
-					"viewName": "GoodsIssueProdList",
-					"viewId": "goodsIssueProdList",
-					"title": "Goods Issue of Production Order"
-				},
-				"goodsIssueProdDetail": {
-					"viewType": "XML",
-					"viewName": "GoodsIssueProdDetail",
-					"viewId": "goodsIssueProdDetail",
-					"title": "Goods Issue of Production Order"
 				},
 				"goodsIssueResvList": {
 					"viewType": "XML",

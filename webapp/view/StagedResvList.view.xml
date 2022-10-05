@@ -214,6 +214,12 @@
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Staging Area" />
 					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Cost Center" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Requestor" />
+					</Column>
 					
 				</columns>
 				<items>
@@ -254,6 +260,12 @@
 								
 							<ObjectIdentifier
 								text="{customStagedResvSrv>StagingArea}" />
+								
+							<ObjectIdentifier
+								text="{customResvItemSrv>CostCenter}" />
+							
+							<ObjectIdentifier
+								text="{customResvItemSrv>GoodsRecipientName}" />
 						
 						</cells>
 					</ColumnListItem>
