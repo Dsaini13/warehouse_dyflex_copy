@@ -185,6 +185,10 @@
 							scanFail="onScanError"
 							dialogTitle="Barcode Scanner" >
 						</ndc:BarcodeScannerButton>
+						<OverflowToolbarButton 
+							icon="sap-icon://excel-attachment" 
+							press="onExportExtract"
+							tooltip="Download Extract"/>
 					</OverflowToolbar>
 				</headerToolbar>
 

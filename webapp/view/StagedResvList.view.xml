@@ -177,8 +177,12 @@
 							dialogTitle="Barcode Scanner" >
 						</ndc:BarcodeScannerButton>
 						<OverflowToolbarButton
-							icon="sap-icon://refresh" text="Refresh" press="onSearch"/>
-							
+							icon="sap-icon://refresh" 
+							text="Refresh" press="onSearch"/>
+						<OverflowToolbarButton 
+							icon="sap-icon://excel-attachment" 
+							press="onExportExtract"
+							tooltip="Download Extract"/>	
 							
 					</OverflowToolbar>
 				</headerToolbar>
@@ -200,6 +204,12 @@
 						<Text text="EAM Work Order" />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Cost Center" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Requestor" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Plant" />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
@@ -213,12 +223,6 @@
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Staging Area" />
-					</Column>
-					<Column minScreenWidth="Tablet" demandPopin="true">
-						<Text text="Cost Center" />
-					</Column>
-					<Column minScreenWidth="Tablet" demandPopin="true">
-						<Text text="Requestor" />
 					</Column>
 					
 				</columns>
@@ -245,6 +249,12 @@
 								title="{customStagedResvSrv>ManufacturingOrder}" />
 							
 							<ObjectIdentifier
+								text="{customStagedResvSrv>CostCenter}" />
+							
+							<ObjectIdentifier
+								text="{customStagedResvSrv>GoodsRecipientName}" />
+								
+							<ObjectIdentifier
 								title="{customStagedResvSrv>Plant}"
 								text="{customStagedResvSrv>PlantName}" />
 							
@@ -260,12 +270,6 @@
 								
 							<ObjectIdentifier
 								text="{customStagedResvSrv>StagingArea}" />
-								
-							<ObjectIdentifier
-								text="{customResvItemSrv>CostCenter}" />
-							
-							<ObjectIdentifier
-								text="{customResvItemSrv>GoodsRecipientName}" />
 						
 						</cells>
 					</ColumnListItem>
