@@ -44,24 +44,6 @@
 						iconInset="false" />
 						
 					<StandardListItem
-						title="Goods Receipt"
-						description="Production Orders"
-						press="onGoodsRcptProdPress"
-						type="Active"
-						icon="sap-icon://add-activity"
-						iconDensityAware="false"
-						iconInset="false" />
-						
-					<StandardListItem
-						title="Goods Issue"
-						description="Production Orders"
-						press="onGoodsIssueProdPress"
-						type="Active"
-						icon="sap-icon://shipping-status"
-						iconDensityAware="false"
-						iconInset="false" />
-						
-					<StandardListItem
 						title="Goods Issue"
 						description="Reservations"
 						press="onGoodsIssueResvPress"

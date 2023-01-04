@@ -61,6 +61,10 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 							scanFail="onScanError"
 							dialogTitle="Barcode Scanner" >
 						</ndc:BarcodeScannerButton>
+						<Button 
+							icon="sap-icon://excel-attachment" 
+							press="onExportExtract"
+							tooltip="Download Extract"/>
 					</OverflowToolbar>
 				</headerToolbar>
 
@@ -75,7 +79,13 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 						<Text text="Req Date / Recipient" />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
-						<Text text="Acct. Assign." />
+						<Text text="Work Order" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Cost Center" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="WBS Element" />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Storage Bin" />
@@ -104,9 +114,17 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 								text="{customResvItemSrv>GoodsRecipientName}" />
 								
 							<ObjectIdentifier
-								title="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignObject' }"
-								text="{ path: 'customResvItemSrv>', formatter: '.formatter.resvAccAssignDesc' }" />
-								
+								title="{customResvItemSrv>ManufacturingOrder}"
+								text="{customResvItemSrv>OrderDescription}" />
+						
+							<ObjectIdentifier
+								title="{customResvItemSrv>CostCenter}"
+								text="{customResvItemSrv>CostCenterDescription}" />
+							
+							<ObjectIdentifier
+								title="{customResvItemSrv>WBSElement}"
+								text="{customResvItemSrv>WBSDescription}" />
+															
 							<ObjectIdentifier
 								text="{customResvItemSrv>WarehouseStorageBin}" />
 							
@@ -140,6 +158,7 @@ controllerName="dyflex.mm.s4cloud.warehouse.controller.GoodsIssueResvList"
 									formatter: '.formatter.openQuantity'
 								}"
 								unit="{customResvItemSrv>BaseUnit}" />
+							
 						</cells>
 					</ColumnListItem>
 				</items>

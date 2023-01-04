@@ -3,10 +3,15 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/m/MessageToast",
+	"sap/m/MessageBox",
+	"sap/ui/export/library",
+	"sap/ui/export/Spreadsheet"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, MessageToast, MessageBox, exportLibrary, Spreadsheet) {
 	"use strict";
-
+	var EdmType = exportLibrary.EdmType;
+	
 	return BaseController.extend("dyflex.mm.s4cloud.warehouse.controller.PickingResvList", {
 
 		formatter: formatter,
@@ -319,8 +324,30 @@ sap.ui.define([
 			oEvent.getSource().setTooltip("");
 		},
 		
-	
-		
+		onExportExtract: function(event) {
+			var aCols, oRowBinding, oSettings, oSheet, oTable;
+
+			aCols = this._createColumnConfig();
+			if (!this._oTable) {
+				this._oTable = this.byId("idGoodsIssueListTable");
+			}
+
+			oTable = this._oTable;
+			oRowBinding = oTable.getBinding("items");
+
+			oSettings = {
+				workbook: { columns: aCols },
+				dataSource: oRowBinding,
+				fileName: "Picking Reservations.xlsx"
+			};
+
+			oSheet = new Spreadsheet(oSettings);
+			oSheet.build()
+				.then( function() {
+					MessageToast.show("Spreadsheet export has finished");
+				})
+				.finally(oSheet.destroy);
+		},
 		
 		/* =========================================================== */
 		/* internal methods                                            */
@@ -341,6 +368,97 @@ sap.ui.define([
 		
 		_updateButtonCounts: function() {
 			this._oViewModel.setProperty("/buttonCountResv", this._aSelectedResv.length);
+		},
+		
+		_createColumnConfig: function() {
+			return [
+				{
+					label: "Reservation",
+					property: "Reservation",
+					type: EdmType.Number,
+					scale: 0
+				},
+				{
+					label: "Reservation Item",
+					property: "ReservationItem",
+					type: EdmType.Number,
+					scale: 0
+				},
+				{
+					label: "Material",
+					property: "Product",
+					type: EdmType.Number,
+					scale: 0
+				},
+				{
+					label: "Material Description",
+					property: "ProductName"
+				},
+				{
+					label: "Requirement Date",
+					property: "MatlCompRequirementDate",
+					type: EdmType.Date
+				},
+				{
+					label: "Work Order",
+					property: "ManufacturingOrder",
+					type: EdmType.Number,
+					scale: 0
+				},
+				{
+					label: "Work Order Description",
+					property: "OrderDescription"
+				},
+				{
+					label: "Cost Center",
+					property: "CostCenter",
+					type: EdmType.Number,
+					scale: 0
+				},
+				{
+					label: "Cost Center Description",
+					property: "CostCenterDescription"
+				},
+				{
+					label: "WBSElement",
+					property: "WBSElement",
+					type: EdmType.Number,
+					scale: 0
+				},
+				{
+					label: "WBS Description",
+					property: "WBSDescription"
+				},
+				{
+					label: "Plant",
+					property: "WBSDescription"
+				},
+				{
+					label: "Storage Location",
+					property: "StorageLocation"
+				},
+				{
+					label: "Storage Location Name",
+					property: "StorageLocationName"
+				},
+				{
+					label: "Storage Bin",
+					property: "WarehouseStorageBin"
+				},
+				{
+					label: "Stock On Hand",
+					property: "to_Stock/StockOnHand",
+					type: EdmType.Number,
+                	unitProperty: "BaseUnit",
+                	scale: 3
+				},
+				{
+					label: "Open Qty",
+					type: EdmType.Number,
+					property: "OpenQuantity",
+					unitProperty: "BaseUnit",
+					scale: 3
+				}];
 		}
 
 	});

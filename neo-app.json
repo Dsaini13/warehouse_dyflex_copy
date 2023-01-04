@@ -48,7 +48,7 @@
       "path": "/sap/opu/odata",
       "target": {
         "type": "destination",
-        "name": "S4HANA_CLOUD",
+        "name": "KESTREL_S4H_CLOUD_API",
         "entryPath": "/sap/opu/odata"
       },
       "description": "S4HANA Cloud System"

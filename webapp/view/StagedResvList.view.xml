@@ -177,8 +177,12 @@
 							dialogTitle="Barcode Scanner" >
 						</ndc:BarcodeScannerButton>
 						<OverflowToolbarButton
-							icon="sap-icon://refresh" text="Refresh" press="onSearch"/>
-							
+							icon="sap-icon://refresh" 
+							text="Refresh" press="onSearch"/>
+						<OverflowToolbarButton 
+							icon="sap-icon://excel-attachment" 
+							press="onExportExtract"
+							tooltip="Download Extract"/>	
 							
 					</OverflowToolbar>
 				</headerToolbar>
@@ -198,6 +202,12 @@
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="EAM Work Order" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Cost Center" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Requestor" />
 					</Column>
 					<Column minScreenWidth="Tablet" demandPopin="true">
 						<Text text="Plant" />
@@ -238,6 +248,12 @@
 							<ObjectIdentifier
 								title="{customStagedResvSrv>ManufacturingOrder}" />
 							
+							<ObjectIdentifier
+								text="{customStagedResvSrv>CostCenter}" />
+							
+							<ObjectIdentifier
+								text="{customStagedResvSrv>GoodsRecipientName}" />
+								
 							<ObjectIdentifier
 								title="{customStagedResvSrv>Plant}"
 								text="{customStagedResvSrv>PlantName}" />
